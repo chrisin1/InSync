@@ -4,7 +4,7 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { createUserWithEmailAndPassword } from "firebase/auth"
 import { collection, addDoc } from "firebase/firestore"; 
 import { auth, db } from '../../firebase/config'
-import styles from './styles'
+import styles from './RegistrationStyles'
 
 export default function RegistrationScreen({navigation}) {
     const [fullName, setFullName] = useState('')
@@ -44,11 +44,11 @@ export default function RegistrationScreen({navigation}) {
     return (
         <View style={styles.container}>
             <KeyboardAwareScrollView
-                style={{ flex: 1, width: '100%' }}
+                style={{ width: '100%' }}
                 keyboardShouldPersistTaps="always">
                 <Image
                     style={styles.logo}
-                    source={require('../../../assets/icon.png')}
+                    source={require('../../../assets/music_note_icon.jpg')}
                 />
                 <TextInput
                     style={styles.input}

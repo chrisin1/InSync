@@ -9,36 +9,37 @@ export default StyleSheet.create({
 
     },
     logo: {
-        flex: 1,
-        height: 120,
-        width: 90,
+        borderRadius: 100,
+        height: 200,
+        width: 200,
         alignSelf: "center",
-        margin: 30
+        margin: 30,
+        marginBottom: 50
     },
     input: {
         height: 48,
-        borderRadius: 5,
+        borderRadius: 100,
         overflow: 'hidden',
         backgroundColor: 'white',
         marginTop: 10,
         marginBottom: 10,
-        marginLeft: 30,
-        marginRight: 30,
-        paddingLeft: 16
+        marginLeft: 50,
+        marginRight: 50,
+        paddingLeft: 20,
     },
     button: {
         backgroundColor: '#788eec',
-        marginLeft: 30,
-        marginRight: 30,
-        marginTop: 20,
+        marginTop: 50,
         height: 48,
-        borderRadius: 5,
+        width: 200,
+        borderRadius: 100,
         alignItems: "center",
+        alignSelf: "center",
         justifyContent: 'center'
     },
     buttonTitle: {
         color: 'white',
-        fontSize: 16,
+        fontSize: 20,
         fontWeight: "bold"
     },
     footerView: {
