@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth, db } from '../../firebase/config'
 import styles from './LoginStyles';
 
 export default function LoginScreen({navigation}) {
@@ -12,6 +14,17 @@ export default function LoginScreen({navigation}) {
     }
 
     const onLoginPress = () => {
+        signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Signed in 
+            const user = userCredential.user;
+            alert("Logged in");
+            // ...
+        })
+        .catch((error) => {
+            console.log(error.code);
+            alert(error.message);
+        });
     }
 
     return (
