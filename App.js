@@ -16,15 +16,18 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator
+        screenOptions={{
+          cardStyle: { backgroundColor: '#222222' },
+        }}>
         { user ? (
           <Stack.Screen name="Home">
             {props => <HomeScreen {...props} extraData={user} />}
           </Stack.Screen>
         ) : (
           <>
-            <Stack.Screen name="Login" component={LoginScreen} />
-            <Stack.Screen name="Registration" component={RegistrationScreen} />
+            <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }}/>
+            <Stack.Screen name="Registration" component={RegistrationScreen} options={{ headerShown: false }}/>
           </>
         )}
       </Stack.Navigator>
