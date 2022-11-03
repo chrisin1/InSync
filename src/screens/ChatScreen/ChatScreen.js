@@ -3,7 +3,7 @@ import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import styles from './ChatStyles';
 
 
-export default function HomeScreen(props) {
+export default function ChatScreen(props) {
     return (
         <View style ={styles.container}>
             
