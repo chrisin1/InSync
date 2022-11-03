@@ -1,9 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { createUserWithEmailAndPassword } from "firebase/auth"
-import { collection, addDoc } from "firebase/firestore"; 
-import { auth, db } from '../../firebase/config'
+import { AuthContext } from '../../AuthContext/AuthContext'
 import styles from './RegistrationStyles'
 
 export default function RegistrationScreen({navigation}) {
@@ -11,6 +9,8 @@ export default function RegistrationScreen({navigation}) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
+
+    const { signUp } = useContext(AuthContext);
 
     const onFooterLinkPress = () => {
         navigation.navigate('Login')
@@ -21,24 +21,7 @@ export default function RegistrationScreen({navigation}) {
             alert("Passwords don't match.")
             return
         }
-        createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            // Signed in 
-            alert("Account made.")
-            try {
-                const docRef = addDoc(collection(db, "users"), {
-                  id: userCredential.user.uid,
-                  email: email,
-                  fullName: fullName
-                });
-            } catch (e) {
-                console.error("Error adding document: ", e);
-            }
-        })
-        .catch((error) => {
-            console.log(error.code);
-            alert(error.message);
-        });
+        signUp({ fullName, email, password });  
     }
 
     return (

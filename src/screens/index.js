@@ -4,4 +4,4 @@ export { default as HomeScreen } from './HomeScreen/HomeScreen'
 
 export { default as RegistrationScreen } from './RegistrationScreen/RegistrationScreen'
 
-export { default as TestScreen } from './TestScreen/TestScreen'
+export { default as ProfileScreen } from './ProfileScreen/ProfileScreen'
