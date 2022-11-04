@@ -1,13 +1,24 @@
 import 'react-native-gesture-handler';
 import React, { useEffect, useState } from 'react'
-import { NavigationContainer } from '@react-navigation/native'
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { LoginScreen, HomeScreen, RegistrationScreen, ChatScreen, ProfileScreen } from './src/screens'
 import {decode, encode} from 'base-64'
 if (!global.btoa) {  global.btoa = encode }
 if (!global.atob) { global.atob = decode }
 
+const Theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: '#222222'
+  },
+};
 const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
+
+// TODO: create verified user stack (home, profile, messages)
 
 export default function App() {
 
@@ -15,22 +26,22 @@ export default function App() {
   const [user, setUser] = useState(null)
 
   return (
-    <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          cardStyle: { backgroundColor: '#222222' },
-        }}>
+    <NavigationContainer
+      theme={Theme}>
+      <Tab.Navigator
+          screenOptions={{
+            tabBarStyle: { backgroundColor: '#373737', borderTopWidth: 0 }
+          }}>
         { user ? (
-          <Stack.Screen name="Home">
-            {props => <HomeScreen {...props} extraData={user} />}
-          </Stack.Screen>
+          <Tab.Screen name="Home" component={HomeScreen} />
         ) : (
           <>
-            <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }}/>
-            <Stack.Screen name="Registration" component={RegistrationScreen} options={{ headerShown: false }}/>
+            <Tab.Screen name="Login" component={LoginScreen} options={{ headerShown: false }}/>
+            <Tab.Screen name="Registration" component={RegistrationScreen} options={{ headerShown: false }}/>
+            <Tab.Screen name="Home" component={HomeScreen} options={{ headerShown: false }}/>
           </>
         )}
-      </Stack.Navigator>
+      </Tab.Navigator>
     </NavigationContainer>
   );
 }
