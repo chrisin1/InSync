@@ -1,10 +1,14 @@
 import 'react-native-gesture-handler';
 import React, { useEffect, useState, useMemo } from 'react'
-import { NavigationContainer } from '@react-navigation/native'
+import { NavigationContainer, DefaultTheme } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { SpotifyConnectScreen, LoginScreen, HomeScreen, RegistrationScreen, ChatScreen, ProfileScreen } from './src/screens'
 import { collection, setDoc, getDoc, doc } from "firebase/firestore";
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "firebase/auth"
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import { LoginScreen, HomeScreen, RegistrationScreen, ChatScreen, ProfileScreen } from './src/screens'
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth"
+import { collection, setDoc, getDoc, doc } from "firebase/firestore"; 
 import { auth, db } from './src/firebase/config'
 import { AuthContext } from './src/AuthContext/AuthContext'
 import {decode, encode} from 'base-64'
@@ -24,7 +28,17 @@ const getTokenFromURL = () => {
         }, {})
 }
 
+const Theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    background: '#222222'
+  },
+};
 const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
+
+// TODO: create verified user stack (home, profile, messages)
 
 export default function App() {
 
@@ -61,8 +75,6 @@ export default function App() {
       console.log(global.token)
       window.location.hash = ""
   }, []);
-
-
 
   const authContext = useMemo( () => ({
     logIn: async data => {
@@ -127,7 +139,6 @@ export default function App() {
   []  
   );
 
-
   if (loading) {
     return (
       <></>
@@ -137,29 +148,30 @@ export default function App() {
   console.log(user)
   return (
     <AuthContext.Provider value={authContext}>
-        <NavigationContainer>
-        <Stack.Navigator
-          screenOptions={{
-            cardStyle: { backgroundColor: '#222222' },
-          }}>
-          { user ? (
-            <>
-                <Stack.Screen name="Home">
-                  {props => <HomeScreen {...props} extraData={user} />}
-                </Stack.Screen>
-                <Stack.Screen name="Connect With Spotify" component={SpotifyConnectScreen}/>
-            </>
-          ) : (
-            <>
-              <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="Registration" component={RegistrationScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="Connect With Spotify" component={SpotifyConnectScreen}/>
-
-            </>
-          )}
-        </Stack.Navigator>
+      <NavigationContainer
+        theme={Theme}>
+        { user ? (
+          <Tab.Navigator
+            initialRouteName={"Home"}
+            screenOptions={{
+              tabBarStyle: { backgroundColor: '#373737', borderBottomWidth: 0, borderTopWidth: 0 }
+            }}>
+              <Tab.Screen name="Chat" component={ChatScreen} options={{ headerShown: false }} />
+              <Tab.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
+              <Tab.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
+              <Tab.Screen name="Connect With Spotify" component={SpotifyConnectScreen}/>
+          </Tab.Navigator>
+        ) : (
+          <Stack.Navigator
+            screenOptions={{
+              cardStyle: { backgroundColor: '#222222' }
+            }}>
+            <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }}/>
+            <Stack.Screen name="Registration" component={RegistrationScreen} options={{ headerShown: false }}/>
+            <Stack.Screen name="Connect With Spotify" component={SpotifyConnectScreen}/>
+          </Stack.Navigator>
+        )}
       </NavigationContainer>
     </AuthContext.Provider>
-    
   );
 }
