@@ -1,6 +1,16 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
+    button: {
+        alignItems: 'center',
+        alignSelf: 'center',
+        backgroundColor: '#FF9283',
+        borderRadius: 100,
+        height: 48,
+        justifyContent: 'center',
+        marginTop: 50,
+        width: 150,
+    },
     container: {
         alignItems: 'center',
         alignSelf: 'center',

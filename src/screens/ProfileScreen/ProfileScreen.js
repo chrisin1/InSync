@@ -1,9 +1,15 @@
-import React, { useState } from 'react'
-import { Text, View, SafeAreaView, Image, ScrollView } from "react-native";
+import React, { useContext } from 'react'
+import { Text, View, SafeAreaView, Image, ScrollView, TouchableOpacity } from "react-native";
 import styles from './ProfileStyles';
-
+import { AuthContext } from '../../AuthContext/AuthContext';
 
 export default function ProfileScreen() {
+    const { logOut } = useContext(AuthContext);
+
+    const onLogoutPress = () => {
+        logOut();  
+    }
+
     return (
         <SafeAreaView style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -74,6 +80,13 @@ export default function ProfileScreen() {
                         </Text>
                     </View>
                 </View>
+            </View>
+            <View>
+                <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => onLogoutPress()}>
+                    <Text style={styles.link}>Log out</Text>
+                </TouchableOpacity>
             </View>
         </ScrollView>
     </SafeAreaView> 
