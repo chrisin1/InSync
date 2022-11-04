@@ -8,14 +8,14 @@ export default function LoginScreen({navigation}) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    const { signIn } = useContext(AuthContext)
+    const { logIn } = useContext(AuthContext)
 
     const onFooterLinkPress = () => {
         navigation.navigate('Registration')
     }
 
     const onLoginPress = () => {
-        signIn({ email, password });  
+        logIn({ email, password });  
     }
 
     return (
