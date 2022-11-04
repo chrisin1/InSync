@@ -1,30 +1,21 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth, db } from '../../firebase/config'
-import styles from './LoginStyles';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { AuthContext } from '../../AuthContext/AuthContext'
+import styles from './LoginStyles'
 
 export default function LoginScreen({navigation}) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+
+    const { signIn } = useContext(AuthContext)
 
     const onFooterLinkPress = () => {
         navigation.navigate('Registration')
     }
 
     const onLoginPress = () => {
-        signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            // Signed in 
-            const user = userCredential.user;
-            alert("Logged in");
-            // ...
-        })
-        .catch((error) => {
-            console.log(error.code);
-            alert(error.message);
-        });
+        signIn({ email, password });  
     }
 
     return (

@@ -3,8 +3,8 @@ import React, { useEffect, useState, useMemo } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { LoginScreen, HomeScreen, RegistrationScreen, ChatScreen, ProfileScreen } from './src/screens'
-import { createUserWithEmailAndPassword } from "firebase/auth"
-import { collection, addDoc } from "firebase/firestore"; 
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth"
+import { collection, setDoc, getDoc, doc } from "firebase/firestore"; 
 import { auth, db } from './src/firebase/config'
 import { AuthContext } from './src/AuthContext/AuthContext'
 import {decode, encode} from 'base-64'
@@ -42,32 +42,33 @@ export default function App() {
 
 
   const authContext = useMemo( () => ({
-    /*signIn: async data => {
-      firebase
-        .auth()
-        .signInWithEmailAndPassword(data.email, data.password)
-        .then((response) => {
-          const uid = response.user.uid
-          const usersRef = firebase.firestore().collection('users')
-          usersRef
-            .doc(uid)
-            .get()
-            .then(firestoreDocument => {
-              if (!firestoreDocument.exists) {
+    signIn: async data => {
+      signInWithEmailAndPassword(auth, data.email, data.password)
+        .then((userCredential) => {
+            // Signed in 
+            alert("Logged in");
+            const uid = userCredential.user.uid
+            const docRef = doc(db, "users", uid);
+            getDoc(docRef)
+            .then((userDoc) => {
+              if (!userDoc.exists()) {
                 alert("User does not exist anymore.")
                 return;
               }
-              const userData = firestoreDocument.data()
-              setUser(userData)
+              console.log("User data:", userDoc.data());
+              const uid = userDoc.id;
+              setUser(uid)
             })
-            .catch(error => {
+            .catch((error)=> {
               alert(error)
-            });
+            })
         })
-        .catch(error => {
-          alert(error)
-        })
+        .catch((error) => {
+            console.log(error.code);
+            alert(error.message);
+        });
     },
+    /*
     signOut: () => {
       firebase
         .signOut()
@@ -85,7 +86,7 @@ export default function App() {
         alert("Account made.")
         try {
             const uid = userCredential.user.uid;
-            const docRef = addDoc(collection(db, "users"), {
+            const docRef = setDoc(doc(db, "users", uid), {
               id: uid,
               email: data.email,
               fullName: data.fullName
