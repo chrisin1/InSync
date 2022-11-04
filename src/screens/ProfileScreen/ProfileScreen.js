@@ -15,7 +15,7 @@ export default function ProfileScreen() {
 
             <View style={{ alignSelf: "center" }}>
                 <View style={styles.profileImage}>
-                    <Image source={require('../../../assets/placeholder-logo.jpg')} style={styles.image} resizeMode="center"></Image>
+                    <Image source={require('../../../assets/georgehead.jpg')} style={styles.image} resizeMode="center"></Image>
                 </View>
             </View>
 
@@ -42,13 +42,13 @@ export default function ProfileScreen() {
             <View style={{ marginTop: 32 }}>
                 <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
                     <View style={styles.imageContainer}>
-                        <Image source={require('../../../assets/placeholder-logo.jpg')} style={styles.image} resizeMode="cover"></Image>
+                        <Image source={require('../../../assets/georgehead.jpg')} style={styles.image} resizeMode="cover"></Image>
                     </View>
                     <View style={styles.imageContainer}>
-                        <Image source={require('../../../assets/placeholder-logo.jpg')} style={styles.image} resizeMode="cover"></Image>
+                        <Image source={require('../../../assets/topgeorge.jpg')} style={styles.image} resizeMode="cover"></Image>
                     </View>
                     <View style={styles.imageContainer}>
-                        <Image source={require('../../../assets/placeholder-logo.jpg')} style={styles.image} resizeMode="cover"></Image>
+                        <Image source={require('../../../assets/georgehead.jpg')} style={styles.image} resizeMode="cover"></Image>
                     </View>
                 </ScrollView>
                 <View style={styles.imageLabel}>
