@@ -2,65 +2,70 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
     container: {
-        alignItems: 'center',
+        flex: 1,
+        marginBottom: 100,
+    },
+    cardContainer: {
         alignSelf: 'center',
+        backgroundColor: '#373737',
+        borderRadius: 20,
         flex: 1,
     },
-    title: {
+    imageContainer: {
         alignSelf: 'center',
+        borderRadius: 20,
+        height: 350,
+        margin: 20,
+        marginBottom: 10,
+        width: 350,
+    },
+    title: {
+        alignSelf: 'flex-start',
         color: 'white',
         fontSize: 48,
         fontWeight: 'bold',
-        margin: 50
+        margin: 30,
     },
-    logo: {
-        alignSelf: 'center',
-        borderRadius: 100,
-        height: 200,
-        marginBottom: 50,
-        width: 200
-    },
-    input: {
-        backgroundColor: '#373737',
-        borderRadius: 100,
+    nameText: {
+        alignSelf: 'flex-start',
         color: 'white',
-        height: 48,
-        marginBottom: 20,
-        marginLeft: 50,
-        marginRight: 50,
-        marginTop: 10,
-        outlineStyle: 'none',
-        overflow: 'hidden',
-        paddingLeft: 20, // input text padding
-        width: 500,
+        fontSize: 32,
+        fontWeight: 'bold',
+        margin: 20,
+        marginBottom: 0,
+    },
+    compText: {
+        alignSelf: 'flex-start',
+        color: 'white',
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 5,
+        marginStart: 20,
+    },
+    detailsText: {
+        alignSelf: 'flex-start',
+        color: '#929292',
+        fontSize: 14,
+        fontWeight: 'normal',
+        marginStart: 20,
     },
     button: {
         alignItems: 'center',
-        alignSelf: 'center',
-        backgroundColor: '#FF9283',
+        backgroundColor: '#222222',
         borderRadius: 100,
-        height: 48,
+        height: 100,
         justifyContent: 'center',
-        marginTop: 50,
-        width: 150,
+        margin: 30,
+        width: 100,
     },
-    buttonTitle: {
-        color: 'black',
-        fontSize: 20,
-        fontWeight: 'bold'
+    buttonIcon: {
+        color: '#ff9283',
+        height: 50,
+        width: 50,
     },
-    footerView: {
-        alignItems: 'center',
-        flex: 1,
-        marginTop: 10
-    },
-    footerText: {
-        color: 'white',
-        fontSize: 14
-    },
-    footerLink: {
-        color: '#FF9283',
-        fontSize: 14,
-        fontWeight: 'bold'
+    buttonContainer: {
+        alignSelf: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
     }
 })
