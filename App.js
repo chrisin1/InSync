@@ -39,11 +39,10 @@ export default function App() {
 
 
   const authContext = useMemo( () => ({
-    signIn: async data => {
+    logIn: async data => {
       signInWithEmailAndPassword(auth, data.email, data.password)
         .then((userCredential) => {
             // Signed in 
-            alert("Logged in");
             const uid = userCredential.user.uid
             const docRef = doc(db, "users", uid);
             getDoc(docRef)
@@ -77,12 +76,11 @@ export default function App() {
       createUserWithEmailAndPassword(auth, data.email, data.password)
       .then((userCredential) => {
         // Signed in 
-        alert("Account made.")
         try {
             const uid = userCredential.user.uid;
             const docRef = setDoc(doc(db, "users", uid), {
               id: uid,
-              email: daxta.email,
+              email: data.email,
               fullName: data.fullName
             }).then(() => {
               setUser(uid) //They make this userData for some reason with all the info, check if this is necessary
