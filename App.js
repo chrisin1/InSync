@@ -3,7 +3,7 @@ import React, { useEffect, useState, useMemo } from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { LoginScreen, HomeScreen, RegistrationScreen, ChatScreen, ProfileScreen } from './src/screens'
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth"
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth"
 import { collection, setDoc, getDoc, doc } from "firebase/firestore"; 
 import { auth, db } from './src/firebase/config'
 import { AuthContext } from './src/AuthContext/AuthContext'
@@ -65,17 +65,14 @@ export default function App() {
             alert(error.message);
         });
     },
-    /*
-    signOut: () => {
-      firebase
-        .signOut()
-        .then(() => {
-          setUser(null)
-        })
-        .catch((error) => {
-          alert(error)
-        })
-    },*/
+    logOut: () => {
+      signOut(auth).then(() => {
+        // Sign-out successful.
+        setUser(null)
+      }).catch((error) => {
+        alert(error)
+      });
+    },
     signUp: async data => {
       createUserWithEmailAndPassword(auth, data.email, data.password)
       .then((userCredential) => {
