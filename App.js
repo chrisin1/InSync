@@ -18,26 +18,23 @@ export default function App() {
   const [loading, setLoading] = useState(true)
   const [user, setUser] = useState(null)
 
-  /*useEffect(() => {
-    const usersRef = firebase.firestore().collection('users');
-    firebase.auth().onAuthStateChanged(user => {
+  useEffect(() => {
+    auth.onAuthStateChanged(user => {
       if (user) {
-        usersRef
-          .doc(user.uid)
-          .get()
-          .then((document) => {
-            const userData = document.data()
-            setLoading(false)
-            setUser(userData)
-          })
-          .catch((error) => {
-            setLoading(false)
-          });
+        const docRef = doc(db, "users", user.uid);
+        getDoc(docRef)
+        .then((userDoc) => {
+          setLoading(false)
+          setUser(userDoc.id)
+        })
+        .catch((error) => {
+          setLoading(false)
+        });
       } else {
         setLoading(false)
       }
     });
-  }, []);*/
+  }, []);
 
 
 
@@ -88,7 +85,7 @@ export default function App() {
             const uid = userCredential.user.uid;
             const docRef = setDoc(doc(db, "users", uid), {
               id: uid,
-              email: data.email,
+              email: daxta.email,
               fullName: data.fullName
             }).then(() => {
               setUser(uid) //They make this userData for some reason with all the info, check if this is necessary
@@ -110,11 +107,11 @@ export default function App() {
   );
 
 
-  /*if (loading) {
+  if (loading) {
     return (
       <></>
     )
-  }*/
+  }
 
   return (
     <AuthContext.Provider value={authContext}>
