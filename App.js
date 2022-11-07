@@ -2,6 +2,9 @@ import 'react-native-gesture-handler';
 import React, { useEffect, useState, useMemo } from 'react'
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
+import { SpotifyConnectScreen, LoginScreen, HomeScreen, RegistrationScreen, ChatScreen, ProfileScreen } from './src/screens'
+import { collection, setDoc, getDoc, doc } from "firebase/firestore";
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "firebase/auth"
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { LoginScreen, HomeScreen, RegistrationScreen, ChatScreen, ProfileScreen } from './src/screens'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth"
@@ -11,6 +14,19 @@ import { AuthContext } from './src/AuthContext/AuthContext'
 import {decode, encode} from 'base-64'
 if (!global.btoa) {  global.btoa = encode }
 if (!global.atob) { global.atob = decode }
+import SpotifyWebApi from 'spotify-web-api-js';
+
+const spotifyApi = new SpotifyWebApi()
+const getTokenFromURL = () => {
+    return window.location.hash
+        .substring(1)
+        .split("&")
+        .reduce((initial, item) => {
+            let parts = item.split("=")
+            initial[parts[0]] = decodeURIComponent(parts[1])
+            return initial
+        }, {})
+}
 
 const Theme = {
   ...DefaultTheme,
@@ -28,6 +44,7 @@ export default function App() {
 
   const [loading, setLoading] = useState(true)
   const [user, setUser] = useState(null)
+  const [spotifyToken, setSpotifyToken] = useState("")
 
   useEffect(() => {
     auth.onAuthStateChanged(user => {
@@ -45,6 +62,18 @@ export default function App() {
         setLoading(false)
       }
     });
+
+      console.log("Our URL: ", getTokenFromURL())
+      const token = getTokenFromURL().access_token
+      console.log("Our Spotify Access Token: ", token)
+      console.log("Global token ", global.token)
+      if (!global.token){
+        console.log("in here")
+        global.token = token
+        console.log("global set to ", global.token)
+      }
+      console.log(global.token)
+      window.location.hash = ""
   }, []);
 
   const authContext = useMemo( () => ({
@@ -115,7 +144,8 @@ export default function App() {
       <></>
     )
   }
-
+  console.log(spotifyToken)
+  console.log(user)
   return (
     <AuthContext.Provider value={authContext}>
       <NavigationContainer
@@ -129,6 +159,7 @@ export default function App() {
               <Tab.Screen name="Chat" component={ChatScreen} options={{ headerShown: false }} />
               <Tab.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
               <Tab.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
+              <Tab.Screen name="Connect With Spotify" component={SpotifyConnectScreen}/>
           </Tab.Navigator>
         ) : (
           <Stack.Navigator
@@ -137,6 +168,7 @@ export default function App() {
             }}>
             <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }}/>
             <Stack.Screen name="Registration" component={RegistrationScreen} options={{ headerShown: false }}/>
+            <Stack.Screen name="Connect With Spotify" component={SpotifyConnectScreen}/>
           </Stack.Navigator>
         )}
       </NavigationContainer>
