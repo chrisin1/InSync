@@ -22,8 +22,6 @@ const Theme = {
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-// TODO: create verified user stack (home, profile, messages)
-
 export default function App() {
 
   const [loading, setLoading] = useState(true)
