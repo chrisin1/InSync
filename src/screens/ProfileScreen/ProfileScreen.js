@@ -1,22 +1,58 @@
-import React, { useContext } from 'react'
-import { Text, View, SafeAreaView, Image, ScrollView, TouchableOpacity } from "react-native";
+import React, { useContext, useEffect, useState } from 'react'
+import { Text, View, SafeAreaView, Image, ScrollView, TouchableOpacity, TextInput } from "react-native";
 import styles from './ProfileStyles';
 import { AuthContext } from '../../AuthContext/AuthContext';
+import { auth, db } from '../../firebase/config';
+import { getDoc, doc } from 'firebase/firestore';
 
 export default function ProfileScreen() {
     const { logOut } = useContext(AuthContext);
+
+    // user data variables
+    const [fullName, setFullName] = useState('');
+    const [bio, setBio] = useState('');
+    const [profileURL, setProfileURL] = useState('');
 
     const onLogoutPress = () => {
         logOut();  
     }
 
+    /* let editable = false;
+    let buttonTitle = 'Edit';
+    const onEditPress = () => {
+        if (this.state.editable) {
+            // get values and save here?
+            this.setState({buttonTitle: 'Edit', editable: false});
+        }
+        else {
+            this.setState({buttonTitle: 'Save', editable: true});
+        }
+    } */
+
+    useEffect(() => {
+        auth.onAuthStateChanged(user => {
+            if (user) { // user is signed in
+                const docRef = doc(db, "users", user.uid);
+                getDoc(docRef)
+                .then(async (userDoc) => {
+                    // retrieve and set userdata here
+                    setFullName(userDoc.data().fullName);
+                    setBio(userDoc.data().bio);
+                })
+                .catch((error) => {
+                    console.log('Error retrieving user information: ', error);
+                });
+            }
+        })
+    }, []);
+
     return (
         <SafeAreaView style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
-            <View style={styles.titleBar}>
-                <Text style={styles.link}>
-                    Edit
-                </Text>
+            <View>
+                <TouchableOpacity style={{marginTop: 25}} onPress={() => onEditPress()}>
+                    <Text style={styles.link}> Edit </Text>
+                </TouchableOpacity>
             </View>
 
             <View style={{ alignSelf: "center" }}>
@@ -26,8 +62,12 @@ export default function ProfileScreen() {
             </View>
 
             <View style={styles.infoContainer}>
-                <Text style={[styles.text, { fontWeight: "200", fontSize: 36 }]}>George</Text>
-                <Text style={[styles.text, { color: "#AEB5BC", fontSize: 14 }]}>I'm on that grind and we don't stop. Passionate about flowers and wildlife. #DryWallRepresent</Text>
+                <Text style={[styles.text, { fontWeight: "200", fontSize: 36 }]}>
+                    {fullName}
+                </Text>
+                <Text style={[styles.text, { color: "#AEB5BC", fontSize: 14 }]}>
+                    {bio}
+                </Text>
             </View>
 
             <View style={styles.statsContainer}>
@@ -85,7 +125,7 @@ export default function ProfileScreen() {
                 <TouchableOpacity
                     style={styles.button}
                     onPress={() => onLogoutPress()}>
-                    <Text style={styles.link}>Log out</Text>
+                    <Text style={styles.buttonTitle}>Log out</Text>
                 </TouchableOpacity>
             </View>
         </ScrollView>
