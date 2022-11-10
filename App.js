@@ -124,10 +124,10 @@ export default function App() {
             screenOptions={{
               tabBarStyle: { backgroundColor: '#373737', borderBottomWidth: 0, borderTopWidth: 0 }
             }}>
-              <Tab.Screen name="Chat" component={ChatScreen} options={{ headerShown: false }} />
-              <Tab.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
-              <Tab.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
-              <Tab.Screen name="Setup" component={SetupScreen} options={{ headerShown: false }} />
+              <Tab.Screen name="Chat" component={ChatScreen} options={{ headerShown: false, unmountOnBlur: true }} />
+              <Tab.Screen name="Home" component={HomeScreen} options={{ headerShown: false, unmountOnBlur: true }} />
+              <Tab.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false, unmountOnBlur: true }} />
+              <Tab.Screen name="Setup" component={SetupScreen} options={{ headerShown: false, unmountOnBlur: true }} />
           </Tab.Navigator>
         ) : (
           <Stack.Navigator
