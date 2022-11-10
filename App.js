@@ -3,7 +3,7 @@ import React, { useEffect, useState, useMemo } from 'react'
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { LoginScreen, HomeScreen, RegistrationScreen, ChatScreen, ProfileScreen } from './src/screens'
+import { LoginScreen, HomeScreen, RegistrationScreen, ChatScreen, ProfileScreen, SetupScreen } from './src/screens'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth"
 import { collection, setDoc, getDoc, doc } from "firebase/firestore"; 
 import { auth, db } from './src/firebase/config'
@@ -127,14 +127,16 @@ export default function App() {
               <Tab.Screen name="Chat" component={ChatScreen} options={{ headerShown: false }} />
               <Tab.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
               <Tab.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
+              <Tab.Screen name="Setup" component={SetupScreen} options={{ headerShown: false }} />
           </Tab.Navigator>
         ) : (
           <Stack.Navigator
             screenOptions={{
               cardStyle: { backgroundColor: '#222222' }
             }}>
-            <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }}/>
-            <Stack.Screen name="Registration" component={RegistrationScreen} options={{ headerShown: false }}/>
+            <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="Registration" component={RegistrationScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="Setup" component={SetupScreen} options={{ headerShown: false }} />
           </Stack.Navigator>
         )}
       </NavigationContainer>
