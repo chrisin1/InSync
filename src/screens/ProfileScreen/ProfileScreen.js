@@ -9,9 +9,12 @@ export default function ProfileScreen() {
     const { logOut } = useContext(AuthContext);
 
     // user data variables
-    const [fullName, setFullName] = useState('');
+    const [displayName, setDisplayName] = useState('');
     const [bio, setBio] = useState('');
-    const [profileURL, setProfileURL] = useState('');
+    const [profilePic, setProfilePic] = useState('')
+    const [age, setAge] = useState('')
+    const [gender, setGender] = useState('')
+    const [location, setLocation] = useState('')
 
     const onLogoutPress = () => {
         logOut();  
@@ -36,8 +39,11 @@ export default function ProfileScreen() {
                 getDoc(docRef)
                 .then(async (userDoc) => {
                     // retrieve and set userdata here
-                    setFullName(userDoc.data().fullName);
+                    setDisplayName(userDoc.data().displayName);
                     setBio(userDoc.data().bio);
+                    setAge(userDoc.data().age);
+                    setGender(userDoc.data().gender);
+                    setLocation(userDoc.data().location);
                 })
                 .catch((error) => {
                     console.log('Error retrieving user information: ', error);
@@ -45,6 +51,8 @@ export default function ProfileScreen() {
             }
         })
     }, []);
+
+    // updateDoc(userDoc, {value: newvalue});
 
     return (
         <SafeAreaView style={styles.container}>
@@ -63,7 +71,7 @@ export default function ProfileScreen() {
 
             <View style={styles.infoContainer}>
                 <Text style={[styles.text, { fontWeight: "200", fontSize: 36 }]}>
-                    {fullName}
+                    {displayName}
                 </Text>
                 <Text style={[styles.text, { color: "#AEB5BC", fontSize: 14 }]}>
                     {bio}
@@ -72,16 +80,16 @@ export default function ProfileScreen() {
 
             <View style={styles.statsContainer}>
                 <View style={styles.statsBox}>
-                    <Text style={[styles.text, { fontSize: 24 }]}>43</Text>
+                    <Text style={[styles.text, { fontSize: 24 }]}>{age}</Text>
                     <Text style={[styles.text, styles.subText]}>Age</Text>
                 </View>
                 <View style={[styles.statsBox, { borderColor: "#DFD8C8", borderLeftWidth: 1, borderRightWidth: 1 }]}>
-                    <Text style={[styles.text, { fontSize: 24 }]}>USA</Text>
+                    <Text style={[styles.text, { fontSize: 24 }]}>{location}</Text>
                     <Text style={[styles.text, styles.subText]}>Location</Text>
                 </View>
                 <View style={styles.statsBox}>
-                        <Text style={[styles.text, { fontSize: 24 }]}>Male</Text>
-                        <Text style={[styles.text, styles.subText]}>Sex</Text>
+                        <Text style={[styles.text, { fontSize: 24 }]}>{gender}</Text>
+                        <Text style={[styles.text, styles.subText]}>Gender</Text>
                     </View>
             </View>
 
