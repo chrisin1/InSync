@@ -3,7 +3,7 @@ import React, { useEffect, useState, useMemo } from 'react'
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { LoginScreen, HomeScreen, RegistrationScreen, ChatScreen, ProfileScreen, SetupScreen } from './src/screens'
+import { LoginScreen, HomeScreen, RegistrationScreen, ChatScreen, ProfileScreen, SetupScreen, EditProfileScreen } from './src/screens'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth"
 import { collection, setDoc, getDoc, doc } from "firebase/firestore"; 
 import { auth, db } from './src/firebase/config'
@@ -119,11 +119,11 @@ export default function App() {
     )
   }
 
-  const signupStack = () => {
+  const ProfileStack = () => {
     return (
       <Stack.Navigator>
-        <Stack.Screen name="Registration" component={RegistrationScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Setup" component={SetupScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="UserProfile" component={ProfileScreen} options={{ headerShown: false, unmountOnBlur: true }} />
+        <Stack.Screen name="EditProfile" component={EditProfileScreen} options={{ headerShown: false }} />
       </Stack.Navigator>
     )
   }
@@ -140,7 +140,7 @@ export default function App() {
             }}>
               <Tab.Screen name="Chat" component={ChatScreen} options={{ headerShown: false, unmountOnBlur: true }} />
               <Tab.Screen name="Home" component={HomeScreen} options={{ headerShown: false, unmountOnBlur: true }} />
-              <Tab.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false, unmountOnBlur: true }} />
+              <Tab.Screen name="Profile" component={ProfileStack} options={{ headerShown: false }} />
           </Tab.Navigator>
         ) : (
           <Stack.Navigator
