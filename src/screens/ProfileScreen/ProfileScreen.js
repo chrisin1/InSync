@@ -1,9 +1,68 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Text, View, SafeAreaView, Image, ScrollView } from "react-native";
 import styles from './ProfileStyles';
-
+import SpotifyWebApi from 'spotify-web-api-js';
 
 export default function ProfileScreen() {
+    // spotifyApi.getMe().then((user) => {
+    //     console.log()
+    // })
+    var [topSongs, setTopSongs] = useState([{}])
+    useEffect(() => {
+        const topSongsList = []
+        if (topSongsList.length === 0) {
+            global.spotifyApi.getMyTopTracks({limit: 3}).then((response) => {
+                console.log(response.items)
+                if (response.items !== null) {
+                    response.items.forEach((song) => {
+                        console.log(song)
+                        topSongsList.push(
+                            {
+                                name: song.name,
+                                artist: song.artists[0].name
+                            }
+                        )
+                        console.log("added")
+                        console.log(topSongsList.length)
+                    })
+                    setTopSongs(topSongsList)
+                }
+                else if (response.item === null){
+                    // getNowPlaying()
+                }
+            })
+        }
+        // setTopSongs(["hello", "hi"])
+        // console.log(topSongs)
+    }, [])
+    
+    
+
+    // let topSongsList = []
+    //     if (topSongsList.length === 0) {
+    //         global.spotifyApi.getMyTopTracks({limit: 3}).then((response) => {
+    //             console.log(response.items)
+    //             if (response.items !== null) {
+    //                 response.items.forEach((song) => {
+    //                     topSongsList.push(
+    //                         <View style={styles.songItem}>
+    //                             <View style={styles.songIndicator}></View>
+    //                             <View style={{ width: 250 }}>
+    //                                 <Text style={[styles.text, { fontWeight: "300" }]}>
+    //                                     song.name - <Text style={{ fontWeight: "400" }}>song.artists[0].name</Text>
+    //                                 </Text>
+    //                             </View>
+    //                         </View>
+    //                     )
+    //                     console.log("added")
+        
+    //                 })
+    //             }
+    //             else if (response.item === null){
+    //                 // getNowPlaying()
+    //             }
+    //         })
+    //     }
     return (
         <SafeAreaView style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -57,23 +116,17 @@ export default function ProfileScreen() {
             </View>
             <Text style={[styles.subText, styles.songs]}>Favorite Songs</Text>
             <View style={{ alignItems: "center" }}>
-                <View style={styles.songItem}>
-                    <View style={styles.songIndicator}></View>
-                    <View style={{ width: 250 }}>
-                        <Text style={[styles.text, { fontWeight: "300" }]}>
-                            Mountain Dew - <Text style={{ fontWeight: "400" }}>Grandpa Jones</Text>
-                        </Text>
-                    </View>
-                </View>
-
-                <View style={styles.songItem}>
-                    <View style={styles.songIndicator}></View>
-                    <View style={{ width: 250 }}>
-                        <Text style={[styles.text, { fontWeight: "300" }]}>
-                            Joy To The World - <Text style={{ fontWeight: "400" }}>Three Dog Night</Text>
-                        </Text>
-                    </View>
-                </View>
+                {topSongs.map((song, index) => {
+                    return <View key={index} style={styles.songItem}>
+                                <View style={styles.songIndicator}></View>
+                                <View style={{ width: 250 }}>
+                                    <Text style={[styles.text, { fontWeight: "300" }]}>
+                                        {song.name} - <Text style={{ fontWeight: "400" }}>{song.artist}</Text>
+                                    </Text>
+                                </View>
+                            </View>
+                })}
+                
             </View>
         </ScrollView>
     </SafeAreaView> 
