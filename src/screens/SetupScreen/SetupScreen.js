@@ -1,8 +1,7 @@
 import React, { useState, useContext } from 'react'
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
-import { auth, db } from '../../firebase/config'
-import { doc, updateDoc } from 'firebase/firestore'
+import { useRoute } from '@react-navigation/native'
 import { AuthContext } from '../../AuthContext/AuthContext'
 import styles from './SetupStyles'
 
@@ -14,26 +13,24 @@ export default function SetupScreen({navigation}) {
     const [gender, setGender] = useState('')
     const [location, setLocation] = useState('')
 
+    const { signUp } = useContext(AuthContext);
+    const route = useRoute()
+
     const onSetupPress = () => {
-        auth.onAuthStateChanged(user => {
-            if (user) { // user is signed in
-                const docRef = doc(db, "users", user.uid);
-                console.log('uid: ', user.uid);
-                updateDoc(docRef, 
-                    {displayName: displayName, bio: bio, age: age, gender: gender, location: location});
-                }
-            });
+        // TODO: allow profile pic upload
+        const fullName = route.params.fullName
+        const email = route.params.email
+        const password = route.params.password
+        signUp({ fullName, email, password, displayName, bio, age, gender, location });
         navigation.navigate('Home');
     }
-
-    // TODO: save inputted info to user
 
     return (
         <View style={styles.container}>
             <KeyboardAwareScrollView
                 style={{ width: '100%' }}
                 keyboardShouldPersistTaps='always'>
-                <Text style={styles.title}> Profile </Text>
+                <Text style={styles.title}> Set Up Your Profile! </Text>
                 <Image
                     style={styles.profilePic}
                     source={require('../../../assets/placeholder-logo.jpg')}

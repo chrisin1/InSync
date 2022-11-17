@@ -88,7 +88,12 @@ export default function App() {
             const docRef = setDoc(doc(db, "users", uid), {
               id: uid,
               email: data.email,
-              fullName: data.fullName
+              fullName: data.fullName,
+              displayName: data.displayName,
+              bio: data.bio,
+              age: data.age,
+              gender: data.gender,
+              location: data.location
             }).then(() => {
               setUser(uid) //They make this userData for some reason with all the info, check if this is necessary
             })
@@ -114,6 +119,15 @@ export default function App() {
     )
   }
 
+  const signupStack = () => {
+    return (
+      <Stack.Navigator>
+        <Stack.Screen name="Registration" component={RegistrationScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Setup" component={SetupScreen} options={{ headerShown: false }} />
+      </Stack.Navigator>
+    )
+  }
+  
   return (
     <AuthContext.Provider value={authContext}>
       <NavigationContainer
@@ -127,16 +141,15 @@ export default function App() {
               <Tab.Screen name="Chat" component={ChatScreen} options={{ headerShown: false, unmountOnBlur: true }} />
               <Tab.Screen name="Home" component={HomeScreen} options={{ headerShown: false, unmountOnBlur: true }} />
               <Tab.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false, unmountOnBlur: true }} />
-              <Tab.Screen name="Setup" component={SetupScreen} options={{ headerShown: false, unmountOnBlur: true }} />
           </Tab.Navigator>
         ) : (
           <Stack.Navigator
-            screenOptions={{
-              cardStyle: { backgroundColor: '#222222' }
-            }}>
+          screenOptions={{
+            cardStyle: { backgroundColor: '#222222' }
+          }}>
             <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
             <Stack.Screen name="Registration" component={RegistrationScreen} options={{ headerShown: false }} />
-            <Stack.Screen name="Setup" component={SetupScreen} options={{ headerShown: false }} />
+            <Stack.Screen name="Setup" component={SetupScreen} options={{ headerShown: false, unmountOnBlur: true }} />
           </Stack.Navigator>
         )}
       </NavigationContainer>

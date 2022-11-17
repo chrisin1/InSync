@@ -10,8 +10,6 @@ export default function RegistrationScreen({navigation}) {
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
 
-    const { signUp } = useContext(AuthContext);
-
     const onFooterLinkPress = () => {
         navigation.navigate('Login')
     }
@@ -21,7 +19,7 @@ export default function RegistrationScreen({navigation}) {
             alert("Passwords don't match.")
             return
         }
-        signUp({ fullName, email, password });  
+        navigation.navigate('Setup', {fullName, email, password})
     }
 
     return (
