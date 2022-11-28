@@ -30,19 +30,17 @@ export default function LoginScreen({navigation}) {
                     style={ styles.logo }
                     source={require('../../../assets/placeholder-logo.jpg')}
                 />
+                <Text style={styles.inputTitle}>E-mail</Text>
                 <TextInput
                     style={styles.input}
-                    placeholder='E-mail'
-                    placeholderTextColor='white'
                     onChangeText={(text) => setEmail(text)}
                     value={email}
                     underlineColorAndroid='transparent'
                     autoCapitalize='none'
                 />
+                <Text style={styles.inputTitle}>Password</Text>
                 <TextInput
                     style={styles.input}
-                    placeholder='Password'
-                    placeholderTextColor='white'
                     secureTextEntry
                     onChangeText={(text) => setPassword(text)}
                     value={password}

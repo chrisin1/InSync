@@ -28,11 +28,17 @@ export default StyleSheet.create({
         marginBottom: 20,
         marginLeft: 50,
         marginRight: 50,
-        marginTop: 10,
+        marginTop: 5,
         outlineStyle: 'none',
         overflow: 'hidden',
         paddingLeft: 20,
         width: 500,
+    },
+    inputTitle: {
+        color: 'white',
+        fontSize: 14,
+        fontWeight: 'bold',
+        marginLeft: 55,
     },
     button: {
         alignItems: 'center',

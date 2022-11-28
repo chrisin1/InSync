@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
     container: {
@@ -13,12 +13,18 @@ export default StyleSheet.create({
         fontWeight: 'bold',
         margin: 50
     },
-    logo: {
+    profilePic: {
         alignSelf: 'center',
         borderRadius: 100,
         height: 200,
         marginBottom: 50,
         width: 200
+    },
+    profileUpload: {
+        alignSelf: 'center',
+        marginLeft: 0,
+        marginTop: -40,
+        marginBottom: 50,
     },
     input: {
         backgroundColor: '#373737',
@@ -26,8 +32,7 @@ export default StyleSheet.create({
         color: 'white',
         height: 48,
         marginBottom: 20,
-        marginLeft: 50,
-        marginRight: 50,
+        marginHorizontal: 50,
         marginTop: 5,
         outlineStyle: 'none',
         overflow: 'hidden',
