@@ -8,8 +8,10 @@ export default function ProfileScreen() {
     //     console.log()
     // })
     var [topSongs, setTopSongs] = useState([{}])
+    var [topArtists, setTopArtists] = useState([{}])
     useEffect(() => {
         const topSongsList = []
+        const topArtistsList = []
         if (topSongsList.length === 0) {
             global.spotifyApi.getMyTopTracks({limit: 3}).then((response) => {
                 console.log(response.items)
@@ -22,7 +24,7 @@ export default function ProfileScreen() {
                                 artist: song.artists[0].name
                             }
                         )
-                        console.log("added")
+                        console.log("added songs")
                         console.log(topSongsList.length)
                     })
                     setTopSongs(topSongsList)
@@ -32,37 +34,33 @@ export default function ProfileScreen() {
                 }
             })
         }
-        // setTopSongs(["hello", "hi"])
-        // console.log(topSongs)
+        if (topArtistsList.length === 0) {
+            global.spotifyApi.getMyTopArtists({limit: 3}).then((response) => {
+                console.log(response.items)
+                if (response.items !== null) {
+                    response.items.forEach((artist) => {
+                        console.log(artist)
+                        topArtistsList.push(
+                            {
+                                name: artist.name
+                            }
+                        )
+                        console.log("added artists")
+                        console.log(topArtistsList.length)
+                    })
+                    setTopArtists(topArtistsList)
+                }
+                else if (response.item === null){
+                    // getNowPlaying()
+                }
+            })
+        }
+
     }, [])
     
     
 
-    // let topSongsList = []
-    //     if (topSongsList.length === 0) {
-    //         global.spotifyApi.getMyTopTracks({limit: 3}).then((response) => {
-    //             console.log(response.items)
-    //             if (response.items !== null) {
-    //                 response.items.forEach((song) => {
-    //                     topSongsList.push(
-    //                         <View style={styles.songItem}>
-    //                             <View style={styles.songIndicator}></View>
-    //                             <View style={{ width: 250 }}>
-    //                                 <Text style={[styles.text, { fontWeight: "300" }]}>
-    //                                     song.name - <Text style={{ fontWeight: "400" }}>song.artists[0].name</Text>
-    //                                 </Text>
-    //                             </View>
-    //                         </View>
-    //                     )
-    //                     console.log("added")
-        
-    //                 })
-    //             }
-    //             else if (response.item === null){
-    //                 // getNowPlaying()
-    //             }
-    //         })
-    //     }
+    
     return (
         <SafeAreaView style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -121,7 +119,21 @@ export default function ProfileScreen() {
                                 <View style={styles.songIndicator}></View>
                                 <View style={{ width: 250 }}>
                                     <Text style={[styles.text, { fontWeight: "300" }]}>
-                                        {song.name} - <Text style={{ fontWeight: "400" }}>{song.artist}</Text>
+                                        {song.name} <Text style={{ fontWeight: "400" }}>{song.artist}</Text>
+                                    </Text>
+                                </View>
+                        </View>
+                })}
+                
+            </View>
+            <Text style={[styles.subText, styles.songs]}>Favorite Artists</Text>
+            <View style={{ alignItems: "center" }}>
+                {topArtists.map((artist, index) => {
+                    return <View key={index} style={styles.songItem}>
+                                <View style={styles.songIndicator}></View>
+                                <View style={{ width: 250 }}>
+                                    <Text style={[styles.text, { fontWeight: "300" }]}>
+                                        <Text style={{ fontWeight: "400" }}>{artist.name} </Text>
                                     </Text>
                                 </View>
                             </View>
