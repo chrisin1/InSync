@@ -1,8 +1,9 @@
-import React, { useState, useContext } from 'react'
-import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import React, { useState, useEffect, useContext } from 'react'
+import { Image, Text, TextInput, TouchableOpacity, View, Linking } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { AuthContext } from '../../AuthContext/AuthContext'
 import styles from './LoginStyles'
+
 
 export default function LoginScreen({navigation}) {
     const [email, setEmail] = useState('')
@@ -15,7 +16,8 @@ export default function LoginScreen({navigation}) {
     }
 
     const onLoginPress = () => {
-        logIn({ email, password });  
+        logIn({ email, password });
+        navigation.navigate('Connect With Spotify')  
     }
 
     return (
