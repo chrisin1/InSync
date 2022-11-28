@@ -4,8 +4,6 @@ import { AuthContext } from '../../AuthContext/AuthContext'
 import styles from './HomeStyles';
 import SpotifyWebApi from 'spotify-web-api-js';
 
-const spotifyApi = new SpotifyWebApi()
-
 export default function HomeScreen(props) {
     const { logOut } = useContext(AuthContext);
     var [nowPlaying, setNowPlaying] = useState({})
@@ -13,25 +11,25 @@ export default function HomeScreen(props) {
     const onLogoutPress = () => {
         logOut();  
     }
-    spotifyApi.setAccessToken(global.token)
-    spotifyApi.getMe().then((user) => {
+    global.spotifyApi.setAccessToken(global.token)
+    global.spotifyApi.getMe().then((user) => {
         //console.log(user)
     })
     const getNowPlaying = () => {
-        console.log("in here")
+        // console.log("in here")
         try {
-            spotifyApi.getMyCurrentPlaybackState().then((response) => {
+            global.spotifyApi.getMyCurrentPlaybackState().then((response) => {
                 console.log(response)
                 if (response.item !== null) {
+
                     setNowPlaying({
                         name: response.item.name,
-                        albumArt: response.item.album.images[0].url,
+                        albumArt: response.item.album.images ? response.item.album.images[0].url : null,
                         artist: response.item.artists[0].name
                     })
-                    console.log(nowPlaying.artist)
                 }
                 else if (response.item === null){
-                    getNowPlaying()
+                    console.log(response)
                 }
             })
         } catch (error) {
@@ -39,8 +37,8 @@ export default function HomeScreen(props) {
         }
         return true
     }
-    getNowPlaying()
-    
+    // constantly poll web player for currently playing track, with timeout to avoid hitting API rate limit
+    setTimeout(getNowPlaying, 3000)
     return (
         <View style={styles.container}>
             <Text style={styles.title}> Sync Up! </Text>

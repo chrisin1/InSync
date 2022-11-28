@@ -1,13 +1,11 @@
 import 'react-native-gesture-handler';
 import React, { useEffect, useState, useMemo } from 'react'
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native'
-import { createStackNavigator } from '@react-navigation/stack'
 import { SpotifyConnectScreen, LoginScreen, HomeScreen, RegistrationScreen, ChatScreen, ProfileScreen } from './src/screens'
-import { collection, setDoc, getDoc, doc } from "firebase/firestore";
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "firebase/auth"
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { LoginScreen, HomeScreen, RegistrationScreen, ChatScreen, ProfileScreen, SetupScreen } from './src/screens'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth"
+import { createStackNavigator } from '@react-navigation/stack'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { collection, setDoc, getDoc, doc } from "firebase/firestore"; 
 import { auth, db } from './src/firebase/config'
 import { AuthContext } from './src/AuthContext/AuthContext'
@@ -16,7 +14,7 @@ if (!global.btoa) {  global.btoa = encode }
 if (!global.atob) { global.atob = decode }
 import SpotifyWebApi from 'spotify-web-api-js';
 
-const spotifyApi = new SpotifyWebApi()
+global.spotifyApi = new SpotifyWebApi()
 const getTokenFromURL = () => {
     return window.location.hash
         .substring(1)
