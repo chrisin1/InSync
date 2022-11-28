@@ -6,7 +6,7 @@ import { AuthContext } from '../../AuthContext/AuthContext';
 import { auth, db } from '../../firebase/config';
 import { getDoc, doc } from 'firebase/firestore';
 
-export default function ProfileScreen() {
+export default function ProfileScreen({navigation}) {
     // spotifyApi.getMe().then((user) => {
     //     console.log()
     // })
@@ -75,17 +75,9 @@ export default function ProfileScreen() {
         logOut();  
     }
 
-    /* let editable = false;
-    let buttonTitle = 'Edit';
     const onEditPress = () => {
-        if (this.state.editable) {
-            // get values and save here?
-            this.setState({buttonTitle: 'Edit', editable: false});
-        }
-        else {
-            this.setState({buttonTitle: 'Save', editable: true});
-        }
-    } */
+        navigation.navigate('EditProfile')
+    }
 
     useEffect(() => {
         auth.onAuthStateChanged(user => {
@@ -107,18 +99,10 @@ export default function ProfileScreen() {
         })
     }, []);
 
-    // updateDoc(userDoc, {value: newvalue});
-
     return (
         <SafeAreaView style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
-            <View>
-                <TouchableOpacity style={{marginTop: 25}} onPress={() => onEditPress()}>
-                    <Text style={styles.link}> Edit </Text>
-                </TouchableOpacity>
-            </View>
-
-            <View style={{ alignSelf: "center" }}>
+            <View style={{ alignSelf: "center", marginTop: 35 }}>
                 <View style={styles.profileImage}>
                     <Image source={require('../../../assets/georgehead.jpg')} style={styles.image} resizeMode="center"></Image>
                 </View>
@@ -192,9 +176,14 @@ export default function ProfileScreen() {
                 })}
                 
             </View>
-            <View>
+            <View style={{ alignSelf: 'center', flexDirection: 'row' }}>
+                <TouchableOpacity 
+                    style={[styles.button, {flex: 1}]} 
+                    onPress={() => onEditPress()}>
+                    <Text style={styles.buttonTitle}> Edit Profile </Text>
+                </TouchableOpacity>
                 <TouchableOpacity
-                    style={styles.button}
+                    style={[styles.button, {flex: 1}]}
                     onPress={() => onLogoutPress()}>
                     <Text style={styles.buttonTitle}>Log out</Text>
                 </TouchableOpacity>

@@ -3,7 +3,6 @@ import React, { useEffect, useState, useMemo } from 'react'
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native'
 import { SpotifyConnectScreen, LoginScreen, HomeScreen, RegistrationScreen, ChatScreen, ProfileScreen } from './src/screens'
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "firebase/auth"
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth"
 import { createStackNavigator } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { collection, setDoc, getDoc, doc } from "firebase/firestore"; 
@@ -146,11 +145,11 @@ export default function App() {
     )
   }
 
-  const signupStack = () => {
+  const ProfileStack = () => {
     return (
       <Stack.Navigator>
-        <Stack.Screen name="Registration" component={RegistrationScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Setup" component={SetupScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="UserProfile" component={ProfileScreen} options={{ headerShown: false, unmountOnBlur: true }} />
+        <Stack.Screen name="EditProfile" component={EditProfileScreen} options={{ headerShown: false }} />
       </Stack.Navigator>
     )
   }
