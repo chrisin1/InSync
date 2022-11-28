@@ -10,8 +10,6 @@ export default function RegistrationScreen({navigation}) {
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
 
-    const { signUp } = useContext(AuthContext);
-
     const onFooterLinkPress = () => {
         navigation.navigate('Login')
     }
@@ -21,7 +19,7 @@ export default function RegistrationScreen({navigation}) {
             alert("Passwords don't match.")
             return
         }
-        signUp({ fullName, email, password });  
+        navigation.navigate('Setup', {fullName, email, password})
     }
 
     return (
@@ -34,38 +32,34 @@ export default function RegistrationScreen({navigation}) {
                     style={styles.logo}
                     source={require('../../../assets/placeholder-logo.jpg')}
                 />
+                <Text style={styles.inputTitle}>Full Name</Text>
                 <TextInput
                     style={styles.input}
-                    placeholder='Full Name'
-                    placeholderTextColor='white'
                     onChangeText={(text) => setFullName(text)}
                     value={fullName}
                     underlineColorAndroid='transparent'
                     autoCapitalize='none'
                 />
+                <Text style={styles.inputTitle}>E-mail</Text>
                 <TextInput
                     style={styles.input}
-                    placeholder='E-mail'
-                    placeholderTextColor='white'
                     onChangeText={(text) => setEmail(text)}
                     value={email}
                     underlineColorAndroid='transparent'
                     autoCapitalize='none'
                 />
+                <Text style={styles.inputTitle}>Password</Text>
                 <TextInput
                     style={styles.input}
-                    placeholder='Password'
-                    placeholderTextColor='white'
                     secureTextEntry
                     onChangeText={(text) => setPassword(text)}
                     value={password}
                     underlineColorAndroid='transparent'
                     autoCapitalize='none'
                 />
+                <Text style={styles.inputTitle}>Confirm Password</Text>
                 <TextInput
                     style={styles.input}
-                    placeholder='Confirm Password'
-                    placeholderTextColor='white'
                     secureTextEntry
                     onChangeText={(text) => setConfirmPassword(text)}
                     value={confirmPassword}

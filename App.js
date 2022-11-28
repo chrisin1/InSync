@@ -6,7 +6,7 @@ import { SpotifyConnectScreen, LoginScreen, HomeScreen, RegistrationScreen, Chat
 import { collection, setDoc, getDoc, doc } from "firebase/firestore";
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "firebase/auth"
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { LoginScreen, HomeScreen, RegistrationScreen, ChatScreen, ProfileScreen } from './src/screens'
+import { LoginScreen, HomeScreen, RegistrationScreen, ChatScreen, ProfileScreen, SetupScreen } from './src/screens'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth"
 import { collection, setDoc, getDoc, doc } from "firebase/firestore"; 
 import { auth, db } from './src/firebase/config'
@@ -37,8 +37,6 @@ const Theme = {
 };
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
-
-// TODO: create verified user stack (home, profile, messages)
 
 export default function App() {
 
@@ -119,7 +117,12 @@ export default function App() {
             const docRef = setDoc(doc(db, "users", uid), {
               id: uid,
               email: data.email,
-              fullName: data.fullName
+              fullName: data.fullName,
+              displayName: data.displayName,
+              bio: data.bio,
+              age: data.age,
+              gender: data.gender,
+              location: data.location
             }).then(() => {
               setUser(uid) //They make this userData for some reason with all the info, check if this is necessary
             })
@@ -144,8 +147,19 @@ export default function App() {
       <></>
     )
   }
+
+  const signupStack = () => {
+    return (
+      <Stack.Navigator>
+        <Stack.Screen name="Registration" component={RegistrationScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Setup" component={SetupScreen} options={{ headerShown: false }} />
+      </Stack.Navigator>
+    )
+  }
+
   console.log(spotifyToken)
   console.log(user)
+
   return (
     <AuthContext.Provider value={authContext}>
       <NavigationContainer

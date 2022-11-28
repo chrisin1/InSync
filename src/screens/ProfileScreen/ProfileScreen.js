@@ -1,16 +1,66 @@
-import React, { useState } from 'react'
-import { Text, View, SafeAreaView, Image, ScrollView } from "react-native";
+import React, { useContext, useEffect, useState } from 'react'
+import { Text, View, SafeAreaView, Image, ScrollView, TouchableOpacity, TextInput } from "react-native";
 import styles from './ProfileStyles';
-
+import { AuthContext } from '../../AuthContext/AuthContext';
+import { auth, db } from '../../firebase/config';
+import { getDoc, doc } from 'firebase/firestore';
 
 export default function ProfileScreen() {
+    const { logOut } = useContext(AuthContext);
+
+    // user data variables
+    const [displayName, setDisplayName] = useState('');
+    const [bio, setBio] = useState('');
+    const [profilePic, setProfilePic] = useState('')
+    const [age, setAge] = useState('')
+    const [gender, setGender] = useState('')
+    const [location, setLocation] = useState('')
+
+    const onLogoutPress = () => {
+        logOut();  
+    }
+
+    /* let editable = false;
+    let buttonTitle = 'Edit';
+    const onEditPress = () => {
+        if (this.state.editable) {
+            // get values and save here?
+            this.setState({buttonTitle: 'Edit', editable: false});
+        }
+        else {
+            this.setState({buttonTitle: 'Save', editable: true});
+        }
+    } */
+
+    useEffect(() => {
+        auth.onAuthStateChanged(user => {
+            if (user) { // user is signed in
+                const docRef = doc(db, "users", user.uid);
+                getDoc(docRef)
+                .then(async (userDoc) => {
+                    // retrieve and set userdata here
+                    setDisplayName(userDoc.data().displayName);
+                    setBio(userDoc.data().bio);
+                    setAge(userDoc.data().age);
+                    setGender(userDoc.data().gender);
+                    setLocation(userDoc.data().location);
+                })
+                .catch((error) => {
+                    console.log('Error retrieving user information: ', error);
+                });
+            }
+        })
+    }, []);
+
+    // updateDoc(userDoc, {value: newvalue});
+
     return (
         <SafeAreaView style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
-            <View style={styles.titleBar}>
-                <Text style={styles.link}>
-                    Edit
-                </Text>
+            <View>
+                <TouchableOpacity style={{marginTop: 25}} onPress={() => onEditPress()}>
+                    <Text style={styles.link}> Edit </Text>
+                </TouchableOpacity>
             </View>
 
             <View style={{ alignSelf: "center" }}>
@@ -20,22 +70,26 @@ export default function ProfileScreen() {
             </View>
 
             <View style={styles.infoContainer}>
-                <Text style={[styles.text, { fontWeight: "200", fontSize: 36 }]}>George</Text>
-                <Text style={[styles.text, { color: "#AEB5BC", fontSize: 14 }]}>I'm on that grind and we don't stop. Passionate about flowers and wildlife. #DryWallRepresent</Text>
+                <Text style={[styles.text, { fontWeight: "200", fontSize: 36 }]}>
+                    {displayName}
+                </Text>
+                <Text style={[styles.text, { color: "#AEB5BC", fontSize: 14 }]}>
+                    {bio}
+                </Text>
             </View>
 
             <View style={styles.statsContainer}>
                 <View style={styles.statsBox}>
-                    <Text style={[styles.text, { fontSize: 24 }]}>43</Text>
+                    <Text style={[styles.text, { fontSize: 24 }]}>{age}</Text>
                     <Text style={[styles.text, styles.subText]}>Age</Text>
                 </View>
                 <View style={[styles.statsBox, { borderColor: "#DFD8C8", borderLeftWidth: 1, borderRightWidth: 1 }]}>
-                    <Text style={[styles.text, { fontSize: 24 }]}>USA</Text>
+                    <Text style={[styles.text, { fontSize: 24 }]}>{location}</Text>
                     <Text style={[styles.text, styles.subText]}>Location</Text>
                 </View>
                 <View style={styles.statsBox}>
-                        <Text style={[styles.text, { fontSize: 24 }]}>Male</Text>
-                        <Text style={[styles.text, styles.subText]}>Sex</Text>
+                        <Text style={[styles.text, { fontSize: 24 }]}>{gender}</Text>
+                        <Text style={[styles.text, styles.subText]}>Gender</Text>
                     </View>
             </View>
 
@@ -74,6 +128,13 @@ export default function ProfileScreen() {
                         </Text>
                     </View>
                 </View>
+            </View>
+            <View>
+                <TouchableOpacity
+                    style={styles.button}
+                    onPress={() => onLogoutPress()}>
+                    <Text style={styles.buttonTitle}>Log out</Text>
+                </TouchableOpacity>
             </View>
         </ScrollView>
     </SafeAreaView> 
