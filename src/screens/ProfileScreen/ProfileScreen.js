@@ -66,7 +66,6 @@ export default function ProfileScreen({navigation}) {
     // user data variables
     const [displayName, setDisplayName] = useState('');
     const [bio, setBio] = useState('');
-    const [profilePic, setProfilePic] = useState('')
     const [age, setAge] = useState('')
     const [gender, setGender] = useState('')
     const [location, setLocation] = useState('')
@@ -76,7 +75,7 @@ export default function ProfileScreen({navigation}) {
     }
 
     const onEditPress = () => {
-        navigation.navigate('EditProfile')
+        navigation.navigate('EditProfile', {displayName, bio, age, gender, location})
     }
 
     useEffect(() => {
