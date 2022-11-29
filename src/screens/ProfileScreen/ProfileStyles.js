@@ -6,7 +6,8 @@ export default StyleSheet.create({
         borderRadius: 100,
         height: 4,
         marginBottom: 3,
-        marginHorizontal: 10,
+        marginLeft: -5,
+        marginRight: 7,
         width: 4,
     },
     button: {

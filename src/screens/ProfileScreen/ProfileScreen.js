@@ -186,22 +186,14 @@ export default function ProfileScreen({navigation}) {
                         {topSongs.map((song, index) => {
                             return (
                                 <View key={index}>
-                                    <View style={styles.bulletpoint} />
                                     <Text style={[styles.topSData, styles.text]}>
+                                        <View style={styles.bulletpoint} />
                                         {song.name} - {song.artist}
                                     </Text>
                                 </View>
                             )
                         })}
                     </View>
-                    <Text style={[styles.topSData, styles.text]}>
-                        <View style={styles.bulletpoint}/> 
-                        Song 1 - artist 1 {'\n'}
-                        <View style={styles.bulletpoint}/> 
-                        Song 2 - artist 2 {'\n'}
-                        <View style={styles.bulletpoint}/> 
-                        Song 3 - artist 3
-                    </Text>
                 </View>
                 <View style={styles.topSBackground}>
                     <Text style={[styles.text, { alignSelf: 'flex-start', fontSize: 20, fontWeight: 'bold', marginBottom: 10, marginStart: 10 }]}>
@@ -211,51 +203,17 @@ export default function ProfileScreen({navigation}) {
                         {topArtists.map((artist, index) => {
                             return (
                                 <View key={index}>
-                                    <View style={styles.bulletpoint} />
                                     <Text style={[styles.topSData, styles.text]}>
+                                        <View style={styles.bulletpoint} />
                                         {artist.name}
                                     </Text>
                                 </View>
                             )
                         })}
                     </View>
-                    <Text style={[styles.topSData, styles.text]}>
-                        <View style={styles.bulletpoint}/> 
-                        artist 1 {'\n'}
-                        <View style={styles.bulletpoint}/> 
-                        artist 2 {'\n'}
-                        <View style={styles.bulletpoint}/> 
-                        artist 3
-                    </Text>
                 </View>                
             </View>
-
-            <Text style={[styles.subText, styles.songs]}>Favorite Songs</Text>
-            <View style={{ alignItems: "center" }}>
-                {topSongs.map((song, index) => {
-                    return <View key={index} style={styles.songItem}>
-                                <View style={styles.songIndicator}></View>
-                                <View style={{ width: 250 }}>
-                                    <Text style={[styles.text, { fontWeight: "300" }]}>
-                                        {song.name} <Text style={{ fontWeight: "400" }}>{song.artist}</Text>
-                                    </Text>
-                                </View>
-                        </View>
-                })}
-            </View>
-            <Text style={[styles.subText, styles.songs]}>Favorite Artists</Text>
-            <View style={{ alignItems: "center" }}>
-                {topArtists.map((artist, index) => {
-                    return <View key={index} style={styles.songItem}>
-                                <View style={styles.songIndicator}></View>
-                                <View style={{ width: 250 }}>
-                                    <Text style={[styles.text, { fontWeight: "300" }]}>
-                                        <Text style={{ fontWeight: "400" }}>{artist.name} </Text>
-                                    </Text>
-                                </View>
-                            </View>
-                })}  
-            </View>
+            
         </ScrollView>
     </SafeAreaView> 
     )
