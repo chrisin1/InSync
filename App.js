@@ -180,6 +180,7 @@ export default function App() {
             <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }}/>
             <Stack.Screen name="Registration" component={RegistrationScreen} options={{ headerShown: false }}/>
             <Stack.Screen name="Connect With Spotify" component={SpotifyConnectScreen} options={{ headerShown: false }}/>
+            <Stack.Screen name="Setup" component={SetupScreen} options={{ headerShown: false }}/>
           </Stack.Navigator>
         )}
       </NavigationContainer>
