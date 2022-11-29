@@ -60,7 +60,7 @@ export default function ProfileScreen({navigation}) {
         }
 
     }, [])
-    
+
     const { logOut } = useContext(AuthContext);
 
     // user data variables
@@ -99,95 +99,121 @@ export default function ProfileScreen({navigation}) {
         })
     }, []);
 
+    // name and bio
+    const headerInfo = (
+        <View style={styles.infoContainer}>
+            <Text style={[styles.text, { fontWeight: "400", fontSize: 36 }]}>
+                {displayName}
+            </Text>
+            <Text>{'\n'}</Text>
+            <Text style={[styles.text, { opacity: '60%', marginTop: -10 }]}>
+                {bio}
+            </Text>
+
+        </View>
+    )
+
+    // user stats: age, gender, location
+    const metaInfo = (
+        <View style={styles.statsContainer}>
+            <View style={[styles.statsBox, { paddingLeft: 0 }]}>
+                <Text style={[styles.text, { fontSize: 20, fontWeight: '200' }]}>{age}</Text>
+            </View>
+            <View style={[styles.statsBox, { borderColor: "#DFD8C8", borderLeftWidth: 1, borderRightWidth: 1 }]}>
+                <Text style={[styles.text, { fontSize: 20, fontWeight: '200' }]}>{gender}</Text>
+            </View>
+            <View style={styles.statsBox}>
+                <Text style={[styles.text, { fontSize: 20, fontWeight: '200' }]}>{location}</Text>
+            </View>
+        </View>
+    )
+
+    // edit profile & log out buttons
+    const buttons = (
+        <View style={{ alignSelf: 'flex-start', flexDirection: 'row' }}>
+            <TouchableOpacity 
+                style={[styles.button, {flex: 1, marginRight: 20 }]} 
+                onPress={() => onEditPress()}>
+                <Text style={styles.buttonTitle}> Edit Profile </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={[styles.button, {flex: 1, marginRight: 20 }]}
+                onPress={() => onLogoutPress()}>
+                <Text style={styles.buttonTitle}>Log Out</Text>
+            </TouchableOpacity>
+        </View>
+    )
+
     return (
         <SafeAreaView style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false}>
-            <View style={{ alignSelf: "center", marginTop: 35 }}>
-                <View style={styles.profileImage}>
-                    <Image source={require('../../../assets/georgehead.jpg')} style={styles.image} resizeMode="center"></Image>
+
+            <View style={{ alignSelf: "center" }}>
+                <Text style={styles.title}>Profile</Text>
+            </View>
+
+            <View style={styles.headerContainer}>
+                <Image source={require('../../../assets/georgehead.jpg')} style={styles.profileImage} resizeMode="center"></Image>
+                <View style={{ marginLeft: 50 }}>
+                    {[headerInfo, metaInfo, buttons]}
                 </View>
             </View>
 
-            <View style={styles.infoContainer}>
-                <Text style={[styles.text, { fontWeight: "200", fontSize: 36 }]}>
-                    {displayName}
-                </Text>
-                <Text style={[styles.text, { color: "#AEB5BC", fontSize: 14 }]}>
-                    {bio}
-                </Text>
+            <View style={styles.imageContainer}>
+                <View style={styles.imageBackground}>
+                    <Image 
+                        source={require('../../../assets/georgehead.jpg')}
+                        style={styles.image} />
+                </View>
+                <View style={styles.imageBackground}>
+                    <Image 
+                        source={require('../../../assets/topgeorge.jpg')}
+                        style={styles.image} />
+                </View>
+                <View style={styles.imageBackground}>
+                    <Image 
+                        source={require('../../../assets/georgehead.jpg')}
+                        style={styles.image} />
+                </View>
             </View>
 
-            <View style={styles.statsContainer}>
-                <View style={styles.statsBox}>
-                    <Text style={[styles.text, { fontSize: 24 }]}>{age}</Text>
-                    <Text style={[styles.text, styles.subText]}>Age</Text>
-                </View>
-                <View style={[styles.statsBox, { borderColor: "#DFD8C8", borderLeftWidth: 1, borderRightWidth: 1 }]}>
-                    <Text style={[styles.text, { fontSize: 24 }]}>{location}</Text>
-                    <Text style={[styles.text, styles.subText]}>Location</Text>
-                </View>
-                <View style={styles.statsBox}>
-                        <Text style={[styles.text, { fontSize: 24 }]}>{gender}</Text>
-                        <Text style={[styles.text, styles.subText]}>Gender</Text>
-                    </View>
-            </View>
-
-            <View style={{ marginTop: 32 }}>
-                <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                    <View style={styles.imageContainer}>
-                        <Image source={require('../../../assets/georgehead.jpg')} style={styles.image} resizeMode="cover"></Image>
-                    </View>
-                    <View style={styles.imageContainer}>
-                        <Image source={require('../../../assets/topgeorge.jpg')} style={styles.image} resizeMode="cover"></Image>
-                    </View>
-                    <View style={styles.imageContainer}>
-                        <Image source={require('../../../assets/georgehead.jpg')} style={styles.image} resizeMode="cover"></Image>
-                    </View>
-                </ScrollView>
-                <View style={styles.imageLabel}>
-                    <Text style={[styles.text, { fontSize: 12, color: "#DFD8C8", textTransform: "uppercase" }]}>Pictures</Text>
-                </View>
-            </View>
-            <Text style={[styles.subText, styles.songs]}>Favorite Songs</Text>
-            <View style={{ alignItems: "center" }}>
-                {topSongs.map((song, index) => {
-                    return <View key={index} style={styles.songItem}>
-                                <View style={styles.songIndicator}></View>
-                                <View style={{ width: 250 }}>
-                                    <Text style={[styles.text, { fontWeight: "300" }]}>
-                                        {song.name} <Text style={{ fontWeight: "400" }}>{song.artist}</Text>
+            <View style={styles.topSContainer}>
+                <View style={styles.topSBackground}>
+                    <Text style={[styles.text, { alignSelf: 'flex-start', fontSize: 20, fontWeight: 'bold', marginBottom: 10, marginStart: 10 }]}>
+                        Current Top Songs
+                    </Text>
+                    <View>
+                        {topSongs.map((song, index) => {
+                            return (
+                                <View key={index}>
+                                    <Text style={[styles.topSData, styles.text]}>
+                                        <View style={styles.bulletpoint} />
+                                        {song.name} - {song.artist}
                                     </Text>
                                 </View>
-                        </View>
-                })}
-                
-            </View>
-            <Text style={[styles.subText, styles.songs]}>Favorite Artists</Text>
-            <View style={{ alignItems: "center" }}>
-                {topArtists.map((artist, index) => {
-                    return <View key={index} style={styles.songItem}>
-                                <View style={styles.songIndicator}></View>
-                                <View style={{ width: 250 }}>
-                                    <Text style={[styles.text, { fontWeight: "300" }]}>
-                                        <Text style={{ fontWeight: "400" }}>{artist.name} </Text>
+                            )
+                        })}
+                    </View>
+                </View>
+                <View style={styles.topSBackground}>
+                    <Text style={[styles.text, { alignSelf: 'flex-start', fontSize: 20, fontWeight: 'bold', marginBottom: 10, marginStart: 10 }]}>
+                        Current Top Artists
+                    </Text>
+                    <View>
+                        {topArtists.map((artist, index) => {
+                            return (
+                                <View key={index}>
+                                    <Text style={[styles.topSData, styles.text]}>
+                                        <View style={styles.bulletpoint} />
+                                        {artist.name}
                                     </Text>
                                 </View>
-                            </View>
-                })}
-                
+                            )
+                        })}
+                    </View>
+                </View>                
             </View>
-            <View style={{ alignSelf: 'center', flexDirection: 'row' }}>
-                <TouchableOpacity 
-                    style={[styles.button, {flex: 1}]} 
-                    onPress={() => onEditPress()}>
-                    <Text style={styles.buttonTitle}> Edit Profile </Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                    style={[styles.button, {flex: 1}]}
-                    onPress={() => onLogoutPress()}>
-                    <Text style={styles.buttonTitle}>Log out</Text>
-                </TouchableOpacity>
-            </View>
+            
         </ScrollView>
     </SafeAreaView> 
     )
