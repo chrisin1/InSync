@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react'
-import { Text, View, SafeAreaView, Image, ScrollView, TouchableOpacity, TextInput } from "react-native";
+import React, { useState, useEffect, useContext } from 'react'
 import styles from './ProfileStyles';
 import SpotifyWebApi from 'spotify-web-api-js';
+import { Text, View, SafeAreaView, Image, ScrollView, TouchableOpacity, TextInput } from "react-native";
 import { AuthContext } from '../../AuthContext/AuthContext';
 import { auth, db } from '../../firebase/config';
 import { getDoc, doc } from 'firebase/firestore';
@@ -230,6 +230,32 @@ export default function ProfileScreen({navigation}) {
                 </View>                
             </View>
 
+            <Text style={[styles.subText, styles.songs]}>Favorite Songs</Text>
+            <View style={{ alignItems: "center" }}>
+                {topSongs.map((song, index) => {
+                    return <View key={index} style={styles.songItem}>
+                                <View style={styles.songIndicator}></View>
+                                <View style={{ width: 250 }}>
+                                    <Text style={[styles.text, { fontWeight: "300" }]}>
+                                        {song.name} <Text style={{ fontWeight: "400" }}>{song.artist}</Text>
+                                    </Text>
+                                </View>
+                        </View>
+                })}
+            </View>
+            <Text style={[styles.subText, styles.songs]}>Favorite Artists</Text>
+            <View style={{ alignItems: "center" }}>
+                {topArtists.map((artist, index) => {
+                    return <View key={index} style={styles.songItem}>
+                                <View style={styles.songIndicator}></View>
+                                <View style={{ width: 250 }}>
+                                    <Text style={[styles.text, { fontWeight: "300" }]}>
+                                        <Text style={{ fontWeight: "400" }}>{artist.name} </Text>
+                                    </Text>
+                                </View>
+                            </View>
+                })}  
+            </View>
         </ScrollView>
     </SafeAreaView> 
     )
