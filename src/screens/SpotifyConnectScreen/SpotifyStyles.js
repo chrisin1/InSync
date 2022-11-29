@@ -18,7 +18,8 @@ export default StyleSheet.create({
         color: 'white',
         fontSize: 30,
         fontWeight: 300,
-        margin: 50,
+        margin: 30,
+        marginBottom: 50,
         marginHorizontal: 150,
         textAlign: 'center',
     },
@@ -35,7 +36,6 @@ export default StyleSheet.create({
         borderRadius: 100,
         height: 48,
         justifyContent: 'center',
-        marginTop: 50,
         width: 250,
     },
     buttonTitle: {
