@@ -1,20 +1,27 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
+    bulletpoint: {
+        backgroundColor: 'white',
+        borderRadius: 100,
+        height: 4,
+        marginBottom: 3,
+        marginHorizontal: 10,
+        width: 4,
+    },
     button: {
         alignItems: 'center',
         alignSelf: 'center',
         backgroundColor: '#FF9283',
         borderRadius: 100,
-        height: 48,
+        height: 25,
         justifyContent: 'center',
-        marginTop: 50,
-        marginHorizontal: 20,
-        width: 150,
+        marginTop: 15,
+        width: 85,
     },
     buttonTitle: {
         color: 'black',
-        fontSize: 20,
+        fontSize: 12,
         fontWeight: 'bold'
     },
     container: {
@@ -22,98 +29,89 @@ export default StyleSheet.create({
         alignSelf: 'center',
         flex: 1,
     },
+    headerContainer: {
+        alignSelf: "center",
+        alignItems: "center",
+        flexDirection: "row",
+        justifyContent: "center",
+        marginTop: 75,
+    },
     image: {
-        flex: 1,
-        height: undefined,
-        width: undefined
+        alignSelf: 'center',
+        borderRadius: 15,
+        height: 150,
+        margin: 15,
+        width: 150,
+    },
+    imageBackground: {
+        alignItems: 'center',
+        backgroundColor: "#373737",
+        borderRadius: 15,
+        height: 220,
+        marginHorizontal: 10,
+        overflow: "hidden",
+        width: 180,
     },
     imageContainer: {
-        width: 180,
-        height: 200,
-        borderRadius: 12,
-        overflow: "hidden",
-        marginHorizontal: 10
-    },
-    imageLabel: {
-        backgroundColor: "#41444B",
-        position: "absolute",
-        top: "50%",
-        marginTop: -50,
-        marginLeft: 30,
-        width: 100,
-        height: 100,
-        alignItems: "center",
-        justifyContent: "center",
-        borderRadius: 12,
-        shadowColor: "rgba(0, 0, 0, 0.38)",
-        shadowOffset: { width: 0, height: 10 },
-        shadowRadius: 20,
-        shadowOpacity: 1
+        alignItems: 'center',
+        alignSelf: 'center',
+        flexDirection: 'row',
+        marginTop: 50,
     },
     infoContainer: {
         alignSelf: "center",
-        alignItems: "center",
-        marginTop: 16
-    },
-    link: {
-        color: '#FF9283',
-        fontSize: 14,
-        fontWeight: 'bold'
     },
     profileImage: {
-        width: 200,
-        height: 200,
         borderRadius: 200 / 2,
-        overflow: "hidden"
+        height: 175,
+        marginLeft: 50,
+        overflow: "hidden",
+        width: 175,
     },
-    songs: {
-        marginLeft: 250,
-        marginTop: 32,
-        marginBottom: 6,
-        alignItems: "center",
-        fontSize: 10
-    },
-    songIndicator: {
-        backgroundColor: "#CABFAB",
-        padding: 4,
-        height: 12,
-        width: 12,
-        borderRadius: 6,
-        marginTop: 3,
-        marginRight: 20
-    },
-    songItem: {
-        flexDirection: "row",
-        alignItems: "flex-start",
-        marginBottom: 16
-    },
-    
     statsContainer: {
+        alignItems: "center",
         flexDirection: "row",
-        justifyContent: "space-around",
-        marginTop: 32
+        marginTop: 20,
     },
     statsBox: {
         alignItems: "center",
-        flex: 1
-    },
-    
-    subText: {
-        fontSize: 12,
-        color: "#AEB5BC",
-        textTransform: "uppercase",
-        fontWeight: "500"
+        justifyContent: "center",
+        paddingHorizontal: 20,
     },
     text: {
         color: 'white',
-        fontSize: 14
     },
-    
-    titleBar: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        marginTop: 24,
-        marginHorizontal: 16
-    }
-    
+    title: {
+        alignSelf: 'center',
+        color: 'white',
+        fontSize: 48,
+        fontWeight: 'bold',
+        marginTop: 30,
+    },
+    topSBackground: {
+        alignSelf: 'stretch',
+        alignItems: 'center',
+        backgroundColor: '#373737',
+        borderRadius: 15,
+        flex: 1,
+        margin: 10,
+        padding: 10,
+    },
+    topSData: {
+        alignSelf: 'flex-start',
+        alignItems: 'center',
+        fontSize: 14,
+        justifyContent: 'center',
+        lineHeight: 22,
+        marginBottom: 5,
+        width: 220,
+    },
+    topSContainer: {
+        alignItems: 'stretch',
+        alignSelf: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: 30,
+        width: 600,
+    },
 });
