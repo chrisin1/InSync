@@ -166,13 +166,13 @@ export default function App() {
       </Tab.Navigator>
     )
   }
+  
   console.log(spotifyToken)
   console.log(user)
 
   return (
     <AuthContext.Provider value={authContext}>
-      <NavigationContainer
-        theme={Theme}>
+      <NavigationContainer theme={Theme}>
         <Stack.Navigator
             screenOptions={{
               cardStyle: { backgroundColor: '#222222' }
