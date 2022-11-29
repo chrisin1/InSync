@@ -1,11 +1,66 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Text, View, SafeAreaView, Image, ScrollView, TouchableOpacity, TextInput } from "react-native";
 import styles from './ProfileStyles';
+import SpotifyWebApi from 'spotify-web-api-js';
 import { AuthContext } from '../../AuthContext/AuthContext';
 import { auth, db } from '../../firebase/config';
 import { getDoc, doc } from 'firebase/firestore';
 
 export default function ProfileScreen({navigation}) {
+    // spotifyApi.getMe().then((user) => {
+    //     console.log()
+    // })
+    var [topSongs, setTopSongs] = useState([{}])
+    var [topArtists, setTopArtists] = useState([{}])
+    useEffect(() => {
+        const topSongsList = []
+        const topArtistsList = []
+        if (topSongsList.length === 0) {
+            global.spotifyApi.getMyTopTracks({limit: 3}).then((response) => {
+                console.log(response.items)
+                if (response.items !== null) {
+                    response.items.forEach((song) => {
+                        console.log(song)
+                        topSongsList.push(
+                            {
+                                name: song.name,
+                                artist: song.artists[0].name
+                            }
+                        )
+                        console.log("added songs")
+                        console.log(topSongsList.length)
+                    })
+                    setTopSongs(topSongsList)
+                }
+                else if (response.item === null){
+                    // getNowPlaying()
+                }
+            })
+        }
+        if (topArtistsList.length === 0) {
+            global.spotifyApi.getMyTopArtists({limit: 3}).then((response) => {
+                console.log(response.items)
+                if (response.items !== null) {
+                    response.items.forEach((artist) => {
+                        console.log(artist)
+                        topArtistsList.push(
+                            {
+                                name: artist.name
+                            }
+                        )
+                        console.log("added artists")
+                        console.log(topArtistsList.length)
+                    })
+                    setTopArtists(topArtistsList)
+                }
+                else if (response.item === null){
+                    // getNowPlaying()
+                }
+            })
+        }
+
+    }, [])
+
     const { logOut } = useContext(AuthContext);
 
     // user data variables
@@ -127,6 +182,18 @@ export default function ProfileScreen({navigation}) {
                     <Text style={[styles.text, { alignSelf: 'flex-start', fontSize: 20, fontWeight: 'bold', marginBottom: 10, marginStart: 10 }]}>
                         Current Top Songs
                     </Text>
+                    <View>
+                        {topSongs.map((song, index) => {
+                            return (
+                                <View key={index}>
+                                    <View style={styles.bulletpoint} />
+                                    <Text style={[styles.topSData, styles.text]}>
+                                        {song.name} - {song.artist}
+                                    </Text>
+                                </View>
+                            )
+                        })}
+                    </View>
                     <Text style={[styles.topSData, styles.text]}>
                         <View style={styles.bulletpoint}/> 
                         Song 1 - artist 1 {'\n'}
@@ -140,6 +207,18 @@ export default function ProfileScreen({navigation}) {
                     <Text style={[styles.text, { alignSelf: 'flex-start', fontSize: 20, fontWeight: 'bold', marginBottom: 10, marginStart: 10 }]}>
                         Current Top Artists
                     </Text>
+                    <View>
+                        {topArtists.map((artist, index) => {
+                            return (
+                                <View key={index}>
+                                    <View style={styles.bulletpoint} />
+                                    <Text style={[styles.topSData, styles.text]}>
+                                        {artist.name}
+                                    </Text>
+                                </View>
+                            )
+                        })}
+                    </View>
                     <Text style={[styles.topSData, styles.text]}>
                         <View style={styles.bulletpoint}/> 
                         artist 1 {'\n'}
