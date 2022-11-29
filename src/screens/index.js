@@ -13,3 +13,5 @@ export { default as ChatScreen } from './ChatScreen/ChatScreen'
 export { default as EditProfileScreen } from './EditProfileScreen/EditProfileScreen'
 
 export { default as SpotifyConnectScreen } from './SpotifyConnectScreen/SpotifyConnectScreen'
+
+export { default as SetupScreen } from './SetupScreen/SetupScreen'
