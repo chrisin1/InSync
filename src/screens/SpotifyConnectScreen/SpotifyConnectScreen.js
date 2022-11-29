@@ -11,12 +11,18 @@ export default function SpotifyConnectScreen(props) {
     }
     return (
         <View style ={styles.container}>
-            
-            <Text style={styles.title}> Our app requires that users connect their profile with their Spotify Account for the fullest experience. Please connect to your Spotify account </Text>
+            <Text style={styles.title}>
+                Connect to Spotify
+            </Text>
             <Image
                 style={ styles.logo }
-                source={require('../../../assets/placeholder-logo.jpg')}
+                source={require('../../../assets/spotify-logo.png')}
             />
+            <Text style={styles.text}> 
+                Our app requests that users connect their profile with their Spotify account for the fullest experience.
+                {'\n\n'}
+                Connect your Spotify account now! 
+            </Text>
             <TouchableOpacity
                     style={styles.button}
                     onPress={() => onConnectPress()}>

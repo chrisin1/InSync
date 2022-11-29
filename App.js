@@ -170,7 +170,7 @@ export default function App() {
               <Tab.Screen name="Chat" component={ChatScreen} options={{ headerShown: false }} />
               <Tab.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
               <Tab.Screen name="Profile" component={ProfileScreen} options={{ headerShown: false }} />
-              <Tab.Screen name="Connect With Spotify" component={SpotifyConnectScreen}/>
+              <Tab.Screen name="Connect With Spotify" component={SpotifyConnectScreen} options={{ headerShown: false }} />
           </Tab.Navigator>
         ) : (
           <Stack.Navigator
@@ -179,7 +179,7 @@ export default function App() {
             }}>
             <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }}/>
             <Stack.Screen name="Registration" component={RegistrationScreen} options={{ headerShown: false }}/>
-            <Stack.Screen name="Connect With Spotify" component={SpotifyConnectScreen}/>
+            <Stack.Screen name="Connect With Spotify" component={SpotifyConnectScreen} options={{ headerShown: false }}/>
           </Stack.Navigator>
         )}
       </NavigationContainer>
