@@ -8,9 +8,6 @@ export default function HomeScreen(props) {
     const { logOut } = useContext(AuthContext);
     var [nowPlaying, setNowPlaying] = useState({})
 
-    const onLogoutPress = () => {
-        logOut();  
-    }
     global.spotifyApi.setAccessToken(global.token)
     global.spotifyApi.getMe().then((user) => {
         //console.log(user)
@@ -21,10 +18,9 @@ export default function HomeScreen(props) {
             global.spotifyApi.getMyCurrentPlaybackState().then((response) => {
                 console.log(response)
                 if (response.item !== null) {
-
                     setNowPlaying({
                         name: response.item.name,
-                        albumArt: response.item.album.images ? response.item.album.images[0].url : null,
+                        albumArt: response.item.album.images[0].url,
                         artist: response.item.artists[0].name
                     })
                 }
@@ -37,8 +33,10 @@ export default function HomeScreen(props) {
         }
         return true
     }
+    console.log("album info: ", nowPlaying.albumArt);
     // constantly poll web player for currently playing track, with timeout to avoid hitting API rate limit
     setTimeout(getNowPlaying, 3000)
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}> Sync Up! </Text>
@@ -46,11 +44,19 @@ export default function HomeScreen(props) {
                 style={ styles.logo }
                 source={require('../../../assets/placeholder-logo.jpg')}
             />
-            <Text style={styles.title}> Now Playing: {nowPlaying.name} by {nowPlaying.artist}</Text>
-            <Image
-                style={ styles.logo }
-                source={nowPlaying.albumArt}
-            />
+            <Text style={styles.nowPlayingText}> Now Playing: </Text>
+            <View style={styles.nowPlayingContainer}>
+                <Image 
+                    style={styles.nowPlayingImage}
+                    source={nowPlaying.albumArt}
+                    defaultSource={require('../../../assets/placeholder-logo.jpg')} >
+                </Image>
+                <Text style={styles.text}> 
+                    {nowPlaying.name} 
+                    <View style={styles.bulletpoint}/>
+                    {nowPlaying.artist}
+                </Text>
+            </View>
 
             <View style={styles.cardContainer}>
                 <Text style={styles.nameText}> Jane Doe </Text>
