@@ -154,7 +154,7 @@ export default function ProfileScreen({navigation}) {
 
             <View style={styles.headerContainer}>
                 <Image source={require('../../../assets/georgehead.jpg')} style={styles.profileImage} resizeMode="center"></Image>
-                <View style={{ marginLeft: 50 }}>
+                <View style={{ marginLeft: 30 }}>
                     {[headerInfo, metaInfo, buttons]}
                 </View>
             </View>
@@ -213,7 +213,7 @@ export default function ProfileScreen({navigation}) {
                     </View>
                 </View>                
             </View>
-            
+
         </ScrollView>
     </SafeAreaView> 
     )

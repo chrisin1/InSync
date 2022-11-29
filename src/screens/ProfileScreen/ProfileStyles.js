@@ -60,7 +60,7 @@ export default StyleSheet.create({
         marginTop: 50,
     },
     infoContainer: {
-        alignSelf: "center",
+        alignSelf: "flex-start",
     },
     profileImage: {
         borderRadius: 200 / 2,
