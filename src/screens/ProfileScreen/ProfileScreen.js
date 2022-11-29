@@ -4,7 +4,7 @@ import SpotifyWebApi from 'spotify-web-api-js';
 import { Text, View, SafeAreaView, Image, ScrollView, TouchableOpacity, TextInput } from "react-native";
 import { AuthContext } from '../../AuthContext/AuthContext';
 import { auth, db } from '../../firebase/config';
-import { getDoc, doc } from 'firebase/firestore';
+import { getDoc, updateDoc, doc, setDoc } from 'firebase/firestore';
 
 export default function ProfileScreen({navigation}) {
     // spotifyApi.getMe().then((user) => {
@@ -12,54 +12,6 @@ export default function ProfileScreen({navigation}) {
     // })
     var [topSongs, setTopSongs] = useState([{}])
     var [topArtists, setTopArtists] = useState([{}])
-    useEffect(() => {
-        const topSongsList = []
-        const topArtistsList = []
-        if (topSongsList.length === 0) {
-            global.spotifyApi.getMyTopTracks({limit: 3}).then((response) => {
-                console.log(response.items)
-                if (response.items !== null) {
-                    response.items.forEach((song) => {
-                        console.log(song)
-                        topSongsList.push(
-                            {
-                                name: song.name,
-                                artist: song.artists[0].name
-                            }
-                        )
-                        console.log("added songs")
-                        console.log(topSongsList.length)
-                    })
-                    setTopSongs(topSongsList)
-                }
-                else if (response.item === null){
-                    // getNowPlaying()
-                }
-            })
-        }
-        if (topArtistsList.length === 0) {
-            global.spotifyApi.getMyTopArtists({limit: 3}).then((response) => {
-                console.log(response.items)
-                if (response.items !== null) {
-                    response.items.forEach((artist) => {
-                        console.log(artist)
-                        topArtistsList.push(
-                            {
-                                name: artist.name
-                            }
-                        )
-                        console.log("added artists")
-                        console.log(topArtistsList.length)
-                    })
-                    setTopArtists(topArtistsList)
-                }
-                else if (response.item === null){
-                    // getNowPlaying()
-                }
-            })
-        }
-
-    }, [])
 
     const { logOut } = useContext(AuthContext);
 
@@ -80,6 +32,7 @@ export default function ProfileScreen({navigation}) {
     }
 
     useEffect(() => {
+        
         auth.onAuthStateChanged(user => {
             if (user) { // user is signed in
                 const docRef = doc(db, "users", user.uid);
@@ -95,6 +48,56 @@ export default function ProfileScreen({navigation}) {
                 .catch((error) => {
                     console.log('Error retrieving user information: ', error);
                 });
+
+                // update user with top songs / top artist fields
+                const topSongsList = []
+                const topArtistsList = []
+                if (topSongsList.length === 0) {
+                    global.spotifyApi.getMyTopTracks({limit: 3}).then((response) => {
+                        console.log(response.items)
+                        if (response.items !== null) {
+                            response.items.forEach((song) => {
+                                console.log(song)
+                                topSongsList.push(
+                                    {
+                                        name: song.name,
+                                        artist: song.artists[0].name
+                                    }
+                                )
+                                console.log("added songs")
+                                console.log(topSongsList.length)
+                            })
+                            setTopSongs(topSongsList)
+                            setDoc(docRef, {topSongs: topSongsList}, {merge: true})
+                        }
+                        else if (response.item === null){
+                            // getNowPlaying()
+                        }
+                    })
+                }
+                if (topArtistsList.length === 0) {
+                    global.spotifyApi.getMyTopArtists({limit: 3}).then((response) => {
+                        console.log(response.items)
+                        if (response.items !== null) {
+                            response.items.forEach((artist) => {
+                                console.log(artist)
+                                topArtistsList.push(
+                                    {
+                                        name: artist.name
+                                    }
+                                )
+                                console.log("added artists")
+                                console.log(topArtistsList.length)
+                            })
+                            setTopArtists(topArtistsList)
+                            setDoc(docRef, {topArtists: topArtistsList}, {merge: true})
+                        }
+                        else if (response.item === null){
+                            // getNowPlaying()
+                        }
+                    })
+                }
+                
             }
         })
     }, []);
@@ -176,7 +179,7 @@ export default function ProfileScreen({navigation}) {
                         style={styles.image} />
                 </View>
             </View>
-
+            
             <View style={styles.topSContainer}>
                 <View style={styles.topSBackground}>
                     <Text style={[styles.text, { alignSelf: 'flex-start', fontSize: 20, fontWeight: 'bold', marginBottom: 10, marginStart: 10 }]}>
@@ -213,7 +216,7 @@ export default function ProfileScreen({navigation}) {
                     </View>
                 </View>                
             </View>
-
+            
         </ScrollView>
     </SafeAreaView> 
     )
