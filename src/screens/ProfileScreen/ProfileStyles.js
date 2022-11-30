@@ -1,13 +1,42 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
+    albumBackground: {
+        alignSelf: 'flex-start',
+        alignItems: 'center',
+        backgroundColor: "#373737",
+        borderRadius: 15,
+        marginHorizontal: 10,
+        overflow: "hidden",
+        padding: 15,
+        paddingBottom: 30,
+    },
+    albumsContainer: {
+        alignItems: 'center',
+        alignSelf: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        marginTop: 35,
+    },
+    albumImage: {
+        alignSelf: 'center',
+        borderRadius: 15,
+        height: 150,
+        marginBottom: 10,
+        width: 150,
+    },
+    albumInfo: {
+        alignSelf: 'flex-start',
+        color: 'white',
+        fontSize: 14,
+        marginBottom: 3,
+    },
     bulletpoint: {
+        alignSelf: 'center',
         backgroundColor: 'white',
         borderRadius: 100,
         height: 4,
-        marginBottom: 3,
-        marginLeft: -5,
-        marginRight: 7,
+        marginHorizontal: 15,
         width: 4,
     },
     button: {
@@ -32,31 +61,7 @@ export default StyleSheet.create({
     },
     headerContainer: {
         alignSelf: "center",
-        alignItems: "center",
         flexDirection: "row",
-        justifyContent: "center",
-        marginTop: 75,
-    },
-    image: {
-        alignSelf: 'center',
-        borderRadius: 15,
-        height: 150,
-        margin: 15,
-        width: 150,
-    },
-    imageBackground: {
-        alignItems: 'center',
-        backgroundColor: "#373737",
-        borderRadius: 15,
-        height: 220,
-        marginHorizontal: 10,
-        overflow: "hidden",
-        width: 180,
-    },
-    imageContainer: {
-        alignItems: 'center',
-        alignSelf: 'center',
-        flexDirection: 'row',
         marginTop: 50,
     },
     infoContainer: {
@@ -65,7 +70,6 @@ export default StyleSheet.create({
     profileImage: {
         borderRadius: 200 / 2,
         height: 175,
-        marginLeft: 50,
         overflow: "hidden",
         width: 175,
     },
@@ -76,8 +80,8 @@ export default StyleSheet.create({
     },
     statsBox: {
         alignItems: "center",
+        flexDirection: 'row',
         justifyContent: "center",
-        paddingHorizontal: 20,
     },
     text: {
         color: 'white',
@@ -91,28 +95,24 @@ export default StyleSheet.create({
     },
     topSBackground: {
         alignSelf: 'stretch',
-        alignItems: 'center',
         backgroundColor: '#373737',
         borderRadius: 15,
         flex: 1,
         margin: 10,
         padding: 10,
     },
+    topSContainer: {
+        alignSelf: 'stretch',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: 25,
+    },
     topSData: {
         alignSelf: 'flex-start',
-        alignItems: 'center',
         fontSize: 14,
         justifyContent: 'center',
         lineHeight: 22,
         marginBottom: 5,
-        width: 220,
-    },
-    topSContainer: {
-        alignItems: 'stretch',
-        alignSelf: 'center',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginTop: 30,
-        width: 600,
+        marginStart: 10,
     },
 });
