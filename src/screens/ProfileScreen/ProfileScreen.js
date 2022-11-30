@@ -5,14 +5,13 @@ import { Text, View, SafeAreaView, Image, ScrollView, TouchableOpacity, TextInpu
 import { AuthContext } from '../../AuthContext/AuthContext';
 import { auth, db } from '../../firebase/config';
 import { getDoc, updateDoc, doc, setDoc } from 'firebase/firestore';
+import { v4 } from 'uuid'
 
 export default function ProfileScreen({navigation}) {
-    // spotifyApi.getMe().then((user) => {
-    //     console.log()
-    // })
+    
     var [topSongs, setTopSongs] = useState([{}])
     var [topArtists, setTopArtists] = useState([{}])
-
+    var [savedAlbums, setSavedAlbums] = useState([{}])
     const { logOut } = useContext(AuthContext);
 
     // user data variables
@@ -46,10 +45,10 @@ export default function ProfileScreen({navigation}) {
                     setLocation(userDoc.data().location);
                 })
                 .catch((error) => {
-                    console.log('Error retrieving user information: ', error);
+                    console.log('Error retrieving user information: ', error)
                 });
 
-                // update user with top songs / top artist fields
+                // update user with top songs field
                 const topSongsList = []
                 const topArtistsList = []
                 if (topSongsList.length === 0) {
@@ -71,10 +70,12 @@ export default function ProfileScreen({navigation}) {
                             setDoc(docRef, {topSongs: topSongsList}, {merge: true})
                         }
                         else if (response.item === null){
-                            // getNowPlaying()
+                            //getNowPlaying()
                         }
                     })
                 }
+
+                // update user with top artist field
                 if (topArtistsList.length === 0) {
                     global.spotifyApi.getMyTopArtists({limit: 3}).then((response) => {
                         console.log(response.items)
@@ -98,6 +99,34 @@ export default function ProfileScreen({navigation}) {
                     })
                 }
                 
+                // retrieve and set user's profile pic from their spotify
+                global.spotifyApi.getMe().then((user) => {
+                    var pic = user.images[0].url
+                    setProfilePic(pic)
+                    setDoc(docRef, {profilePic: pic}, {merge: true})
+                })
+
+                // retrieve random three album arts from user saved albums
+                global.spotifyApi.getMySavedAlbums({limit: 3}).then((response) => {
+                    const albums = []
+                    if (response.items !== null) {
+                        response.items.forEach((album) => {
+                            albums.push(
+                                {
+                                    name: album.album.name,
+                                    artist: album.album.artists[0].name,
+                                    albumArt: album.album.images[0].url
+                                }
+                            )
+                            console.log("albums")
+                            console.log(albums.length)
+                        })
+                        setSavedAlbums(albums)
+                    }
+                    else if (response.item === null){
+                        // getNowPlaying()
+                    }
+                })
             }
         })
     }, []);
@@ -156,28 +185,23 @@ export default function ProfileScreen({navigation}) {
             </View>
 
             <View style={styles.headerContainer}>
-                <Image source={require('../../../assets/georgehead.jpg')} style={styles.profileImage} resizeMode="center"></Image>
+                <Image source={profilePic} style={styles.profileImage} resizeMode="center"></Image>
                 <View style={{ marginLeft: 30 }}>
                     {[headerInfo, metaInfo, buttons]}
                 </View>
             </View>
 
             <View style={styles.imageContainer}>
-                <View style={styles.imageBackground}>
-                    <Image 
-                        source={require('../../../assets/georgehead.jpg')}
-                        style={styles.image} />
-                </View>
-                <View style={styles.imageBackground}>
-                    <Image 
-                        source={require('../../../assets/topgeorge.jpg')}
-                        style={styles.image} />
-                </View>
-                <View style={styles.imageBackground}>
-                    <Image 
-                        source={require('../../../assets/georgehead.jpg')}
-                        style={styles.image} />
-                </View>
+                {savedAlbums.map((album, index) => {
+                    return (
+                        <View style={styles.imageBackground}>
+                            <Image 
+                                source={album.albumArt}
+                                style={styles.image} />
+                        </View>
+                    )
+                })}
+                
             </View>
             
             <View style={styles.topSContainer}>
@@ -205,7 +229,7 @@ export default function ProfileScreen({navigation}) {
                     <View>
                         {topArtists.map((artist, index) => {
                             return (
-                                <View key={index}>
+                                <View key={index + 4}>
                                     <Text style={[styles.topSData, styles.text]}>
                                         <View style={styles.bulletpoint} />
                                         {artist.name}
