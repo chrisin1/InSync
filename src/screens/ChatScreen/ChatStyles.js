@@ -8,9 +8,9 @@ export default StyleSheet.create({
         
     },
     title: {
-        alignSelf: 'flex-start',
+        alignSelf: 'center',
         color: 'white',
-        fontSize: 48,
+        fontSize: 36,
         fontWeight: 'bold',
         margin: 50
     },
@@ -22,13 +22,16 @@ export default StyleSheet.create({
     },
     
     name: {
+        fontsize: 16,
         fontWeight: 'bold',
         color: 'white'
     },
     text: {
+        fontSize: 14,
         color: 'white'
     },
     rightContainer: {
+        paddingBottom: 20,
         width: 300
         
     },
@@ -37,6 +40,7 @@ export default StyleSheet.create({
         padding: 10,
     },
     row: {
+        paddingBottom: 5,
         flexDirection: 'row',
         justifyContent: 'space-between'
     },
