@@ -30,11 +30,7 @@ export default function SetupScreen({navigation}) {
                 style={{ width: '100%' }}
                 keyboardShouldPersistTaps='always'>
                 <Text style={styles.title}> Set Up Your Profile! </Text>
-                <Image
-                    style={styles.profilePic}
-                    source={require('../../../assets/placeholder-logo.jpg')}
-                />
-                <Text style={[styles.inputTitle, styles.profileUpload]}>Upload Photo</Text>
+
                 <Text style={styles.inputTitle}>Display Name</Text>
                 <TextInput
                     style={styles.input}

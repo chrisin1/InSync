@@ -46,7 +46,8 @@ export default StyleSheet.create({
         height: 25,
         justifyContent: 'center',
         marginTop: 15,
-        width: 85,
+        marginRight: 20,
+        paddingHorizontal: 10,
     },
     buttonTitle: {
         color: 'black',
@@ -76,7 +77,7 @@ export default StyleSheet.create({
     },
     statsContainer: {
         flexDirection: "row",
-        marginTop: 15,
+        marginTop: 10,
     },
     statsBox: {
         alignItems: "flex-start",
