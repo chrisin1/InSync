@@ -207,6 +207,9 @@ export default function ProfileScreen({navigation}) {
                             <Image 
                                 source={album.albumArt}
                                 style={styles.albumImage} />
+                                
+                            <Text style={[styles.albumInfo, { fontWeight: 'bold' }]}> {album.name} </Text>
+                            <Text style={[styles.albumInfo, { opacity: '60%' }]}> {album.artist} </Text>
                         </View>
                     )
                 })}
