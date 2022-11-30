@@ -8,6 +8,9 @@ export default function HomeScreen(props) {
     const { logOut } = useContext(AuthContext);
     var [nowPlaying, setNowPlaying] = useState({})
 
+    const onLogoutPress = () => {
+        logOut();  
+    }
     global.spotifyApi.setAccessToken(global.token)
     global.spotifyApi.getMe().then((user) => {
         //console.log(user)
@@ -18,9 +21,10 @@ export default function HomeScreen(props) {
             global.spotifyApi.getMyCurrentPlaybackState().then((response) => {
                 console.log(response)
                 if (response.item !== null) {
+
                     setNowPlaying({
                         name: response.item.name,
-                        albumArt: response.item.album.images[0].url,
+                        albumArt: response.item.album.images ? response.item.album.images[0].url : null,
                         artist: response.item.artists[0].name
                     })
                 }
@@ -33,62 +37,28 @@ export default function HomeScreen(props) {
         }
         return true
     }
-
     // constantly poll web player for currently playing track, with timeout to avoid hitting API rate limit
     setTimeout(getNowPlaying, 3000)
-
     return (
         <View style={styles.container}>
             <Text style={styles.title}> Sync Up! </Text>
-            
-            <Text style={styles.nowPlayingText}> Now Playing: </Text>
-            <View style={styles.nowPlayingContainer}>
-                <Image 
-                    style={styles.nowPlayingImage}
-                    source={nowPlaying.albumArt}
-                    defaultSource={require('../../../assets/placeholder-logo.jpg')} >
-                </Image>
-                <Text style={styles.text}> 
-                    {nowPlaying.name} 
-                    <View style={styles.bulletpoint}/>
-                    {nowPlaying.artist}
-                </Text>
-            </View>
+            <Image
+                style={ styles.logo }
+                source={require('../../../assets/placeholder-logo.jpg')}
+            />
+            <Text style={styles.title}> Now Playing: {nowPlaying.name} by {nowPlaying.artist}</Text>
+            <Image
+                style={ styles.logo }
+                source={nowPlaying.albumArt}
+            />
 
             <View style={styles.cardContainer}>
-                <View style={styles.cardHeader}>
-                    <Image style={styles.profileImage} source={require('../../../assets/placeholder-logo.jpg')} />
-                    <Text style={styles.nameText}> Bathroom George </Text>
-                </View>
-                <View style={styles.albumsContainer}>
-                    <View style={styles.albumContainer}>
-                        <Image style={styles.albumImage} />
-                        <Text style={[styles.albumInfo, { fontWeight: 'bold' }]}> Album Name </Text>
-                        <Text style={[styles.albumInfo, { opacity: '60%' }]}> Artist Name </Text>
-                    </View>
-                    <View style={styles.albumContainer}>
-                        <Image style={styles.albumImage} />
-                        <Text style={[styles.albumInfo, { fontWeight: 'bold' }]}> Album Name </Text>
-                        <Text style={[styles.albumInfo, { opacity: '60%' }]}> Artist Name </Text>
-                    </View>
-                    <View style={styles.albumContainer}>
-                        <Image style={styles.albumImage} />
-                        <Text style={[styles.albumInfo, { fontWeight: 'bold' }]}> Album Name </Text>
-                        <Text style={[styles.albumInfo, { opacity: '60%' }]}> Artist Name </Text>
-                    </View>
-                </View>
-
-                <View style={styles.topSContainer}>
-                    <View style={styles.topSBackground}>
-                        <Text style={[styles.topSData, { fontWeight: 'bold' }]}> Current Top Songs </Text>
-                    </View>
-                    <View style={styles.topSBackground}>
-                        <Text style={[styles.topSData, { fontWeight: 'bold' }]}> Current Top Artists </Text>
-                    </View>
-                </View>
-
+                <Text style={styles.nameText}> Jane Doe </Text>
+                <Image style={styles.imageContainer}
+                    source={require('../../../assets/placeholder-logo.jpg')} />
                 <Text style={styles.compText}> 95% Compatible </Text>
-                <View style={styles.buttonsContainer}>
+                <Text style={styles.detailsText}> Compatibility Details **REPLACE LATER** </Text>
+                <View style={styles.buttonContainer}>
                     <TouchableOpacity 
                         style={styles.button}
                         onPress={() => alert('PRESSED LEFT')}>

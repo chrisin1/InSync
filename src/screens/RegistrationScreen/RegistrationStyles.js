@@ -11,7 +11,7 @@ export default StyleSheet.create({
         color: 'white',
         fontSize: 48,
         fontWeight: 'bold',
-        margin: 50,
+        margin: 50
     },
     logo: {
         alignSelf: 'center',
@@ -47,7 +47,7 @@ export default StyleSheet.create({
         borderRadius: 100,
         height: 48,
         justifyContent: 'center',
-        marginTop: 35,
+        marginTop: 50,
         width: 200,
     },
     buttonTitle: {

@@ -5,7 +5,6 @@ import { SetupScreen, SpotifyConnectScreen, LoginScreen, HomeScreen, Registratio
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from "firebase/auth"
 import { createStackNavigator } from '@react-navigation/stack'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { Ionicons } from '@expo/vector-icons';
 import { collection, setDoc, getDoc, doc } from "firebase/firestore"; 
 import { auth, db } from './src/firebase/config'
 import { AuthContext } from './src/AuthContext/AuthContext'
@@ -159,40 +158,11 @@ export default function App() {
       <Tab.Navigator
             initialRouteName={"Home"}
             screenOptions={{
-              tabBarStyle: { backgroundColor: '#373737', borderBottomWidth: 0, borderTopWidth: 0 },
-              tabBarActiveTintColor: '#FF9283',
-              title: ''
+              tabBarStyle: { backgroundColor: '#373737', borderBottomWidth: 0, borderTopWidth: 0 }
             }}>
-              <Tab.Screen 
-                name="Chat" 
-                component={ChatScreen} 
-                options={{ 
-                  tabBarIcon: ({ color, size }) => (
-                    <Ionicons name="chatbubbles" color={color} size={size} />
-                  ),
-                  headerShown: false 
-                }} 
-              />
-              <Tab.Screen 
-                name="Home" 
-                component={HomeScreen} 
-                options={{ 
-                  tabBarIcon: ({ color, size }) => (
-                    <Ionicons name="ios-home-sharp" color={color} size={size} />
-                  ),
-                  headerShown: false 
-                }} 
-              />
-              <Tab.Screen 
-                name="Profile" 
-                component={ProfileStack} 
-                options={{ 
-                  tabBarIcon: ({ color, size }) => (
-                    <Ionicons name="person" color={color} size={size} />
-                  ),
-                  headerShown: false 
-                }} 
-              />
+              <Tab.Screen name="Chat" component={ChatScreen} options={{ headerShown: false }} />
+              <Tab.Screen name="Home" component={HomeScreen} options={{ headerShown: false }} />
+              <Tab.Screen name="Profile" component={ProfileStack} options={{ headerShown: false }} />
       </Tab.Navigator>
     )
   }
@@ -213,12 +183,12 @@ export default function App() {
               <Stack.Screen name="Home">
                 {props => <HomeScreen {...props} extraData={user} />}
               </Stack.Screen>
-              <Stack.Screen name="Connect With Spotify" component={SpotifyConnectScreen} options={{ headerShown: false }}/>
+              <Stack.Screen name="Connect With Spotify" component={SpotifyConnectScreen}/>
             </>
           ) : (
             <>
               <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }}/>
-              <Stack.Screen name="Connect With Spotify" component={SpotifyConnectScreen} options={{ headerShown: false}}/>
+              <Stack.Screen name="Connect With Spotify" component={SpotifyConnectScreen}/>
               <Stack.Screen name="Registration" component={RegistrationScreen} options={{ headerShown: false }}/>
               <Stack.Screen name="Setup" component={SetupScreen} options={{ headerShown: false }}/>
             </>     

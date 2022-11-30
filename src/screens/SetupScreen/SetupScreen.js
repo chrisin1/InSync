@@ -7,6 +7,7 @@ import styles from './SetupStyles'
 
 export default function SetupScreen({navigation}) {
     const [displayName, setDisplayName] = useState('')
+    const [profilePic, setProfilePic] = useState('')
     const [bio, setBio] = useState('')
     const [age, setAge] = useState('')
     const [gender, setGender] = useState('')
@@ -30,7 +31,11 @@ export default function SetupScreen({navigation}) {
                 style={{ width: '100%' }}
                 keyboardShouldPersistTaps='always'>
                 <Text style={styles.title}> Set Up Your Profile! </Text>
-
+                <Image
+                    style={styles.profilePic}
+                    source={require('../../../assets/placeholder-logo.jpg')}
+                />
+                <Text style={[styles.inputTitle, styles.profileUpload]}>Upload Photo</Text>
                 <Text style={styles.inputTitle}>Display Name</Text>
                 <TextInput
                     style={styles.input}

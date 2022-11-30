@@ -2,18 +2,16 @@ import React, { useState, useContext } from 'react'
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { auth, db } from '../../firebase/config';
-import { updateDoc, doc, getDoc } from 'firebase/firestore';
-import { useRoute } from '@react-navigation/native';
+import { updateDoc, doc } from 'firebase/firestore';
 import styles from './EditProfileStyles'
 
 export default function EditProfileScreen({navigation}) {
-    const route = useRoute();
-
-    const [displayName, setDisplayName] = useState(route.params.displayName)
-    const [bio, setBio] = useState(route.params.bio)
-    const [age, setAge] = useState(route.params.age)
-    const [gender, setGender] = useState(route.params.gender)
-    const [location, setLocation] = useState(route.params.location)
+    const [displayName, setDisplayName] = useState('')
+    const [profilePic, setProfilePic] = useState('')
+    const [bio, setBio] = useState('')
+    const [age, setAge] = useState('')
+    const [gender, setGender] = useState('')
+    const [location, setLocation] = useState('')
 
     const onSavePress = () => {
         auth.onAuthStateChanged(user => {
@@ -24,7 +22,7 @@ export default function EditProfileScreen({navigation}) {
                     {displayName: displayName, bio: bio, age: age, gender: gender, location: location});
                 }
             });
-        navigation.push('UserProfile')
+        navigation.navigate('UserProfile')
     }
 
     return (
@@ -37,6 +35,7 @@ export default function EditProfileScreen({navigation}) {
                     style={styles.profilePic}
                     source={require('../../../assets/placeholder-logo.jpg')}
                 />
+                <Text style={[styles.inputTitle, styles.profileUpload]}>Upload Photo</Text>
                 <Text style={styles.inputTitle}>Display Name</Text>
                 <TextInput
                     style={styles.input}
