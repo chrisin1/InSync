@@ -26,7 +26,7 @@ export default function SpotifyConnectScreen(props) {
             <TouchableOpacity
                     style={styles.button}
                     onPress={() => onConnectPress()}>
-                    <Text style={styles.buttonTitle}>Connect With Spotify</Text>
+                    <Text style={styles.buttonTitle}>Connect with Spotify</Text>
             </TouchableOpacity>
         </View>
     )

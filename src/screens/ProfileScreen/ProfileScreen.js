@@ -17,7 +17,6 @@ export default function ProfileScreen({navigation}) {
     // user data variables
     const [displayName, setDisplayName] = useState('');
     const [bio, setBio] = useState('');
-    const [profilePic, setProfilePic] = useState('')
     const [age, setAge] = useState('')
     const [gender, setGender] = useState('')
     const [location, setLocation] = useState('')
@@ -25,9 +24,11 @@ export default function ProfileScreen({navigation}) {
     const onLogoutPress = () => {
         logOut();  
     }
-
     const onEditPress = () => {
-        navigation.navigate('EditProfile')
+        navigation.navigate('EditProfile', {displayName, bio, age, gender, location})
+    }
+    const onSpotifyPress = () => {
+        navigation.navigate('Connect With Spotify');
     }
 
     useEffect(() => {
@@ -138,7 +139,7 @@ export default function ProfileScreen({navigation}) {
                 {displayName}
             </Text>
             <Text>{'\n'}</Text>
-            <Text style={[styles.text, { opacity: '60%', marginTop: -10 }]}>
+            <Text style={[styles.text, { opacity: '60%', marginTop: -15 }]}>
                 {bio}
             </Text>
 
@@ -148,14 +149,19 @@ export default function ProfileScreen({navigation}) {
     // user stats: age, gender, location
     const metaInfo = (
         <View style={styles.statsContainer}>
-            <View style={[styles.statsBox, { paddingLeft: 0 }]}>
-                <Text style={[styles.text, { fontSize: 20, fontWeight: '200' }]}>{age}</Text>
-            </View>
-            <View style={[styles.statsBox, { borderColor: "#DFD8C8", borderLeftWidth: 1, borderRightWidth: 1 }]}>
-                <Text style={[styles.text, { fontSize: 20, fontWeight: '200' }]}>{gender}</Text>
-            </View>
             <View style={styles.statsBox}>
-                <Text style={[styles.text, { fontSize: 20, fontWeight: '200' }]}>{location}</Text>
+                <Text style={[styles.text, { fontSize: 20 }]}>{age}</Text>
+                <Text style={[styles.text, { fontSize: 12, fontWeight: '100', opacity: '60%' }]}>Age</Text>
+            </View>
+            <View style={styles.bulletpoint}/>
+            <View style={styles.statsBox}>
+                <Text style={[styles.text, { fontSize: 20 }]}>{gender}</Text>
+                <Text style={[styles.text, { fontSize: 12, fontWeight: '100', opacity: '60%' }]}>Gender</Text>
+            </View>
+            <View style={styles.bulletpoint}/>
+            <View style={styles.statsBox}>
+                <Text style={[styles.text, { fontSize: 20 }]}>{location}</Text>
+                <Text style={[styles.text, { fontSize: 12, fontWeight: '100', opacity: '60%' }]}>Location</Text>
             </View>
         </View>
     )
@@ -164,22 +170,25 @@ export default function ProfileScreen({navigation}) {
     const buttons = (
         <View style={{ alignSelf: 'flex-start', flexDirection: 'row' }}>
             <TouchableOpacity 
-                style={[styles.button, {flex: 1, marginRight: 20 }]} 
+                style={styles.button} 
                 onPress={() => onEditPress()}>
                 <Text style={styles.buttonTitle}> Edit Profile </Text>
             </TouchableOpacity>
             <TouchableOpacity
-                style={[styles.button, {flex: 1, marginRight: 20 }]}
+                style={styles.button}
                 onPress={() => onLogoutPress()}>
                 <Text style={styles.buttonTitle}>Log Out</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={styles.button}
+                onPress={() => onSpotifyPress()}>
+                <Text style={styles.buttonTitle}>Connect to Spotify</Text>
             </TouchableOpacity>
         </View>
     )
 
     return (
         <SafeAreaView style={styles.container}>
-        <ScrollView showsVerticalScrollIndicator={false}>
-
             <View style={{ alignSelf: "center" }}>
                 <Text style={styles.title}>Profile</Text>
             </View>
@@ -214,7 +223,7 @@ export default function ProfileScreen({navigation}) {
                             return (
                                 <View key={index}>
                                     <Text style={[styles.topSData, styles.text]}>
-                                        <View style={styles.bulletpoint} />
+                                        <View style={[styles.bulletpoint, { marginBottom: 3 }]} />
                                         {song.name} - {song.artist}
                                     </Text>
                                 </View>
@@ -231,7 +240,7 @@ export default function ProfileScreen({navigation}) {
                             return (
                                 <View key={index + 4}>
                                     <Text style={[styles.topSData, styles.text]}>
-                                        <View style={styles.bulletpoint} />
+                                        <View style={[styles.bulletpoint, { marginBottom: 3 }]} />
                                         {artist.name}
                                     </Text>
                                 </View>
@@ -240,8 +249,6 @@ export default function ProfileScreen({navigation}) {
                     </View>
                 </View>                
             </View>
-            
-        </ScrollView>
     </SafeAreaView> 
     )
 }
