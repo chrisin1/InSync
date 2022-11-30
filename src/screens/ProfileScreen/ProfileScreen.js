@@ -108,7 +108,7 @@ export default function ProfileScreen({navigation}) {
                 {displayName}
             </Text>
             <Text>{'\n'}</Text>
-            <Text style={[styles.text, { opacity: '60%', marginTop: -10 }]}>
+            <Text style={[styles.text, { opacity: '60%', marginTop: -15 }]}>
                 {bio}
             </Text>
 
@@ -119,15 +119,18 @@ export default function ProfileScreen({navigation}) {
     const metaInfo = (
         <View style={styles.statsContainer}>
             <View style={styles.statsBox}>
-                <Text style={[styles.text, { fontSize: 20, fontWeight: '200' }]}>{age}</Text>
+                <Text style={[styles.text, { fontSize: 20 }]}>{age}</Text>
+                <Text style={[styles.text, { fontSize: 12, fontWeight: '100', opacity: '60%' }]}>Age</Text>
             </View>
+            <View style={styles.bulletpoint}/>
             <View style={styles.statsBox}>
-                <View style={styles.bulletpoint}/>
-                <Text style={[styles.text, { fontSize: 20, fontWeight: '200' }]}>{gender}</Text>
-                <View style={styles.bulletpoint}/>
+                <Text style={[styles.text, { fontSize: 20 }]}>{gender}</Text>
+                <Text style={[styles.text, { fontSize: 12, fontWeight: '100', opacity: '60%' }]}>Gender</Text>
             </View>
+            <View style={styles.bulletpoint}/>
             <View style={styles.statsBox}>
-                <Text style={[styles.text, { fontSize: 20, fontWeight: '200' }]}>{location}</Text>
+                <Text style={[styles.text, { fontSize: 20 }]}>{location}</Text>
+                <Text style={[styles.text, { fontSize: 12, fontWeight: '100', opacity: '60%' }]}>Location</Text>
             </View>
         </View>
     )
