@@ -25,9 +25,11 @@ export default function ProfileScreen({navigation}) {
     const onLogoutPress = () => {
         logOut();  
     }
-
     const onEditPress = () => {
         navigation.navigate('EditProfile', {displayName, bio, age, gender, location})
+    }
+    const onSpotifyPress = () => {
+        navigation.navigate('Connect With Spotify');
     }
 
     useEffect(() => {
@@ -139,14 +141,19 @@ export default function ProfileScreen({navigation}) {
     const buttons = (
         <View style={{ alignSelf: 'flex-start', flexDirection: 'row' }}>
             <TouchableOpacity 
-                style={[styles.button, {flex: 1, marginRight: 20 }]} 
+                style={styles.button} 
                 onPress={() => onEditPress()}>
                 <Text style={styles.buttonTitle}> Edit Profile </Text>
             </TouchableOpacity>
             <TouchableOpacity
-                style={[styles.button, {flex: 1, marginRight: 20 }]}
+                style={styles.button}
                 onPress={() => onLogoutPress()}>
                 <Text style={styles.buttonTitle}>Log Out</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={styles.button}
+                onPress={() => onSpotifyPress()}>
+                <Text style={styles.buttonTitle}>Connect to Spotify</Text>
             </TouchableOpacity>
         </View>
     )
