@@ -20,7 +20,7 @@ export default function ProfileScreen({navigation}) {
     const [age, setAge] = useState('')
     const [gender, setGender] = useState('')
     const [location, setLocation] = useState('')
-
+    const [profilePic, setProfilePic] = useState('')
     const onLogoutPress = () => {
         logOut();  
     }
@@ -200,13 +200,13 @@ export default function ProfileScreen({navigation}) {
                 </View>
             </View>
 
-            <View style={styles.imageContainer}>
+            <View style={styles.albumsContainer}>
                 {savedAlbums.map((album, index) => {
                     return (
-                        <View style={styles.imageBackground}>
+                        <View style={styles.albumBackground}>
                             <Image 
                                 source={album.albumArt}
-                                style={styles.image} />
+                                style={styles.albumImage} />
                         </View>
                     )
                 })}
