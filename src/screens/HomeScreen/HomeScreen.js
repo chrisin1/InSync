@@ -33,17 +33,14 @@ export default function HomeScreen(props) {
         }
         return true
     }
-    console.log("album info: ", nowPlaying.albumArt);
+
     // constantly poll web player for currently playing track, with timeout to avoid hitting API rate limit
     setTimeout(getNowPlaying, 3000)
 
     return (
         <View style={styles.container}>
             <Text style={styles.title}> Sync Up! </Text>
-            <Image
-                style={ styles.logo }
-                source={require('../../../assets/placeholder-logo.jpg')}
-            />
+            
             <Text style={styles.nowPlayingText}> Now Playing: </Text>
             <View style={styles.nowPlayingContainer}>
                 <Image 
@@ -59,12 +56,39 @@ export default function HomeScreen(props) {
             </View>
 
             <View style={styles.cardContainer}>
-                <Text style={styles.nameText}> Jane Doe </Text>
-                <Image style={styles.imageContainer}
-                    source={require('../../../assets/placeholder-logo.jpg')} />
+                <View style={styles.cardHeader}>
+                    <Image style={styles.profileImage} source={require('../../../assets/placeholder-logo.jpg')} />
+                    <Text style={styles.nameText}> Bathroom George </Text>
+                </View>
+                <View style={styles.albumsContainer}>
+                    <View style={styles.albumContainer}>
+                        <Image style={styles.albumImage} />
+                        <Text style={[styles.albumInfo, { fontWeight: 'bold' }]}> Album Name </Text>
+                        <Text style={[styles.albumInfo, { opacity: '60%' }]}> Artist Name </Text>
+                    </View>
+                    <View style={styles.albumContainer}>
+                        <Image style={styles.albumImage} />
+                        <Text style={[styles.albumInfo, { fontWeight: 'bold' }]}> Album Name </Text>
+                        <Text style={[styles.albumInfo, { opacity: '60%' }]}> Artist Name </Text>
+                    </View>
+                    <View style={styles.albumContainer}>
+                        <Image style={styles.albumImage} />
+                        <Text style={[styles.albumInfo, { fontWeight: 'bold' }]}> Album Name </Text>
+                        <Text style={[styles.albumInfo, { opacity: '60%' }]}> Artist Name </Text>
+                    </View>
+                </View>
+
+                <View style={styles.topSContainer}>
+                    <View style={styles.topSBackground}>
+                        <Text style={[styles.topSData, { fontWeight: 'bold' }]}> Current Top Songs </Text>
+                    </View>
+                    <View style={styles.topSBackground}>
+                        <Text style={[styles.topSData, { fontWeight: 'bold' }]}> Current Top Artists </Text>
+                    </View>
+                </View>
+
                 <Text style={styles.compText}> 95% Compatible </Text>
-                <Text style={styles.detailsText}> Compatibility Details **REPLACE LATER** </Text>
-                <View style={styles.buttonContainer}>
+                <View style={styles.buttonsContainer}>
                     <TouchableOpacity 
                         style={styles.button}
                         onPress={() => alert('PRESSED LEFT')}>
