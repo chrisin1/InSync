@@ -160,21 +160,27 @@ export default function ProfileScreen({navigation}) {
                 </View>
             </View>
 
-            <View style={styles.imageContainer}>
-                <View style={styles.imageBackground}>
+            <View style={styles.albumContainer}>
+                <View style={styles.albumBackground}>
                     <Image 
                         source={require('../../../assets/georgehead.jpg')}
-                        style={styles.image} />
+                        style={styles.albumImage} />
+                    <Text style={[styles.albumInfo, { fontWeight: 'bold' }]}> Album Name </Text>
+                    <Text style={[styles.albumInfo, { opacity: '60%' }]}> Artist Name </Text>
                 </View>
-                <View style={styles.imageBackground}>
+                <View style={styles.albumBackground}>
                     <Image 
                         source={require('../../../assets/topgeorge.jpg')}
-                        style={styles.image} />
+                        style={styles.albumImage} />
+                    <Text style={[styles.albumInfo, { fontWeight: 'bold' }]}> Album Name </Text>
+                    <Text style={[styles.albumInfo, { opacity: '60%' }]}> Artist Name </Text>
                 </View>
-                <View style={styles.imageBackground}>
+                <View style={styles.albumBackground}>
                     <Image 
                         source={require('../../../assets/georgehead.jpg')}
-                        style={styles.image} />
+                        style={styles.albumImage} />
+                    <Text style={[styles.albumInfo, { fontWeight: 'bold' }]}> Album Name </Text>
+                    <Text style={[styles.albumInfo, { opacity: '60%' }]}> Artist Name </Text>
                 </View>
             </View>
 

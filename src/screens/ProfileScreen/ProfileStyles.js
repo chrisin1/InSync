@@ -1,6 +1,36 @@
 import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
+    albumBackground: {
+        alignSelf: 'flex-start',
+        alignItems: 'center',
+        backgroundColor: "#373737",
+        borderRadius: 15,
+        marginHorizontal: 10,
+        overflow: "hidden",
+        padding: 15,
+        paddingBottom: 30,
+    },
+    albumContainer: {
+        alignItems: 'center',
+        alignSelf: 'center',
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        marginTop: 35,
+    },
+    albumImage: {
+        alignSelf: 'center',
+        borderRadius: 15,
+        height: 150,
+        marginBottom: 10,
+        width: 150,
+    },
+    albumInfo: {
+        alignSelf: 'flex-start',
+        color: 'white',
+        fontSize: 14,
+        marginBottom: 3,
+    },
     bulletpoint: {
         alignSelf: 'center',
         backgroundColor: 'white',
@@ -31,32 +61,8 @@ export default StyleSheet.create({
     },
     headerContainer: {
         alignSelf: "center",
-        alignItems: "center",
         flexDirection: "row",
-        justifyContent: "center",
         marginTop: 75,
-    },
-    image: {
-        alignSelf: 'center',
-        borderRadius: 15,
-        height: 150,
-        margin: 15,
-        width: 150,
-    },
-    imageBackground: {
-        alignItems: 'center',
-        backgroundColor: "#373737",
-        borderRadius: 15,
-        height: 220,
-        marginHorizontal: 10,
-        overflow: "hidden",
-        width: 180,
-    },
-    imageContainer: {
-        alignItems: 'center',
-        alignSelf: 'center',
-        flexDirection: 'row',
-        marginTop: 50,
     },
     infoContainer: {
         alignSelf: "flex-start",
@@ -110,7 +116,7 @@ export default StyleSheet.create({
         alignSelf: 'center',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop: 30,
+        marginTop: 25,
         width: 600,
     },
 });
