@@ -41,7 +41,6 @@ export default StyleSheet.create({
     },
     button: {
         alignItems: 'center',
-        alignSelf: 'center',
         backgroundColor: '#FF9283',
         borderRadius: 100,
         height: 25,
@@ -61,27 +60,27 @@ export default StyleSheet.create({
     },
     headerContainer: {
         alignSelf: "center",
+        alignItems: 'center',
         flexDirection: "row",
+        justifyContent: 'space-evenly',
         marginTop: 50,
     },
     infoContainer: {
         alignSelf: "flex-start",
     },
     profileImage: {
-        borderRadius: 200 / 2,
+        borderRadius: 100,
         height: 175,
         overflow: "hidden",
         width: 175,
     },
     statsContainer: {
-        alignItems: "center",
         flexDirection: "row",
-        marginTop: 20,
+        marginTop: 15,
     },
     statsBox: {
-        alignItems: "center",
-        flexDirection: 'row',
-        justifyContent: "center",
+        alignItems: "flex-start",
+        flexDirection: 'column',
     },
     text: {
         color: 'white',
