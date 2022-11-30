@@ -115,11 +115,13 @@ export default function ProfileScreen({navigation}) {
     // user stats: age, gender, location
     const metaInfo = (
         <View style={styles.statsContainer}>
-            <View style={[styles.statsBox, { paddingLeft: 0 }]}>
+            <View style={styles.statsBox}>
                 <Text style={[styles.text, { fontSize: 20, fontWeight: '200' }]}>{age}</Text>
             </View>
-            <View style={[styles.statsBox, { borderColor: "#DFD8C8", borderLeftWidth: 1, borderRightWidth: 1 }]}>
+            <View style={styles.statsBox}>
+                <View style={styles.bulletpoint}/>
                 <Text style={[styles.text, { fontSize: 20, fontWeight: '200' }]}>{gender}</Text>
+                <View style={styles.bulletpoint}/>
             </View>
             <View style={styles.statsBox}>
                 <Text style={[styles.text, { fontSize: 20, fontWeight: '200' }]}>{location}</Text>
@@ -186,7 +188,7 @@ export default function ProfileScreen({navigation}) {
                             return (
                                 <View key={index}>
                                     <Text style={[styles.topSData, styles.text]}>
-                                        <View style={styles.bulletpoint} />
+                                        <View style={[styles.bulletpoint, { marginBottom: 3, marginStart: -5 }]} />
                                         {song.name} - {song.artist}
                                     </Text>
                                 </View>
@@ -203,7 +205,7 @@ export default function ProfileScreen({navigation}) {
                             return (
                                 <View key={index}>
                                     <Text style={[styles.topSData, styles.text]}>
-                                        <View style={styles.bulletpoint} />
+                                        <View style={[styles.bulletpoint, { marginBottom: 3, marginStart: -5 }]} />
                                         {artist.name}
                                     </Text>
                                 </View>

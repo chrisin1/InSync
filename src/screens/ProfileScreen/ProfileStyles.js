@@ -2,12 +2,11 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
     bulletpoint: {
+        alignSelf: 'center',
         backgroundColor: 'white',
         borderRadius: 100,
         height: 4,
-        marginBottom: 3,
-        marginLeft: -5,
-        marginRight: 7,
+        marginHorizontal: 10,
         width: 4,
     },
     button: {
@@ -76,8 +75,8 @@ export default StyleSheet.create({
     },
     statsBox: {
         alignItems: "center",
+        flexDirection: 'row',
         justifyContent: "center",
-        paddingHorizontal: 20,
     },
     text: {
         color: 'white',
@@ -100,7 +99,6 @@ export default StyleSheet.create({
     },
     topSData: {
         alignSelf: 'flex-start',
-        alignItems: 'center',
         fontSize: 14,
         justifyContent: 'center',
         lineHeight: 22,
