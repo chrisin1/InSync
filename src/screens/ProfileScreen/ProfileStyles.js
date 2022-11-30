@@ -101,6 +101,12 @@ export default StyleSheet.create({
         margin: 10,
         padding: 10,
     },
+    topSContainer: {
+        alignSelf: 'stretch',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginTop: 25,
+    },
     topSData: {
         alignSelf: 'flex-start',
         fontSize: 14,
@@ -108,11 +114,5 @@ export default StyleSheet.create({
         lineHeight: 22,
         marginBottom: 5,
         marginStart: 10,
-    },
-    topSContainer: {
-        alignSelf: 'stretch',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginTop: 25,
     },
 });
