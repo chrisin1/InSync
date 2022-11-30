@@ -25,9 +25,11 @@ export default function ProfileScreen({navigation}) {
     const onLogoutPress = () => {
         logOut();  
     }
-
     const onEditPress = () => {
         navigation.navigate('EditProfile', {displayName, bio, age, gender, location})
+    }
+    const onSpotifyPress = () => {
+        navigation.navigate('Connect With Spotify');
     }
 
     useEffect(() => {
@@ -108,7 +110,7 @@ export default function ProfileScreen({navigation}) {
                 {displayName}
             </Text>
             <Text>{'\n'}</Text>
-            <Text style={[styles.text, { opacity: '60%', marginTop: -10 }]}>
+            <Text style={[styles.text, { opacity: '60%', marginTop: -15 }]}>
                 {bio}
             </Text>
 
@@ -119,15 +121,18 @@ export default function ProfileScreen({navigation}) {
     const metaInfo = (
         <View style={styles.statsContainer}>
             <View style={styles.statsBox}>
-                <Text style={[styles.text, { fontSize: 20, fontWeight: '200' }]}>{age}</Text>
+                <Text style={[styles.text, { fontSize: 20 }]}>{age}</Text>
+                <Text style={[styles.text, { fontSize: 12, fontWeight: '100', opacity: '60%' }]}>Age</Text>
             </View>
+            <View style={styles.bulletpoint}/>
             <View style={styles.statsBox}>
-                <View style={styles.bulletpoint}/>
-                <Text style={[styles.text, { fontSize: 20, fontWeight: '200' }]}>{gender}</Text>
-                <View style={styles.bulletpoint}/>
+                <Text style={[styles.text, { fontSize: 20 }]}>{gender}</Text>
+                <Text style={[styles.text, { fontSize: 12, fontWeight: '100', opacity: '60%' }]}>Gender</Text>
             </View>
+            <View style={styles.bulletpoint}/>
             <View style={styles.statsBox}>
-                <Text style={[styles.text, { fontSize: 20, fontWeight: '200' }]}>{location}</Text>
+                <Text style={[styles.text, { fontSize: 20 }]}>{location}</Text>
+                <Text style={[styles.text, { fontSize: 12, fontWeight: '100', opacity: '60%' }]}>Location</Text>
             </View>
         </View>
     )
@@ -136,14 +141,19 @@ export default function ProfileScreen({navigation}) {
     const buttons = (
         <View style={{ alignSelf: 'flex-start', flexDirection: 'row' }}>
             <TouchableOpacity 
-                style={[styles.button, {flex: 1, marginRight: 20 }]} 
+                style={styles.button} 
                 onPress={() => onEditPress()}>
                 <Text style={styles.buttonTitle}> Edit Profile </Text>
             </TouchableOpacity>
             <TouchableOpacity
-                style={[styles.button, {flex: 1, marginRight: 20 }]}
+                style={styles.button}
                 onPress={() => onLogoutPress()}>
                 <Text style={styles.buttonTitle}>Log Out</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+                style={styles.button}
+                onPress={() => onSpotifyPress()}>
+                <Text style={styles.buttonTitle}>Connect to Spotify</Text>
             </TouchableOpacity>
         </View>
     )
