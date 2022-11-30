@@ -147,8 +147,6 @@ export default function ProfileScreen({navigation}) {
 
     return (
         <SafeAreaView style={styles.container}>
-        <ScrollView showsVerticalScrollIndicator={false}>
-
             <View style={{ alignSelf: "center" }}>
                 <Text style={styles.title}>Profile</Text>
             </View>
@@ -160,7 +158,7 @@ export default function ProfileScreen({navigation}) {
                 </View>
             </View>
 
-            <View style={styles.albumContainer}>
+            <View style={styles.albumsContainer}>
                 <View style={styles.albumBackground}>
                     <Image 
                         source={require('../../../assets/georgehead.jpg')}
@@ -194,7 +192,7 @@ export default function ProfileScreen({navigation}) {
                             return (
                                 <View key={index}>
                                     <Text style={[styles.topSData, styles.text]}>
-                                        <View style={[styles.bulletpoint, { marginBottom: 3, marginStart: -5 }]} />
+                                        <View style={[styles.bulletpoint, { marginBottom: 3 }]} />
                                         {song.name} - {song.artist}
                                     </Text>
                                 </View>
@@ -211,7 +209,7 @@ export default function ProfileScreen({navigation}) {
                             return (
                                 <View key={index}>
                                     <Text style={[styles.topSData, styles.text]}>
-                                        <View style={[styles.bulletpoint, { marginBottom: 3, marginStart: -5 }]} />
+                                        <View style={[styles.bulletpoint, { marginBottom: 3 }]} />
                                         {artist.name}
                                     </Text>
                                 </View>
@@ -220,8 +218,6 @@ export default function ProfileScreen({navigation}) {
                     </View>
                 </View>                
             </View>
-
-        </ScrollView>
     </SafeAreaView> 
     )
 }

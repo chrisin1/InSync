@@ -11,7 +11,7 @@ export default StyleSheet.create({
         padding: 15,
         paddingBottom: 30,
     },
-    albumContainer: {
+    albumsContainer: {
         alignItems: 'center',
         alignSelf: 'center',
         flexDirection: 'row',
@@ -36,7 +36,7 @@ export default StyleSheet.create({
         backgroundColor: 'white',
         borderRadius: 100,
         height: 4,
-        marginHorizontal: 10,
+        marginHorizontal: 15,
         width: 4,
     },
     button: {
@@ -62,7 +62,7 @@ export default StyleSheet.create({
     headerContainer: {
         alignSelf: "center",
         flexDirection: "row",
-        marginTop: 75,
+        marginTop: 50,
     },
     infoContainer: {
         alignSelf: "flex-start",
@@ -70,7 +70,6 @@ export default StyleSheet.create({
     profileImage: {
         borderRadius: 200 / 2,
         height: 175,
-        marginLeft: 50,
         overflow: "hidden",
         width: 175,
     },
@@ -96,7 +95,6 @@ export default StyleSheet.create({
     },
     topSBackground: {
         alignSelf: 'stretch',
-        alignItems: 'center',
         backgroundColor: '#373737',
         borderRadius: 15,
         flex: 1,
@@ -109,14 +107,12 @@ export default StyleSheet.create({
         justifyContent: 'center',
         lineHeight: 22,
         marginBottom: 5,
-        width: 220,
+        marginStart: 10,
     },
     topSContainer: {
-        alignItems: 'stretch',
-        alignSelf: 'center',
+        alignSelf: 'stretch',
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginTop: 25,
-        width: 600,
     },
 });
