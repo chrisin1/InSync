@@ -204,7 +204,7 @@ export default function ProfileScreen({navigation}) {
             <View style={styles.albumsContainer}>
                 {savedAlbums.map((album, index) => {
                     return (
-                        <View style={styles.albumsBackground}>
+                        <View style={styles.albumBackground}>
                             <Image 
                                 source={album.albumArt}
                                 style={styles.albumImage} />
