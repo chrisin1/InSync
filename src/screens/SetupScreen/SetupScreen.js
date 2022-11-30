@@ -21,7 +21,7 @@ export default function SetupScreen({navigation}) {
         const email = route.params.email
         const password = route.params.password
         signUp({ fullName, email, password, displayName, bio, age, gender, location });
-        navigation.navigate('Home');
+        navigation.navigate('Connect With Spotify');
     }
 
     return (
