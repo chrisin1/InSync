@@ -209,8 +209,8 @@ export default function ProfileScreen({navigation}) {
                                 source={album.albumArt}
                                 style={styles.albumImage} />
                                 
-                            <Text style={[styles.albumInfo, { fontWeight: 'bold' }]}> Album Name </Text>
-                            <Text style={[styles.albumInfo, { opacity: '60%' }]}> Artist Name </Text>
+                            <Text style={[styles.albumInfo, { fontWeight: 'bold' }]}> {album.name} </Text>
+                            <Text style={[styles.albumInfo, { opacity: '60%' }]}> {album.artist} </Text>
                         </View>
                     )
                 })}
