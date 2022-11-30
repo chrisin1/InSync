@@ -7,7 +7,6 @@ import styles from './SetupStyles'
 
 export default function SetupScreen({navigation}) {
     const [displayName, setDisplayName] = useState('')
-    const [profilePic, setProfilePic] = useState('')
     const [bio, setBio] = useState('')
     const [age, setAge] = useState('')
     const [gender, setGender] = useState('')
