@@ -33,7 +33,7 @@ export default function ProfileScreen({navigation}) {
 
     useEffect(() => {
         
-        auth.onAuthStateChanged(user => {
+        auth.onAuthStateChanged(async user => {
             if (user) { // user is signed in
                 const docRef = doc(db, "users", user.uid);
                 getDoc(docRef)
@@ -195,7 +195,11 @@ export default function ProfileScreen({navigation}) {
             </View>
 
             <View style={styles.headerContainer}>
-                <Image source={profilePic} style={styles.profileImage} resizeMode="center"></Image>
+                <Image 
+                    source={profilePic}
+                    defaultSource={require('../../../assets/placeholder-profile.png')}
+                    style={styles.profileImage}
+                    resizeMode="center" />
                 <View style={{ marginLeft: 30 }}>
                     {[headerInfo, metaInfo, buttons]}
                 </View>
@@ -207,6 +211,7 @@ export default function ProfileScreen({navigation}) {
                         <View style={styles.albumBackground}>
                             <Image 
                                 source={album.albumArt}
+                                defaultSource={require('../../../assets/placeholder-album.png')}
                                 style={styles.albumImage} />
                                 
                             <Text style={[styles.albumInfo, { fontWeight: 'bold' }]}> {album.name} </Text>
