@@ -15,10 +15,11 @@ export default StyleSheet.create({
     },
     logo: {
         alignSelf: 'center',
-        borderRadius: 100,
-        height: 200,
+        borderRadius: 200,
+        height: 250,
         marginBottom: 50,
-        width: 200
+        resizeMode: 'contain',
+        width: 250,
     },
     input: {
         backgroundColor: '#373737',

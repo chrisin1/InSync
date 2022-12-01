@@ -25,10 +25,10 @@ export default function LoginScreen({navigation}) {
             <KeyboardAwareScrollView
                 style={{ flex: 1, width: '100%' }}
                 keyboardShouldPersistTaps='always'>
-                <Text style={styles.title}> Log in </Text>
+                <Text style={styles.title}> Log In </Text>
                 <Image
-                    style={ styles.logo }
-                    source={require('../../../assets/placeholder-logo.jpg')}
+                    style={styles.logo}
+                    source={require('../../../assets/insync-logo.png')}
                 />
                 <Text style={styles.inputTitle}>E-mail</Text>
                 <TextInput
@@ -50,12 +50,12 @@ export default function LoginScreen({navigation}) {
                 <TouchableOpacity
                     style={styles.button}
                     onPress={() => onLoginPress()}>
-                    <Text style={styles.buttonTitle}>Log in</Text>
+                    <Text style={styles.buttonTitle}>Log In</Text>
                 </TouchableOpacity>
                 <View style={styles.footerView}>
                     <Text style={styles.footerText}>
                         Don't have an account? 
-                        <Text onPress={onFooterLinkPress} style={styles.footerLink}>  Sign up</Text>
+                        <Text onPress={onFooterLinkPress} style={styles.footerLink}>  Sign Up</Text>
                     </Text>
                 </View>
             </KeyboardAwareScrollView>

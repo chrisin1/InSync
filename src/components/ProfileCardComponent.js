@@ -7,7 +7,7 @@ export default class ProfileCard extends React.Component {
             <View style={styles.cardContainer}>
                 <Text style={styles.nameText}> Jane Doe </Text>
                 <Image style={styles.imageContainer}
-                    source={require('../../../assets/placeholder-logo.jpg')} />
+                    source={require('../../../assets/insync-logo.png')} />
                 <Text style={styles.compText}> 95% Compatible </Text>
                 <Text style={styles.detailsText}> Compatibility Details **REPLACE LATER** </Text>
                 <View style={styles.buttonContainer}>

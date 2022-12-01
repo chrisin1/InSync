@@ -44,6 +44,7 @@ export default function ProfileScreen({navigation}) {
                     setAge(userDoc.data().age);
                     setGender(userDoc.data().gender);
                     setLocation(userDoc.data().location);
+                    console.log('retrieved user info');
                 })
                 .catch((error) => {
                     console.log('Error retrieving user information: ', error)
@@ -226,7 +227,7 @@ export default function ProfileScreen({navigation}) {
                             return (
                                 <View key={index}>
                                     <Text style={[styles.topSData, styles.text]}>
-                                        <View style={[styles.bulletpoint, { marginBottom: 3 }]} />
+                                        <View style={[styles.bulletpoint, { marginBottom: 3, marginLeft: 5, marginRight: 10 }]} />
                                         {song.name} - {song.artist}
                                     </Text>
                                 </View>
@@ -243,7 +244,7 @@ export default function ProfileScreen({navigation}) {
                             return (
                                 <View key={index + 4}>
                                     <Text style={[styles.topSData, styles.text]}>
-                                        <View style={[styles.bulletpoint, { marginBottom: 3 }]} />
+                                        <View style={[styles.bulletpoint, { marginBottom: 3, marginLeft: 5, marginRight: 10 }]} />
                                         {artist.name}
                                     </Text>
                                 </View>
