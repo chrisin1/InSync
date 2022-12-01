@@ -33,7 +33,7 @@ export default function ProfileScreen({navigation}) {
 
     useEffect(() => {
         
-        auth.onAuthStateChanged(user => {
+        auth.onAuthStateChanged(async user => {
             if (user) { // user is signed in
                 const docRef = doc(db, "users", user.uid);
                 getDoc(docRef)
