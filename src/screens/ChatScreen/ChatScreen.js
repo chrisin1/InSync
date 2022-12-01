@@ -9,7 +9,7 @@ export default function ChatScreen(props) {
             <Text style= {styles.title}>Messages</Text>
 
             <View style ={styles.chatContainer}>
-                <Image source={require('../../../assets/insync-logo.png')} style = {styles.image}/>
+                <Image source={require('../../../assets/placeholder-profile.png')} style = {styles.image}/>
                 <View style ={styles.rightContainer} >
                     <View style ={styles.row}>
                         <Text style ={styles.name}>Chris In</Text>
@@ -20,7 +20,7 @@ export default function ChatScreen(props) {
             </View>
 
             <View style ={styles.chatContainer}>
-                <Image source={require('../../../assets/insync-logo.png')} style = {styles.image}/>
+                <Image source={require('../../../assets/placeholder-profile.png')} style = {styles.image}/>
                 <View style ={styles.rightContainer} >
                     <View style ={styles.row}>
                         <Text style ={styles.name}>Nancy Chen</Text>
@@ -31,7 +31,7 @@ export default function ChatScreen(props) {
             </View>
 
             <View style ={styles.chatContainer}>
-                <Image source={require('../../../assets/insync-logo.png')} style = {styles.image}/>
+                <Image source={require('../../../assets/placeholder-profile.png')} style = {styles.image}/>
                 <View style ={styles.rightContainer} >
                     <View style ={styles.row}>
                         <Text style ={styles.name}>Nicole Liang</Text>

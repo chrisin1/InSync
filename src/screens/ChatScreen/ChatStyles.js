@@ -5,7 +5,6 @@ export default StyleSheet.create({
         alignItems: 'center',
         alignSelf: 'center',
         flex: 1,
-        
     },
     title: {
         alignSelf: 'center',
@@ -15,34 +14,38 @@ export default StyleSheet.create({
         margin: 50
     },
     image: {
-        height: 60,
-        width: 60,
-        borderRadius: 30,
-        marginRight: 10
+        height: 75,
+        width: 75,
+        backgroundColor: '#FF9382',
+        borderRadius: 100,
+        marginRight: 20
     },
-    
     name: {
         fontsize: 16,
         fontWeight: 'bold',
-        color: 'white'
+        marginBottom: 5,
+        color: 'white',
     },
     text: {
         fontSize: 14,
-        color: 'white'
+        fontWeight: 300,
+        color: 'white',
+        opacity: '60%',
     },
     rightContainer: {
-        paddingBottom: 20,
-        width: 300
-        
+        justifyContent: 'space-evenly',
+        paddingVertical: 15,
+        width: 300,
     },
     chatContainer: {
         flexDirection: 'row',
+        margin: 5,
         padding: 10,
     },
     row: {
         paddingBottom: 5,
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
     },
    
 })
