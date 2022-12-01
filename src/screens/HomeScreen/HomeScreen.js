@@ -113,7 +113,7 @@ export default function HomeScreen(props) {
         try {
             global.spotifyApi.getMyCurrentPlaybackState().then((response) => {
                 console.log(response)
-                if (response.item !== null) {
+                if (response.item != null) {
                     setNowPlaying({
                         name: response.item.name,
                         albumArt: response.item.album.images[0].url,
