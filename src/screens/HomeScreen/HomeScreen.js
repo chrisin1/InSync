@@ -142,7 +142,8 @@ export default function HomeScreen(props) {
                 <Image 
                     style={styles.nowPlayingImage}
                     source={nowPlaying.albumArt}
-                    defaultSource={require('../../../assets/insync-logo.png')} >
+                    defaultSource={require('../../../assets/placeholder-album.png')}
+                    resizeMode='center' >
                 </Image>
                 <Text style={styles.text}> 
                     {nowPlaying.name} 
@@ -153,7 +154,9 @@ export default function HomeScreen(props) {
 
             <View style={styles.cardContainer}>
                 <View style={styles.cardHeader}>
-                    <Image style={styles.profileImage} source={require('../../../assets/insync-logo.png')} />
+                    <Image 
+                        style={styles.profileImage} 
+                        defaultSource={require('../../../assets/placeholder-album.png')} />
                     <Text style={styles.nameText}> Bathroom George </Text>
                 </View>
                 <View style={styles.albumsContainer}>
