@@ -5,7 +5,7 @@ import { auth, db } from '../../firebase/config';
 import styles from './HomeStyles';
 import SpotifyWebApi from 'spotify-web-api-js';
 import { enableIndexedDbPersistence } from 'firebase/firestore';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc, query, where, collection, getDocs } from 'firebase/firestore';
 
 export default function HomeScreen(props) {
     const { logOut } = useContext(AuthContext);
@@ -22,7 +22,7 @@ export default function HomeScreen(props) {
             if (user) { // user is signed in
                 const docRef = doc(db, "users", user.uid);
 
-                // update user with top songs / top artist fields
+                // update user's audio feature ratings
                 const userAudioFeatures = {
                     acousticness: 0.0,
                     danceability: 0.0,
@@ -30,23 +30,8 @@ export default function HomeScreen(props) {
                     instrumentalness: 0.0,
                     valence: 0.0,
                 };
-
                 global.spotifyApi.getMyTopTracks({limit: 10}).then((response) => {
                     if (response.items !== null) { 
-                        function averageValue() { //callback of next part to calculate average
-                            let count = 0;
-                            Object.keys(userAudioFeatures).forEach((key) => {
-                                userAudioFeatures[key] = userAudioFeatures[key]/response.items.length;
-                                count++;
-                                if(count == Object.keys(userAudioFeatures).length)
-                                {
-                                    console.log("Amount of top songs: " + response.items.length);
-                                    console.log(userAudioFeatures);
-                                    setDoc(docRef, {audioFeatures: userAudioFeatures}, {merge: true})
-                                }
-                            })
-                        }
-                        
                         //Add up the relevant audio features for top songs
                         let songCount = 0;
                         for (const song of response.items) {
@@ -63,11 +48,41 @@ export default function HomeScreen(props) {
                                     averageValue(); //go to callback to calculate averages of audio features
                             })
                         }
+
+                        function averageValue() { //callback of next part to calculate average
+                            let count = 0;
+                            Object.keys(userAudioFeatures).forEach((key) => {
+                                userAudioFeatures[key] = userAudioFeatures[key]/response.items.length;
+                                count++;
+                                if(count == Object.keys(userAudioFeatures).length)
+                                {
+                                    console.log("Amount of top songs: " + response.items.length);
+                                    console.log(userAudioFeatures);
+                                    setDoc(docRef, {audioFeatures: userAudioFeatures}, {merge: true})
+                                    updateCompatibility();
+                                }
+                            })
+                        }
                     }
                     else if (response.item === null){
                         console.log("Failed to get top tracks");
                     }
                 })
+
+                //update compatibility with other users
+                function updateCompatibility(){
+                    const userCompability = []
+                    const q = query(collection(db, "users"), where("audioFeatures", "!=", null));
+                    getDocs(q).then((response) => {
+                        console.log("eyo!!!");
+                        response.forEach((doc) => {
+                            console.log(doc.id, " => ", doc.data().audioFeatures.valence);
+                        });
+                    }).catch((error)=> {
+                        console.log(error)
+                    })
+                } 
+
             }
         })
     }, []);
