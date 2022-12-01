@@ -5,11 +5,12 @@ import { auth, db } from '../../firebase/config';
 import styles from './HomeStyles';
 import SpotifyWebApi from 'spotify-web-api-js';
 import { enableIndexedDbPersistence } from 'firebase/firestore';
-import { doc, setDoc } from 'firebase/firestore';
+import { doc, setDoc, query, where, collection, getDocs } from 'firebase/firestore';
 
 export default function HomeScreen(props) {
     const { logOut } = useContext(AuthContext);
     var [nowPlaying, setNowPlaying] = useState({})
+    var [compatibilityRanking, setCompatibilityRanking] = useState([{}])
 
     global.spotifyApi.setAccessToken(global.token)
     global.spotifyApi.getMe().then((user) => {
@@ -22,7 +23,7 @@ export default function HomeScreen(props) {
             if (user) { // user is signed in
                 const docRef = doc(db, "users", user.uid);
 
-                // update user with top songs / top artist fields
+                // update user's audio feature ratings
                 const userAudioFeatures = {
                     acousticness: 0.0,
                     danceability: 0.0,
@@ -30,9 +31,25 @@ export default function HomeScreen(props) {
                     instrumentalness: 0.0,
                     valence: 0.0,
                 };
-
                 global.spotifyApi.getMyTopTracks({limit: 10}).then((response) => {
                     if (response.items !== null) { 
+                        //Add up the relevant audio features for top songs
+                        let songCount = 0;
+                        for (const song of response.items) {
+                            global.spotifyApi.getAudioFeaturesForTrack(song.id).then((features) => {
+                                console.log(features);
+                                userAudioFeatures["acousticness"] += features.acousticness;
+                                userAudioFeatures["danceability"] += features.danceability;
+                                userAudioFeatures["energy"] += features.energy;
+                                userAudioFeatures["instrumentalness"] += features.instrumentalness;
+                                userAudioFeatures["valence"] += features.valence;
+                                songCount++;
+                                //If all songs are added in the calculations
+                                if(songCount == response.items.length)
+                                    averageValue(); //go to callback to calculate averages of audio features
+                            })
+                        }
+
                         function averageValue() { //callback of next part to calculate average
                             let count = 0;
                             Object.keys(userAudioFeatures).forEach((key) => {
@@ -43,24 +60,8 @@ export default function HomeScreen(props) {
                                     console.log("Amount of top songs: " + response.items.length);
                                     console.log(userAudioFeatures);
                                     setDoc(docRef, {audioFeatures: userAudioFeatures}, {merge: true})
+                                    updateCompatibility();
                                 }
-                            })
-                        }
-                        
-                        //Add up the relevant audio features for top songs
-                        let songCount = 0;
-                        for (const song of response.items) {
-                            global.spotifyApi.getAudioFeaturesForTrack(song.id).then((features) => {
-                                console.log(features);
-                                userAudioFeatures["acousticness"] = userAudioFeatures["acousticness"] + features.acousticness;
-                                userAudioFeatures["danceability"] = userAudioFeatures["danceability"] + features.danceability;
-                                userAudioFeatures["energy"] = userAudioFeatures["energy"] + features.energy;
-                                userAudioFeatures["instrumentalness"] = userAudioFeatures["instrumentalness"] + features.instrumentalness;
-                                userAudioFeatures["valence"] = userAudioFeatures["valence"] + features.valence;
-                                songCount++;
-                                //If all songs are added in the calculations
-                                if(songCount == response.items.length)
-                                    averageValue(); //go to callback to calculate averages of audio features
                             })
                         }
                     }
@@ -68,6 +69,42 @@ export default function HomeScreen(props) {
                         console.log("Failed to get top tracks");
                     }
                 })
+                
+                //update compatibility with other users
+                function updateCompatibility(){
+                    const compatibilityList = []
+                    const q = query(collection(db, "users"), where("audioFeatures", "!=", null));
+                    getDocs(q).then((response) => {
+                        var count = 0;
+                        response.forEach((doc) => {
+                            //can add check here for checking if within rejected list
+                            let compatibility = Math.abs(userAudioFeatures["acousticness"]-doc.data().audioFeatures.acousticness);
+                            compatibility += Math.abs(userAudioFeatures["danceability"]-doc.data().audioFeatures.danceability);
+                            compatibility += Math.abs(userAudioFeatures["energy"]-doc.data().audioFeatures.energy);
+                            compatibility += Math.abs(userAudioFeatures["instrumentalness"]-doc.data().audioFeatures.instrumentalness);
+                            compatibility += Math.abs(userAudioFeatures["valence"]-doc.data().audioFeatures.valence);
+                            //Final calculations to make percent: 100% - (#/5 * 100);
+                            compatibility = 100 - 20 * compatibility;
+                            compatibilityList.push(
+                                {
+                                    id: doc.id,
+                                    compatibility: compatibility
+                                }
+                            )
+                            count++;
+                            //when done
+                            if(count == response.size)
+                            {
+                                compatibilityList.sort((a, b) => a.compatibility - b.compatibility);
+                                setCompatibilityRanking(compatibilityList);
+                                console.log(compatibilityList);
+                            }
+                        });
+                    }).catch((error)=> {
+                        console.log(error)
+                    })
+                }
+
             }
         })
     }, []);
@@ -76,7 +113,7 @@ export default function HomeScreen(props) {
         try {
             global.spotifyApi.getMyCurrentPlaybackState().then((response) => {
                 console.log(response)
-                if (response.item !== null) {
+                if (response.item != null) {
                     setNowPlaying({
                         name: response.item.name,
                         albumArt: response.item.album.images[0].url,
