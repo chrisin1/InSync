@@ -37,11 +37,11 @@ export default function HomeScreen(props) {
                         for (const song of response.items) {
                             global.spotifyApi.getAudioFeaturesForTrack(song.id).then((features) => {
                                 console.log(features);
-                                userAudioFeatures["acousticness"] = userAudioFeatures["acousticness"] + features.acousticness;
-                                userAudioFeatures["danceability"] = userAudioFeatures["danceability"] + features.danceability;
-                                userAudioFeatures["energy"] = userAudioFeatures["energy"] + features.energy;
-                                userAudioFeatures["instrumentalness"] = userAudioFeatures["instrumentalness"] + features.instrumentalness;
-                                userAudioFeatures["valence"] = userAudioFeatures["valence"] + features.valence;
+                                userAudioFeatures["acousticness"] += features.acousticness;
+                                userAudioFeatures["danceability"] += features.danceability;
+                                userAudioFeatures["energy"] += features.energy;
+                                userAudioFeatures["instrumentalness"] += features.instrumentalness;
+                                userAudioFeatures["valence"] += features.valence;
                                 songCount++;
                                 //If all songs are added in the calculations
                                 if(songCount == response.items.length)
@@ -71,12 +71,27 @@ export default function HomeScreen(props) {
 
                 //update compatibility with other users
                 function updateCompatibility(){
-                    const userCompability = []
+                    const compatibilityList = []
                     const q = query(collection(db, "users"), where("audioFeatures", "!=", null));
                     getDocs(q).then((response) => {
                         console.log("eyo!!!");
                         response.forEach((doc) => {
-                            console.log(doc.id, " => ", doc.data().audioFeatures.valence);
+                            //can add check here for checking if within rejected list
+                            let compatibility = Math.abs(userAudioFeatures["acousticness"]-doc.data().audioFeatures.acousticness);
+                            compatibility += Math.abs(userAudioFeatures["danceability"]-doc.data().audioFeatures.danceability);
+                            compatibility += Math.abs(userAudioFeatures["energy"]-doc.data().audioFeatures.energy);
+                            compatibility += Math.abs(userAudioFeatures["instrumentalness"]-doc.data().audioFeatures.instrumentalness);
+                            compatibility += Math.abs(userAudioFeatures["valence"]-doc.data().audioFeatures.valence);
+                            //Final calculations to make percent: 100% - (#/5 * 100);
+                            compatibility = 100 - 20 * compatibility;
+                            console.log(doc.id, " => ", compatibility);
+                            
+                            compatibilityList.push(
+                                {
+                                    id: doc.id,
+                                    compatibility: compatibility
+                                }
+                            )
                         });
                     }).catch((error)=> {
                         console.log(error)
