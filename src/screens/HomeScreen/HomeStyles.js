@@ -49,8 +49,8 @@ export default StyleSheet.create({
     },
     buttonIcon: {
         alignSelf: 'center',
-        height: 75,
-        width: 75,
+        height: 100,
+        width: 100,
     },
     buttonsContainer: {
         alignSelf: 'center',

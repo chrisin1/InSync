@@ -27,10 +27,10 @@ export default function RegistrationScreen({navigation}) {
             <KeyboardAwareScrollView
                 style={{ width: '100%' }}
                 keyboardShouldPersistTaps='always'>
-                <Text style={styles.title}> Sign up </Text>
+                <Text style={styles.title}> Sign Up </Text>
                 <Image
                     style={styles.logo}
-                    source={require('../../../assets/placeholder-logo.jpg')}
+                    source={require('../../../assets/insync-logo.png')}
                 />
                 <Text style={styles.inputTitle}>Full Name</Text>
                 <TextInput
@@ -69,12 +69,12 @@ export default function RegistrationScreen({navigation}) {
                 <TouchableOpacity
                     style={styles.button}
                     onPress={() => onRegisterPress()}>
-                    <Text style={styles.buttonTitle}>Sign up</Text>
+                    <Text style={styles.buttonTitle}>Sign Up</Text>
                 </TouchableOpacity>
                 <View style={styles.footerView}>
                     <Text style={styles.footerText}>
                         Already have an account? 
-                        <Text onPress={onFooterLinkPress} style={styles.footerLink}>  Log in</Text>
+                        <Text onPress={onFooterLinkPress} style={styles.footerLink}>  Log In</Text>
                     </Text>
                 </View>
             </KeyboardAwareScrollView>

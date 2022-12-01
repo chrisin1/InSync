@@ -35,7 +35,7 @@ export default function EditProfileScreen({navigation}) {
                 <Text style={styles.title}> Update Your Profile </Text>
                 <Image
                     style={styles.profilePic}
-                    source={require('../../../assets/placeholder-logo.jpg')}
+                    source={require('../../../assets/insync-logo.png')}
                 />
                 <Text style={styles.inputTitle}>Display Name</Text>
                 <TextInput

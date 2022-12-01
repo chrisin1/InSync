@@ -105,7 +105,7 @@ export default function HomeScreen(props) {
                 <Image 
                     style={styles.nowPlayingImage}
                     source={nowPlaying.albumArt}
-                    defaultSource={require('../../../assets/placeholder-logo.jpg')} >
+                    defaultSource={require('../../../assets/insync-logo.png')} >
                 </Image>
                 <Text style={styles.text}> 
                     {nowPlaying.name} 
@@ -116,7 +116,7 @@ export default function HomeScreen(props) {
 
             <View style={styles.cardContainer}>
                 <View style={styles.cardHeader}>
-                    <Image style={styles.profileImage} source={require('../../../assets/placeholder-logo.jpg')} />
+                    <Image style={styles.profileImage} source={require('../../../assets/insync-logo.png')} />
                     <Text style={styles.nameText}> Bathroom George </Text>
                 </View>
                 <View style={styles.albumsContainer}>
@@ -152,13 +152,13 @@ export default function HomeScreen(props) {
                         style={styles.button}
                         onPress={() => alert('PRESSED LEFT')}>
                         <Image style={styles.buttonIcon}
-                            source={require('../../../assets/favicon.png')} />
+                            source={require('../../../assets/button-match.png')} />
                     </TouchableOpacity>
                     <TouchableOpacity
                         style={styles.button}
                         onPress={() => alert('PRESSED RIGHT')}>
                         <Image style={styles.buttonIcon}
-                            source={require('../../../assets/favicon.png')} />
+                            source={require('../../../assets/button-no-match.png')} />
                     </TouchableOpacity>
                 </View>
             </View>
