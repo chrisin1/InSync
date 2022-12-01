@@ -10,6 +10,7 @@ import { doc, setDoc, query, where, collection, getDocs } from 'firebase/firesto
 export default function HomeScreen(props) {
     const { logOut } = useContext(AuthContext);
     var [nowPlaying, setNowPlaying] = useState({})
+    var [compatibilityRanking, setCompatibilityRanking] = useState([{}])
 
     global.spotifyApi.setAccessToken(global.token)
     global.spotifyApi.getMe().then((user) => {
@@ -68,13 +69,13 @@ export default function HomeScreen(props) {
                         console.log("Failed to get top tracks");
                     }
                 })
-
+                
                 //update compatibility with other users
                 function updateCompatibility(){
                     const compatibilityList = []
                     const q = query(collection(db, "users"), where("audioFeatures", "!=", null));
                     getDocs(q).then((response) => {
-                        console.log("eyo!!!");
+                        var count = 0;
                         response.forEach((doc) => {
                             //can add check here for checking if within rejected list
                             let compatibility = Math.abs(userAudioFeatures["acousticness"]-doc.data().audioFeatures.acousticness);
@@ -84,19 +85,25 @@ export default function HomeScreen(props) {
                             compatibility += Math.abs(userAudioFeatures["valence"]-doc.data().audioFeatures.valence);
                             //Final calculations to make percent: 100% - (#/5 * 100);
                             compatibility = 100 - 20 * compatibility;
-                            console.log(doc.id, " => ", compatibility);
-                            
                             compatibilityList.push(
                                 {
                                     id: doc.id,
                                     compatibility: compatibility
                                 }
                             )
+                            count++;
+                            //when done
+                            if(count == response.size)
+                            {
+                                compatibilityList.sort((a, b) => a.compatibility - b.compatibility);
+                                setCompatibilityRanking(compatibilityList);
+                                console.log(compatibilityList);
+                            }
                         });
                     }).catch((error)=> {
                         console.log(error)
                     })
-                } 
+                }
 
             }
         })
