@@ -56,7 +56,8 @@ export default StyleSheet.create({
         alignSelf: 'center',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        margin: 25,
+        marginTop: 20,
+        marginBottom: 10,
     },
     cardContainer: {
         alignSelf: 'center',
@@ -76,19 +77,17 @@ export default StyleSheet.create({
         color: 'white',
         fontSize: 18,
         fontWeight: 'bold',
-        marginBottom: 5,
+        marginBottom: 10,
     },
     container: {
         flex: 1,
         marginBottom: 75,
     },
-    imageContainer: {
+    logo: {
         alignSelf: 'center',
-        borderRadius: 20,
-        height: 350,
-        margin: 20,
-        marginBottom: 10,
-        width: 350,
+        borderRadius: 100,
+        height: 75,
+        width: 75,
     },
     nameText: {
         alignSelf: 'center',
@@ -104,7 +103,7 @@ export default StyleSheet.create({
         flexDirection: 'row',
         height: 40,
         justifyContent: 'center',
-        marginBottom: 40,
+        marginBottom: 15,
         marginStart: 40,
     },
     nowPlayingImage: {
@@ -134,6 +133,12 @@ export default StyleSheet.create({
         color: 'white',
         fontSize: 48,
         fontWeight: 'bold',
+    },
+    titleContainer: {
+        alignSelf: 'flex-start',
+        alignItems: 'center',
+        flexDirection: 'row',
+        justifyContent: 'center',
         margin: 30,
         marginBottom: 15,
     },
@@ -163,7 +168,6 @@ export default StyleSheet.create({
         color: 'white',
         fontSize: 12,
         justifyContent: 'center',
-        lineHeight: 22,
         marginBottom: 5,
     },
 })

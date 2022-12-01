@@ -135,7 +135,10 @@ export default function HomeScreen(props) {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}> Sync Up! </Text>
+            <View style={styles.titleContainer}>
+                <Image style={styles.logo} source={require('../../../assets/insync-logo.png')} />
+                <Text style={styles.title}> Sync Up! </Text>
+            </View>
             
             <Text style={styles.nowPlayingText}> Now Playing: </Text>
             <View style={styles.nowPlayingContainer}>
@@ -180,9 +183,33 @@ export default function HomeScreen(props) {
                 <View style={styles.topSContainer}>
                     <View style={styles.topSBackground}>
                         <Text style={[styles.topSData, { fontWeight: 'bold' }]}> Current Top Songs </Text>
+                        <Text style={[styles.topSData, { fontWeight: '300' }]}>
+                            <View style={styles.bulletpoint} />
+                            Song name - Artist name
+                        </Text> 
+                        <Text style={[styles.topSData, { fontWeight: '300' }]}>
+                            <View style={styles.bulletpoint} />
+                            Song name - Artist name
+                        </Text> 
+                        <Text style={[styles.topSData, { fontWeight: '300' }]}>
+                            <View style={styles.bulletpoint} />
+                            Song name - Artist name
+                        </Text> 
                     </View>
                     <View style={styles.topSBackground}>
                         <Text style={[styles.topSData, { fontWeight: 'bold' }]}> Current Top Artists </Text>
+                        <Text style={[styles.topSData, { fontWeight: '300' }]}>
+                            <View style={styles.bulletpoint} />
+                            Artist name
+                        </Text> 
+                        <Text style={[styles.topSData, { fontWeight: '300' }]}>
+                            <View style={styles.bulletpoint} />
+                            Artist name
+                        </Text> 
+                        <Text style={[styles.topSData, { fontWeight: '300' }]}>
+                            <View style={styles.bulletpoint} />
+                            Artist name
+                        </Text>
                     </View>
                 </View>
 
