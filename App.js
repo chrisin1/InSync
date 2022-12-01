@@ -120,7 +120,11 @@ export default function App() {
               bio: data.bio,
               age: data.age,
               gender: data.gender,
-              location: data.location
+              location: data.location,
+              history: [{
+                id: uid,
+                matched: 0
+              }]
             }).then(() => {
               setUser(uid) //They make this userData for some reason with all the info, check if this is necessary
             })
