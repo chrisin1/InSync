@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import { Image, Text, TextInput, TouchableOpacity, View, Linking } from 'react-native'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { AuthContext } from '../../AuthContext/AuthContext'
+import { auth, db } from '../../firebase/config'
 import styles from './LoginStyles'
 
 
@@ -16,8 +17,16 @@ export default function LoginScreen({navigation}) {
     }
 
     const onLoginPress = () => {
-        logIn({ email, password });
-        navigation.navigate('Connect With Spotify')  
+        // if (logIn({ email, password }) == true){
+        //     console.log("success")
+        //     navigation.navigate('Connect With Spotify')  
+        // }
+        logIn({ email, password })
+        auth.onAuthStateChanged(user => {
+            if (user) { 
+                navigation.navigate('Connect With Spotify')  
+            }
+        })
     }
 
     return (
