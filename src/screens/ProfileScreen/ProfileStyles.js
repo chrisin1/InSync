@@ -112,7 +112,6 @@ export default StyleSheet.create({
         alignSelf: 'flex-start',
         fontSize: 14,
         justifyContent: 'center',
-        lineHeight: 22,
         marginBottom: 5,
         marginStart: 10,
     },
