@@ -58,6 +58,7 @@ export default function HomeScreen(props) {
                                 userAudioFeatures["instrumentalness"] = userAudioFeatures["instrumentalness"] + features.instrumentalness;
                                 userAudioFeatures["valence"] = userAudioFeatures["valence"] + features.valence;
                                 songCount++;
+                                //If all songs are added in the calculations
                                 if(songCount == response.items.length)
                                     averageValue(); //go to callback to calculate averages of audio features
                             })
