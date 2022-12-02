@@ -163,7 +163,7 @@ export default function App() {
       <Tab.Navigator
             initialRouteName={"Home"}
             screenOptions={{
-              tabBarStyle: { backgroundColor: '#373737', borderBottomWidth: 0, borderTopWidth: 0 },
+              tabBarStyle: { backgroundColor: '#373737', borderBottomWidth: 0, borderTopWidth: 0, marginBottom: 1.5 },
               tabBarActiveTintColor: '#FF9283',
               title: ''
             }}>
