@@ -5,23 +5,46 @@ import { auth, db } from '../../firebase/config';
 import styles from './HomeStyles';
 import SpotifyWebApi from 'spotify-web-api-js';
 import { enableIndexedDbPersistence } from 'firebase/firestore';
-import { doc, setDoc, query, where, collection, getDocs, getDoc, updateDoc } from 'firebase/firestore';
+import { doc, arrayUnion, query, where, collection, getDocs, getDoc, updateDoc } from 'firebase/firestore';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 
 export default function HomeScreen(props) {
     var [nowPlaying, setNowPlaying] = useState({})
     var [compatibilityRanking, setCompatibilityRanking] = useState([{}])
-
+    var [userDocRef, setUserDocRef] = useState(null);
     global.spotifyApi.setAccessToken(global.token)
     global.spotifyApi.getMe().then((user) => {
         //console.log(user)
     })
+
+    const onMatchPress = (id) => {
+        // Add to history on database
+        updateDoc(userDocRef, {
+            history: arrayUnion({
+                id: id,
+                matched: 1
+            })
+        });
+        setCompatibilityRanking(compatibilityRanking.filter(person => person.id != id));
+    }
+
+    const onNoMatchPress = (id) => {
+        // Add to history on database
+        updateDoc(userDocRef, {
+            history: arrayUnion({
+                id: id,
+                matched: 0
+            })
+        });
+        setCompatibilityRanking(compatibilityRanking.filter(person => person.id != id));
+    }
 
     useEffect(() => {
         
         auth.onAuthStateChanged(user => {
             if (user) { // user is signed in
                 const docRef = doc(db, "users", user.uid);
+                setUserDocRef(docRef);
 
                 // update user's audio feature ratings
                 const userAudioFeatures = {
@@ -133,6 +156,7 @@ export default function HomeScreen(props) {
 
     const getNowPlaying = () => {
         try {
+            console.log(compatibilityRanking);
             global.spotifyApi.getMyCurrentPlaybackState().then((response) => {
                 console.log(response)
                 if (response.item != null) {
@@ -209,15 +233,15 @@ export default function HomeScreen(props) {
                     <View style={styles.buttonsContainer}>
                         <TouchableOpacity 
                             style={styles.button}
-                            onPress={() => alert('PRESSED LEFT')}>
+                            onPress={() => onNoMatchPress(user.id)}>
                             <Image style={styles.buttonIcon}
-                                source={require('../../../assets/button-match.png')} />
+                                source={require('../../../assets/button-no-match.png')} />
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.button}
-                            onPress={() => alert('PRESSED RIGHT')}>
+                            onPress={() => onMatchPress(user.id)}>
                             <Image style={styles.buttonIcon}
-                                source={require('../../../assets/button-no-match.png')} />
+                                source={require('../../../assets/button-match.png')} />
                         </TouchableOpacity>
                     </View>
                 </View>
