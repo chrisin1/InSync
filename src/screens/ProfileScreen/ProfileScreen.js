@@ -124,6 +124,7 @@ export default function ProfileScreen({navigation}) {
                             console.log(albums.length)
                         })
                         setSavedAlbums(albums)
+                        setDoc(docRef, {topAlbums: albums}, {merge: true})
                     }
                     else if (response.item === null){
                         // getNowPlaying()

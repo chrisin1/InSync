@@ -169,5 +169,6 @@ export default StyleSheet.create({
         fontSize: 12,
         justifyContent: 'center',
         marginBottom: 5,
+        width: 75
     },
 })
