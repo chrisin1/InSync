@@ -10,6 +10,7 @@ export default function HomeScreen(props) {
     const { logOut } = useContext(AuthContext);
     var [nowPlaying, setNowPlaying] = useState({})
     var [compatibilityRanking, setCompatibilityRanking] = useState([{}])
+
     global.spotifyApi.setAccessToken(global.token)
     global.spotifyApi.getMe().then((user) => {
         //console.log(user)
@@ -120,7 +121,6 @@ export default function HomeScreen(props) {
                         console.log(error)
                     })
                 }
-
             }
         })
     }, []);
@@ -171,78 +171,65 @@ export default function HomeScreen(props) {
                 </Text>
             </View>
 
-            <View style={styles.cardContainer}>
-                <View style={styles.cardHeader}>
-                    <Image 
-                        style={styles.profileImage} 
-                        defaultSource={require('../../../assets/placeholder-album.png')} />
-                    <Text style={styles.nameText}> Bathroom George </Text>
-                </View>
-                <View style={styles.albumsContainer}>
-                    <View style={styles.albumContainer}>
-                        <Image style={styles.albumImage} />
-                        <Text style={[styles.albumInfo, { fontWeight: 'bold' }]}> Album Name </Text>
-                        <Text style={[styles.albumInfo, { opacity: '60%' }]}> Artist Name </Text>
+            <View style={styles.backgroundCard}>
+                <View style={styles.cardContainer}>
+                    <View style={styles.cardHeader}>
+                        <Image 
+                            style={styles.profileImage} 
+                            defaultSource={require('../../../assets/placeholder-profile.png')} />
+                        <Text style={styles.nameText}> Display Name </Text>
                     </View>
-                    <View style={styles.albumContainer}>
-                        <Image style={styles.albumImage} />
-                        <Text style={[styles.albumInfo, { fontWeight: 'bold' }]}> Album Name </Text>
-                        <Text style={[styles.albumInfo, { opacity: '60%' }]}> Artist Name </Text>
+                    <View style={styles.albumsContainer}>
+                        <View style={styles.albumContainer}>
+                            <Image
+                                defaultSource={require('../../../assets/placeholder-album.png')}
+                                style={styles.albumImage} />
+                                
+                            <Text style={[styles.albumInfo, { fontWeight: 'bold' }]} numberOfLines={1}> Album Name </Text>
+                            <Text style={[styles.albumInfo, { opacity: '60%' }]} numberOfLines={1}> Album Artist </Text>
+                        </View>
                     </View>
-                    <View style={styles.albumContainer}>
-                        <Image style={styles.albumImage} />
-                        <Text style={[styles.albumInfo, { fontWeight: 'bold' }]}> Album Name </Text>
-                        <Text style={[styles.albumInfo, { opacity: '60%' }]}> Artist Name </Text>
-                    </View>
-                </View>
 
-                <View style={styles.topSContainer}>
-                    <View style={styles.topSBackground}>
-                        <Text style={[styles.topSData, { fontWeight: 'bold' }]}> Current Top Songs </Text>
-                        <Text style={[styles.topSData, { fontWeight: '300' }]}>
-                            <View style={styles.bulletpoint} />
-                            Song name - Artist name
-                        </Text> 
-                        <Text style={[styles.topSData, { fontWeight: '300' }]}>
-                            <View style={styles.bulletpoint} />
-                            Song name - Artist name
-                        </Text> 
-                        <Text style={[styles.topSData, { fontWeight: '300' }]}>
-                            <View style={styles.bulletpoint} />
-                            Song name - Artist name
-                        </Text> 
+                    <View style={styles.topSContainer}>
+                        <View style={styles.topSBackground}>
+                            <Text style={[styles.topSData, { fontWeight: 'bold' }]}> Current Top Songs </Text>
+                            <View>
+                                <View>
+                                    <Text style={[styles.topSData, { width: '75%'}]} numberOfLines={1}>
+                                        <View style={styles.bulletpoint} />
+                                        Song Name - Artist Name
+                                    </Text>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={styles.topSBackground}>
+                            <Text style={[styles.topSData, { fontWeight: 'bold' }]}> Current Top Artists </Text>
+                            <View>
+                                <View>
+                                    <Text style={styles.topSData}>
+                                        <View style={styles.bulletpoint} />
+                                        Artist Name
+                                    </Text>
+                                </View>
+                            </View>
+                        </View>
                     </View>
-                    <View style={styles.topSBackground}>
-                        <Text style={[styles.topSData, { fontWeight: 'bold' }]}> Current Top Artists </Text>
-                        <Text style={[styles.topSData, { fontWeight: '300' }]}>
-                            <View style={styles.bulletpoint} />
-                            Artist name
-                        </Text> 
-                        <Text style={[styles.topSData, { fontWeight: '300' }]}>
-                            <View style={styles.bulletpoint} />
-                            Artist name
-                        </Text> 
-                        <Text style={[styles.topSData, { fontWeight: '300' }]}>
-                            <View style={styles.bulletpoint} />
-                            Artist name
-                        </Text>
-                    </View>
-                </View>
 
-                <Text style={styles.compText}> 95% Compatible </Text>
-                <View style={styles.buttonsContainer}>
-                    <TouchableOpacity 
-                        style={styles.button}
-                        onPress={() => alert('PRESSED LEFT')}>
-                        <Image style={styles.buttonIcon}
-                            source={require('../../../assets/button-match.png')} />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={styles.button}
-                        onPress={() => alert('PRESSED RIGHT')}>
-                        <Image style={styles.buttonIcon}
-                            source={require('../../../assets/button-no-match.png')} />
-                    </TouchableOpacity>
+                    <Text style={styles.compText}> 95% Compatible </Text>
+                    <View style={styles.buttonsContainer}>
+                        <TouchableOpacity 
+                            style={styles.button}
+                            onPress={() => alert('PRESSED LEFT')}>
+                            <Image style={styles.buttonIcon}
+                                source={require('../../../assets/button-match.png')} />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.button}
+                            onPress={() => alert('PRESSED RIGHT')}>
+                            <Image style={styles.buttonIcon}
+                                source={require('../../../assets/button-no-match.png')} />
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </View>
         </View>
