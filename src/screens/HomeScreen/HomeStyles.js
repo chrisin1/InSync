@@ -2,6 +2,7 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
     albumContainer: {
+        borderRadius: 20,
         flexDirection: 'column',
         margin: 3,
         paddingBottom: 15,
@@ -10,14 +11,14 @@ export default StyleSheet.create({
         backgroundColor: '#222222',
         borderRadius: 20,
         flexDirection: 'row',
-        justifyContent: 'space-evenly',
+        justifyContent: 'space-between',
         margin: 20,
         marginBottom: 0,
         padding: 10,
     },
     albumImage: {
         alignSelf: 'center',
-        backgroundColor: '#FF9283',
+        backgroundColor: '#FF9382',
         borderRadius: 10,
         height: 100,
         margin: 5,
@@ -38,7 +39,7 @@ export default StyleSheet.create({
         justifyContent: 'center',
         overflow: 'visible',
         width: '50%',
-        height: '70%',
+        height: 125,
     },
     bulletpoint: {
         backgroundColor: 'white',
@@ -53,7 +54,7 @@ export default StyleSheet.create({
         borderRadius: 100,
         height: 125,
         justifyContent: 'center',
-        marginHorizontal: 30,
+        marginHorizontal: 40,
         width: 125,
     },
     buttonIcon: {
@@ -64,7 +65,7 @@ export default StyleSheet.create({
     buttonsContainer: {
         alignSelf: 'center',
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'space-around',
         marginTop: 20,
         marginBottom: 10,
     },
@@ -72,7 +73,9 @@ export default StyleSheet.create({
         alignSelf: 'center',
         backgroundColor: '#373737',
         borderRadius: 20,
+        marginBottom: 20,
         paddingBottom: 20,
+        width: 450,
     },
     cardHeader: {
         alignSelf: 'flex-start',
@@ -89,8 +92,9 @@ export default StyleSheet.create({
         marginBottom: 10,
     },
     container: {
+        alignItems: 'center',
         flex: 1,
-        marginBottom: 75,
+        marginBottom: 15,
     },
     logo: {
         alignSelf: 'center',
@@ -104,6 +108,7 @@ export default StyleSheet.create({
         fontSize: 32,
         fontWeight: 'bold',
         marginStart: 5,
+        marginLeft: 10,
     },
     nowPlayingContainer: {
         alignSelf: 'flex-start',
@@ -179,6 +184,5 @@ export default StyleSheet.create({
         flex: 1,
         fontSize: 12,
         marginBottom: 5,
-        width: 75
     },
 })
