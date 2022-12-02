@@ -5,6 +5,7 @@ export default StyleSheet.create({
         alignItems: 'center',
         alignSelf: 'center',
         flex: 1,
+        paddingBottom: 50,
     },
     title: {
         alignSelf: 'center',

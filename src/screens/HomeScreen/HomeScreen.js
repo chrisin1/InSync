@@ -5,11 +5,10 @@ import { auth, db } from '../../firebase/config';
 import styles from './HomeStyles';
 import SpotifyWebApi from 'spotify-web-api-js';
 import { enableIndexedDbPersistence } from 'firebase/firestore';
-import { doc, setDoc, query, where, collection, getDocs, getDoc } from 'firebase/firestore';
+import { doc, setDoc, query, where, collection, getDocs, getDoc, updateDoc } from 'firebase/firestore';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 
 export default function HomeScreen(props) {
-    const { logOut } = useContext(AuthContext);
     var [nowPlaying, setNowPlaying] = useState({})
     var [compatibilityRanking, setCompatibilityRanking] = useState([{}])
 
@@ -112,9 +111,8 @@ export default function HomeScreen(props) {
                                     topSongs: doc.data().topSongs,
                                     topAlbums: doc.data().topAlbums,
                                     compatibility: Math.round(compatibility * 10) / 10
-                                }
-                              }
-                            )
+                                })
+                            }
                             
                             count++;
                             //when done
@@ -154,16 +152,15 @@ export default function HomeScreen(props) {
         return true
     }
     const createCards = (user, index) => {
-
         console.log(user.displayName);
         return (
-            <>
-                <View style={styles.cardContainer} key={index}>
+            <View>
+                <View style={styles.cardContainer}>
                     <View style={styles.cardHeader}>
                         <Image 
                             style={styles.profileImage} 
-                            defaultSource={require('../../../assets/placeholder-album.png')} />
-                        <Text style={styles.nameText}> {user.displayName} </Text>
+                            defaultSource={require('../../../assets/placeholder-profile.png')} />
+                        <Text style={styles.nameText} numberOfLines={1}> {user.displayName} </Text>
                     </View>
                     <View style={styles.albumsContainer}>
                         {user.topAlbums?.map((album) => {
@@ -171,10 +168,11 @@ export default function HomeScreen(props) {
                                 <View style={styles.albumContainer}>
                                     <Image 
                                         style={styles.albumImage}
+                                        defaultSource={require('../../../assets/placeholder-album.png')}
                                         source={album.albumArt}
-                                        />
-                                    <Text style={[styles.albumInfo, { fontWeight: 'bold' }]}> {album.name} </Text>
-                                    <Text style={[styles.albumInfo, { opacity: '60%' }]}> {album.artist} </Text>
+                                    />
+                                    <Text style={[styles.albumInfo, { fontWeight: 'bold' }]} numberOfLines={1}> {album.name} </Text>
+                                    <Text style={[styles.albumInfo, { opacity: '60%' }]} numberOfLines={1}> {album.artist} </Text>
                                 </View>
                             )           
                         })}
@@ -183,10 +181,10 @@ export default function HomeScreen(props) {
 
                     <View style={styles.topSContainer}>
                         <View style={styles.topSBackground}>
-                            <Text style={[styles.topSData, { fontWeight: 'bold' }]}> Current Top Songs </Text>
+                            <Text style={[styles.topSData, { fontWeight: 'bold' }]} numberOfLines={1}> Current Top Songs </Text>
                             {user.topSongs?.map((song) => {
                                 return (
-                                    <Text style={[styles.topSData, { fontWeight: '300' }]}>
+                                    <Text style={[styles.topSData, { fontWeight: '300' }]} numberOfLines={1}>
                                         <View style={styles.bulletpoint} />
                                         {song.name} - {song.artist}
                                     </Text> 
@@ -195,10 +193,10 @@ export default function HomeScreen(props) {
                         </View>
                         
                         <View style={styles.topSBackground}>
-                            <Text style={[styles.topSData, { fontWeight: 'bold' }]}> Current Top Artists </Text>
+                            <Text style={[styles.topSData, { fontWeight: 'bold' }]} numberOfLines={1}> Current Top Artists </Text>
                             {user.topArtists?.map((artist) => {
                                 return (
-                                    <Text style={[styles.topSData, { fontWeight: '300' }]}>
+                                    <Text style={[styles.topSData, { fontWeight: '300' }]} numberOfLines={1}>
                                         <View style={styles.bulletpoint} />
                                         {artist.name}
                                     </Text> 
@@ -207,7 +205,7 @@ export default function HomeScreen(props) {
                         </View>
                     </View>
 
-                    <Text style={styles.compText}> {user.compatibility}% Compatible </Text>
+                    <Text style={styles.compText}> {user.compatibility}% Compatible! </Text>
                     <View style={styles.buttonsContainer}>
                         <TouchableOpacity 
                             style={styles.button}
@@ -223,7 +221,7 @@ export default function HomeScreen(props) {
                         </TouchableOpacity>
                     </View>
                 </View>
-            </>                
+            </View>                
         )
     }
     // constantly poll web player for currently playing track, with timeout to avoid hitting API rate limit
@@ -242,7 +240,7 @@ export default function HomeScreen(props) {
                     style={styles.nowPlayingImage}
                     source={nowPlaying.albumArt}
                     defaultSource={require('../../../assets/placeholder-album.png')}
-                    resizeMode='center' >
+                    resizeMode='contain' >
                 </Image>
                 <Text style={styles.text}> 
                     {nowPlaying.name} 
@@ -251,71 +249,9 @@ export default function HomeScreen(props) {
                 </Text>
             </View>
             
-            <ScrollView>
+            <ScrollView showsVerticalScrollIndicator={false}>
                 {compatibilityRanking?.map(createCards)}
             </ScrollView>
-
-            <View style={styles.backgroundCard}>
-                <View style={styles.cardContainer}>
-                    <View style={styles.cardHeader}>
-                        <Image 
-                            style={styles.profileImage} 
-                            defaultSource={require('../../../assets/placeholder-profile.png')} />
-                        <Text style={styles.nameText}> Display Name </Text>
-                    </View>
-                    <View style={styles.albumsContainer}>
-                        <View style={styles.albumContainer}>
-                            <Image
-                                defaultSource={require('../../../assets/placeholder-album.png')}
-                                style={styles.albumImage} />
-                                
-                            <Text style={[styles.albumInfo, { fontWeight: 'bold' }]} numberOfLines={1}> Album Name </Text>
-                            <Text style={[styles.albumInfo, { opacity: '60%' }]} numberOfLines={1}> Album Artist </Text>
-                        </View>
-                    </View>
-
-                    <View style={styles.topSContainer}>
-                        <View style={styles.topSBackground}>
-                            <Text style={[styles.topSData, { fontWeight: 'bold' }]}> Current Top Songs </Text>
-                            <View>
-                                <View>
-                                    <Text style={[styles.topSData, { width: '75%'}]} numberOfLines={1}>
-                                        <View style={styles.bulletpoint} />
-                                        Song Name - Artist Name
-                                    </Text>
-                                </View>
-                            </View>
-                        </View>
-                        <View style={styles.topSBackground}>
-                            <Text style={[styles.topSData, { fontWeight: 'bold' }]}> Current Top Artists </Text>
-                            <View>
-                                <View>
-                                    <Text style={styles.topSData}>
-                                        <View style={styles.bulletpoint} />
-                                        Artist Name
-                                    </Text>
-                                </View>
-                            </View>
-                        </View>
-                    </View>
-
-                    <Text style={styles.compText}> 95% Compatible </Text>
-                    <View style={styles.buttonsContainer}>
-                        <TouchableOpacity 
-                            style={styles.button}
-                            onPress={() => alert('PRESSED LEFT')}>
-                            <Image style={styles.buttonIcon}
-                                source={require('../../../assets/button-match.png')} />
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                            style={styles.button}
-                            onPress={() => alert('PRESSED RIGHT')}>
-                            <Image style={styles.buttonIcon}
-                                source={require('../../../assets/button-no-match.png')} />
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            </View>
         </View>
     )
 }
