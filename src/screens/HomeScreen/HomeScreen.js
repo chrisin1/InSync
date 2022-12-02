@@ -4,12 +4,15 @@ import { AuthContext } from '../../AuthContext/AuthContext'
 import { auth, db } from '../../firebase/config';
 import styles from './HomeStyles';
 import SpotifyWebApi from 'spotify-web-api-js';
-import { getDoc, getDocs, setDoc, doc, query, where, collection, updateDoc} from 'firebase/firestore';
+import { enableIndexedDbPersistence } from 'firebase/firestore';
+import { doc, setDoc, query, where, collection, getDocs, getDoc } from 'firebase/firestore';
+import { FlatList, ScrollView } from 'react-native-gesture-handler';
 
 export default function HomeScreen(props) {
     const { logOut } = useContext(AuthContext);
     var [nowPlaying, setNowPlaying] = useState({})
     var [compatibilityRanking, setCompatibilityRanking] = useState([{}])
+
     global.spotifyApi.setAccessToken(global.token)
     global.spotifyApi.getMe().then((user) => {
         //console.log(user)
@@ -89,10 +92,9 @@ export default function HomeScreen(props) {
                     getDocs(q).then((response) => {
                         var count = 0;
                         response.forEach((doc) => {
-                            //If it user hasn't matched/rejected them before
+                            //can add check here for checking if within rejected list
                             if(!matchHistory.some(match => match.id == doc.data().id))
                             {
-                                //can add check here for checking if within rejected list
                                 let compatibility = Math.abs(userAudioFeatures["acousticness"]-doc.data().audioFeatures.acousticness);
                                 compatibility += Math.abs(userAudioFeatures["danceability"]-doc.data().audioFeatures.danceability);
                                 compatibility += Math.abs(userAudioFeatures["energy"]-doc.data().audioFeatures.energy);
@@ -100,18 +102,25 @@ export default function HomeScreen(props) {
                                 compatibility += Math.abs(userAudioFeatures["valence"]-doc.data().audioFeatures.valence);
                                 //Final calculations to make percent: 100% - (#/5 * 100);
                                 compatibility = 100 - 20 * compatibility;
+                                console.log(doc.data())
                                 compatibilityList.push(
-                                    {
-                                        id: doc.id,
-                                        compatibility: compatibility
-                                    }
-                                )
-                            }
+                                {
+                                    id: doc.id,
+                                    displayName: doc.data().displayName,
+                                    profileImage: doc.data().profileImage,
+                                    topArtists: doc.data().topArtists,
+                                    topSongs: doc.data().topSongs,
+                                    topAlbums: doc.data().topAlbums,
+                                    compatibility: Math.round(compatibility * 10) / 10
+                                }
+                              }
+                            )
+                            
                             count++;
                             //when done
                             if(count == response.size)
                             {
-                                compatibilityList.sort((a, b) => a.compatibility - b.compatibility);
+                                compatibilityList.sort((a, b) => b.compatibility - a.compatibility);
                                 setCompatibilityRanking(compatibilityList);
                                 console.log(compatibilityList);
                             }
@@ -120,7 +129,6 @@ export default function HomeScreen(props) {
                         console.log(error)
                     })
                 }
-
             }
         })
     }, []);
@@ -145,7 +153,79 @@ export default function HomeScreen(props) {
         }
         return true
     }
+    const createCards = (user, index) => {
 
+        console.log(user.displayName);
+        return (
+            <>
+                <View style={styles.cardContainer} key={index}>
+                    <View style={styles.cardHeader}>
+                        <Image 
+                            style={styles.profileImage} 
+                            defaultSource={require('../../../assets/placeholder-album.png')} />
+                        <Text style={styles.nameText}> {user.displayName} </Text>
+                    </View>
+                    <View style={styles.albumsContainer}>
+                        {user.topAlbums?.map((album) => {
+                            return (
+                                <View style={styles.albumContainer}>
+                                    <Image 
+                                        style={styles.albumImage}
+                                        source={album.albumArt}
+                                        />
+                                    <Text style={[styles.albumInfo, { fontWeight: 'bold' }]}> {album.name} </Text>
+                                    <Text style={[styles.albumInfo, { opacity: '60%' }]}> {album.artist} </Text>
+                                </View>
+                            )           
+                        })}
+        
+                    </View>
+
+                    <View style={styles.topSContainer}>
+                        <View style={styles.topSBackground}>
+                            <Text style={[styles.topSData, { fontWeight: 'bold' }]}> Current Top Songs </Text>
+                            {user.topSongs?.map((song) => {
+                                return (
+                                    <Text style={[styles.topSData, { fontWeight: '300' }]}>
+                                        <View style={styles.bulletpoint} />
+                                        {song.name} - {song.artist}
+                                    </Text> 
+                                )           
+                            })}
+                        </View>
+                        
+                        <View style={styles.topSBackground}>
+                            <Text style={[styles.topSData, { fontWeight: 'bold' }]}> Current Top Artists </Text>
+                            {user.topArtists?.map((artist) => {
+                                return (
+                                    <Text style={[styles.topSData, { fontWeight: '300' }]}>
+                                        <View style={styles.bulletpoint} />
+                                        {artist.name}
+                                    </Text> 
+                                )           
+                            })}
+                        </View>
+                    </View>
+
+                    <Text style={styles.compText}> {user.compatibility}% Compatible </Text>
+                    <View style={styles.buttonsContainer}>
+                        <TouchableOpacity 
+                            style={styles.button}
+                            onPress={() => alert('PRESSED LEFT')}>
+                            <Image style={styles.buttonIcon}
+                                source={require('../../../assets/button-match.png')} />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.button}
+                            onPress={() => alert('PRESSED RIGHT')}>
+                            <Image style={styles.buttonIcon}
+                                source={require('../../../assets/button-no-match.png')} />
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </>                
+        )
+    }
     // constantly poll web player for currently playing track, with timeout to avoid hitting API rate limit
     setTimeout(getNowPlaying, 3000)
 
@@ -170,79 +250,70 @@ export default function HomeScreen(props) {
                     {nowPlaying.artist}
                 </Text>
             </View>
+            
+            <ScrollView>
+                {compatibilityRanking?.map(createCards)}
+            </ScrollView>
 
-            <View style={styles.cardContainer}>
-                <View style={styles.cardHeader}>
-                    <Image 
-                        style={styles.profileImage} 
-                        defaultSource={require('../../../assets/placeholder-album.png')} />
-                    <Text style={styles.nameText}> Bathroom George </Text>
-                </View>
-                <View style={styles.albumsContainer}>
-                    <View style={styles.albumContainer}>
-                        <Image style={styles.albumImage} />
-                        <Text style={[styles.albumInfo, { fontWeight: 'bold' }]}> Album Name </Text>
-                        <Text style={[styles.albumInfo, { opacity: '60%' }]}> Artist Name </Text>
+            <View style={styles.backgroundCard}>
+                <View style={styles.cardContainer}>
+                    <View style={styles.cardHeader}>
+                        <Image 
+                            style={styles.profileImage} 
+                            defaultSource={require('../../../assets/placeholder-profile.png')} />
+                        <Text style={styles.nameText}> Display Name </Text>
                     </View>
-                    <View style={styles.albumContainer}>
-                        <Image style={styles.albumImage} />
-                        <Text style={[styles.albumInfo, { fontWeight: 'bold' }]}> Album Name </Text>
-                        <Text style={[styles.albumInfo, { opacity: '60%' }]}> Artist Name </Text>
+                    <View style={styles.albumsContainer}>
+                        <View style={styles.albumContainer}>
+                            <Image
+                                defaultSource={require('../../../assets/placeholder-album.png')}
+                                style={styles.albumImage} />
+                                
+                            <Text style={[styles.albumInfo, { fontWeight: 'bold' }]} numberOfLines={1}> Album Name </Text>
+                            <Text style={[styles.albumInfo, { opacity: '60%' }]} numberOfLines={1}> Album Artist </Text>
+                        </View>
                     </View>
-                    <View style={styles.albumContainer}>
-                        <Image style={styles.albumImage} />
-                        <Text style={[styles.albumInfo, { fontWeight: 'bold' }]}> Album Name </Text>
-                        <Text style={[styles.albumInfo, { opacity: '60%' }]}> Artist Name </Text>
-                    </View>
-                </View>
 
-                <View style={styles.topSContainer}>
-                    <View style={styles.topSBackground}>
-                        <Text style={[styles.topSData, { fontWeight: 'bold' }]}> Current Top Songs </Text>
-                        <Text style={[styles.topSData, { fontWeight: '300' }]}>
-                            <View style={styles.bulletpoint} />
-                            Song name - Artist name
-                        </Text> 
-                        <Text style={[styles.topSData, { fontWeight: '300' }]}>
-                            <View style={styles.bulletpoint} />
-                            Song name - Artist name
-                        </Text> 
-                        <Text style={[styles.topSData, { fontWeight: '300' }]}>
-                            <View style={styles.bulletpoint} />
-                            Song name - Artist name
-                        </Text> 
+                    <View style={styles.topSContainer}>
+                        <View style={styles.topSBackground}>
+                            <Text style={[styles.topSData, { fontWeight: 'bold' }]}> Current Top Songs </Text>
+                            <View>
+                                <View>
+                                    <Text style={[styles.topSData, { width: '75%'}]} numberOfLines={1}>
+                                        <View style={styles.bulletpoint} />
+                                        Song Name - Artist Name
+                                    </Text>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={styles.topSBackground}>
+                            <Text style={[styles.topSData, { fontWeight: 'bold' }]}> Current Top Artists </Text>
+                            <View>
+                                <View>
+                                    <Text style={styles.topSData}>
+                                        <View style={styles.bulletpoint} />
+                                        Artist Name
+                                    </Text>
+                                </View>
+                            </View>
+                        </View>
                     </View>
-                    <View style={styles.topSBackground}>
-                        <Text style={[styles.topSData, { fontWeight: 'bold' }]}> Current Top Artists </Text>
-                        <Text style={[styles.topSData, { fontWeight: '300' }]}>
-                            <View style={styles.bulletpoint} />
-                            Artist name
-                        </Text> 
-                        <Text style={[styles.topSData, { fontWeight: '300' }]}>
-                            <View style={styles.bulletpoint} />
-                            Artist name
-                        </Text> 
-                        <Text style={[styles.topSData, { fontWeight: '300' }]}>
-                            <View style={styles.bulletpoint} />
-                            Artist name
-                        </Text>
-                    </View>
-                </View>
 
-                <Text style={styles.compText}> 95% Compatible </Text>
-                <View style={styles.buttonsContainer}>
-                    <TouchableOpacity 
-                        style={styles.button}
-                        onPress={() => alert('PRESSED LEFT')}>
-                        <Image style={styles.buttonIcon}
-                            source={require('../../../assets/button-match.png')} />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        style={styles.button}
-                        onPress={() => alert('PRESSED RIGHT')}>
-                        <Image style={styles.buttonIcon}
-                            source={require('../../../assets/button-no-match.png')} />
-                    </TouchableOpacity>
+                    <Text style={styles.compText}> 95% Compatible </Text>
+                    <View style={styles.buttonsContainer}>
+                        <TouchableOpacity 
+                            style={styles.button}
+                            onPress={() => alert('PRESSED LEFT')}>
+                            <Image style={styles.buttonIcon}
+                                source={require('../../../assets/button-match.png')} />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.button}
+                            onPress={() => alert('PRESSED RIGHT')}>
+                            <Image style={styles.buttonIcon}
+                                source={require('../../../assets/button-no-match.png')} />
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </View>
         </View>
