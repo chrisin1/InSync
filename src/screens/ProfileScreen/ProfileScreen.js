@@ -44,7 +44,6 @@ export default function ProfileScreen({navigation}) {
                     setAge(userDoc.data().age);
                     setGender(userDoc.data().gender);
                     setLocation(userDoc.data().location);
-                    console.log('retrieved user info');
                 })
                 .catch((error) => {
                     console.log('Error retrieving user information: ', error)
