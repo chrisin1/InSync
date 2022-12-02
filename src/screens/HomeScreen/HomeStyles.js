@@ -179,5 +179,6 @@ export default StyleSheet.create({
         flex: 1,
         fontSize: 12,
         marginBottom: 5,
+        width: 75
     },
 })
