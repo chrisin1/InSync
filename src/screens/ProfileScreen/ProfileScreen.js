@@ -105,6 +105,8 @@ export default function ProfileScreen({navigation}) {
                     var pic = user.images[0].url
                     setProfilePic(pic)
                     setDoc(docRef, {profilePic: pic}, {merge: true})
+                }).catch((error)=> {
+                    console.log(error)
                 })
 
                 // retrieve random three album arts from user saved albums
