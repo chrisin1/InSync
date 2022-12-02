@@ -3,21 +3,29 @@ import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import styles from './ChatStyles';
 
 
-export default function ChatScreen(props) {
+export default function ChatScreen({navigation}) {
+    const onRoomPress = () => {
+        navigation.navigate('ChatRoom');
+    }
     return (
         <View style ={styles.container}>
             <Text style= {styles.title}>Messages</Text>
 
-            <View style ={styles.chatContainer}>
-                <Image source={require('../../../assets/placeholder-profile.png')} style = {styles.image}/>
-                <View style ={styles.rightContainer} >
-                    <View style ={styles.row}>
-                        <Text style ={styles.name}>Chris In</Text>
-                        <Text style ={styles.text}>3 min</Text>
+            
+            <TouchableOpacity onPress={() => onRoomPress()}>
+                <View style ={styles.chatContainer}>
+                    <Image source={require('../../../assets/placeholder-profile.png')} style = {styles.image}/>
+                    <View style ={styles.rightContainer} >
+                        <View style ={styles.row}>
+                            <Text style ={styles.name}>Chris In</Text>
+                            <Text style ={styles.text}>3 min</Text>
+                        </View>
+                        <Text style ={styles.text} numberOfLines ={1}>I just got home</Text>
                     </View>
-                    <Text style ={styles.text} numberOfLines ={1}>I just got home</Text>
                 </View>
-            </View>
+            </TouchableOpacity>
+            
+            
 
             <View style ={styles.chatContainer}>
                 <Image source={require('../../../assets/placeholder-profile.png')} style = {styles.image}/>
