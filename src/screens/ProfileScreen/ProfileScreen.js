@@ -44,7 +44,6 @@ export default function ProfileScreen({navigation}) {
                     setAge(userDoc.data().age);
                     setGender(userDoc.data().gender);
                     setLocation(userDoc.data().location);
-                    console.log('retrieved user info');
                 })
                 .catch((error) => {
                     console.log('Error retrieving user information: ', error)
@@ -124,6 +123,7 @@ export default function ProfileScreen({navigation}) {
                             console.log(albums.length)
                         })
                         setSavedAlbums(albums)
+                        updateDoc(docRef, {savedAlbums: albums});
                     }
                     else if (response.item === null){
                         // getNowPlaying()
@@ -199,7 +199,7 @@ export default function ProfileScreen({navigation}) {
                     source={profilePic}
                     defaultSource={require('../../../assets/placeholder-profile.png')}
                     style={styles.profileImage}
-                    resizeMode="center" />
+                    resizeMode="contain" />
                 <View style={{ marginLeft: 30 }}>
                     {[headerInfo, metaInfo, buttons]}
                 </View>

@@ -14,28 +14,30 @@ export default StyleSheet.create({
         margin: 50
     },
     image: {
+        backgroundColor: 'white',
         height: 75,
+        opacity: '10%',
         width: 75,
-        backgroundColor: '#FF9382',
         borderRadius: 100,
         marginRight: 20
     },
     name: {
-        fontsize: 16,
+        fontSize: 16,
         fontWeight: 'bold',
-        marginBottom: 5,
+        marginBottom: 3,
         color: 'white',
     },
     text: {
         fontSize: 14,
-        fontWeight: 300,
+        fontWeight: 200,
         color: 'white',
         opacity: '60%',
+        maxWidth: 300,
     },
     rightContainer: {
         justifyContent: 'space-evenly',
         paddingVertical: 15,
-        width: 300,
+        width: 350,
     },
     chatContainer: {
         flexDirection: 'row',
