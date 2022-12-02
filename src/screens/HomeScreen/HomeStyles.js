@@ -21,7 +21,7 @@ export default StyleSheet.create({
         borderRadius: 10,
         height: 100,
         margin: 5,
-        marginBottom: 10,
+        marginBottom: 5,
         width: 100,
     },
     albumInfo: {
@@ -29,7 +29,16 @@ export default StyleSheet.create({
         color: 'white',
         fontSize: 12,
         marginStart: 5,
-        marginBottom: 3,
+        width: 100,
+    },
+    backgroundCard: {
+        alignSelf: 'center',
+        backgroundColor: '#2D2D2D',
+        borderRadius: 20,
+        justifyContent: 'center',
+        overflow: 'visible',
+        width: '50%',
+        height: '70%',
     },
     bulletpoint: {
         backgroundColor: 'white',
@@ -124,8 +133,10 @@ export default StyleSheet.create({
     },
     profileImage: {
         alignSelf: 'center',
+        backgroundColor: '#222222',
         borderRadius: 100,
         height: 50,
+        resizeMode: 'contain',
         width: 50,
     },
     title: {
@@ -149,12 +160,12 @@ export default StyleSheet.create({
         marginHorizontal: 10,
     },
     topSBackground: {
-        alignSelf: 'stretch',
-        alignItems: 'center',
+        alignItems: 'flex-start',
         backgroundColor: '#222222',
         borderRadius: 15,
         flex: 1,
         margin: 5,
+        overflow: 'hidden',
         padding: 10,
     },
     topSContainer: {
@@ -164,10 +175,9 @@ export default StyleSheet.create({
         margin: 15,
     },
     topSData: {
-        alignSelf: 'flex-start',
         color: 'white',
+        flex: 1,
         fontSize: 12,
-        justifyContent: 'center',
         marginBottom: 5,
         width: 75
     },

@@ -10,6 +10,8 @@ export { default as TestScreen } from './TestScreen/TestScreen'
 
 export { default as ChatScreen } from './ChatScreen/ChatScreen'
 
+export { default as ChatRoomScreen } from './ChatRoomScreen/ChatRoomScreen'
+
 export { default as EditProfileScreen } from './EditProfileScreen/EditProfileScreen'
 
 export { default as SpotifyConnectScreen } from './SpotifyConnectScreen/SpotifyConnectScreen'

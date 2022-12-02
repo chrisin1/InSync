@@ -38,7 +38,7 @@ export default function HomeScreen(props) {
                         let songCount = 0;
                         for (const song of response.items) {
                             global.spotifyApi.getAudioFeaturesForTrack(song.id).then((features) => {
-                                console.log(features);
+                                //console.log(features);
                                 userAudioFeatures["acousticness"] += features.acousticness;
                                 userAudioFeatures["danceability"] += features.danceability;
                                 userAudioFeatures["energy"] += features.energy;
@@ -60,8 +60,10 @@ export default function HomeScreen(props) {
                                 {
                                     console.log("Amount of top songs: " + response.items.length);
                                     console.log(userAudioFeatures);
-                                    setDoc(docRef, {audioFeatures: userAudioFeatures}, {merge: true})
-                                    updateCompatibility();
+                                    updateDoc(docRef, {
+                                        audioFeatures: userAudioFeatures
+                                    })
+                                    getMatchHistory();
                                 }
                             })
                         }
@@ -70,6 +72,18 @@ export default function HomeScreen(props) {
                         console.log("Failed to get top tracks");
                     }
                 })
+
+                let matchHistory = [];
+                //get user's match history
+                function getMatchHistory(){
+                    getDoc(docRef).then((userDoc) => {
+                        matchHistory = userDoc.data().history;
+                        console.log(matchHistory);
+                        updateCompatibility();
+                    }).catch((error)=> {
+                        console.log("Get matchHistory error: " + error);
+                    })
+                }
                 
                 //update compatibility with other users
                 function updateCompatibility(){
@@ -79,15 +93,17 @@ export default function HomeScreen(props) {
                         var count = 0;
                         response.forEach((doc) => {
                             //can add check here for checking if within rejected list
-                            let compatibility = Math.abs(userAudioFeatures["acousticness"]-doc.data().audioFeatures.acousticness);
-                            compatibility += Math.abs(userAudioFeatures["danceability"]-doc.data().audioFeatures.danceability);
-                            compatibility += Math.abs(userAudioFeatures["energy"]-doc.data().audioFeatures.energy);
-                            compatibility += Math.abs(userAudioFeatures["instrumentalness"]-doc.data().audioFeatures.instrumentalness);
-                            compatibility += Math.abs(userAudioFeatures["valence"]-doc.data().audioFeatures.valence);
-                            //Final calculations to make percent: 100% - (#/5 * 100);
-                            compatibility = 100 - 20 * compatibility;
-                            console.log(doc.data())
-                            compatibilityList.push(
+                            if(!matchHistory.some(match => match.id == doc.data().id))
+                            {
+                                let compatibility = Math.abs(userAudioFeatures["acousticness"]-doc.data().audioFeatures.acousticness);
+                                compatibility += Math.abs(userAudioFeatures["danceability"]-doc.data().audioFeatures.danceability);
+                                compatibility += Math.abs(userAudioFeatures["energy"]-doc.data().audioFeatures.energy);
+                                compatibility += Math.abs(userAudioFeatures["instrumentalness"]-doc.data().audioFeatures.instrumentalness);
+                                compatibility += Math.abs(userAudioFeatures["valence"]-doc.data().audioFeatures.valence);
+                                //Final calculations to make percent: 100% - (#/5 * 100);
+                                compatibility = 100 - 20 * compatibility;
+                                console.log(doc.data())
+                                compatibilityList.push(
                                 {
                                     id: doc.id,
                                     displayName: doc.data().displayName,
@@ -97,7 +113,9 @@ export default function HomeScreen(props) {
                                     topAlbums: doc.data().topAlbums,
                                     compatibility: Math.round(compatibility * 10) / 10
                                 }
+                              }
                             )
+                            
                             count++;
                             //when done
                             if(count == response.size)
@@ -111,7 +129,6 @@ export default function HomeScreen(props) {
                         console.log(error)
                     })
                 }
-
             }
         })
     }, []);
@@ -238,6 +255,67 @@ export default function HomeScreen(props) {
                 {compatibilityRanking?.map(createCards)}
             </ScrollView>
 
+            <View style={styles.backgroundCard}>
+                <View style={styles.cardContainer}>
+                    <View style={styles.cardHeader}>
+                        <Image 
+                            style={styles.profileImage} 
+                            defaultSource={require('../../../assets/placeholder-profile.png')} />
+                        <Text style={styles.nameText}> Display Name </Text>
+                    </View>
+                    <View style={styles.albumsContainer}>
+                        <View style={styles.albumContainer}>
+                            <Image
+                                defaultSource={require('../../../assets/placeholder-album.png')}
+                                style={styles.albumImage} />
+                                
+                            <Text style={[styles.albumInfo, { fontWeight: 'bold' }]} numberOfLines={1}> Album Name </Text>
+                            <Text style={[styles.albumInfo, { opacity: '60%' }]} numberOfLines={1}> Album Artist </Text>
+                        </View>
+                    </View>
+
+                    <View style={styles.topSContainer}>
+                        <View style={styles.topSBackground}>
+                            <Text style={[styles.topSData, { fontWeight: 'bold' }]}> Current Top Songs </Text>
+                            <View>
+                                <View>
+                                    <Text style={[styles.topSData, { width: '75%'}]} numberOfLines={1}>
+                                        <View style={styles.bulletpoint} />
+                                        Song Name - Artist Name
+                                    </Text>
+                                </View>
+                            </View>
+                        </View>
+                        <View style={styles.topSBackground}>
+                            <Text style={[styles.topSData, { fontWeight: 'bold' }]}> Current Top Artists </Text>
+                            <View>
+                                <View>
+                                    <Text style={styles.topSData}>
+                                        <View style={styles.bulletpoint} />
+                                        Artist Name
+                                    </Text>
+                                </View>
+                            </View>
+                        </View>
+                    </View>
+
+                    <Text style={styles.compText}> 95% Compatible </Text>
+                    <View style={styles.buttonsContainer}>
+                        <TouchableOpacity 
+                            style={styles.button}
+                            onPress={() => alert('PRESSED LEFT')}>
+                            <Image style={styles.buttonIcon}
+                                source={require('../../../assets/button-match.png')} />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={styles.button}
+                            onPress={() => alert('PRESSED RIGHT')}>
+                            <Image style={styles.buttonIcon}
+                                source={require('../../../assets/button-no-match.png')} />
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            </View>
         </View>
     )
 }
