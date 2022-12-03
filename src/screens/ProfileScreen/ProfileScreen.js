@@ -214,8 +214,8 @@ export default function ProfileScreen({navigation}) {
                                 defaultSource={require('../../../assets/placeholder-album.png')}
                                 style={styles.albumImage} />
                                 
-                            <Text style={[styles.albumInfo, { fontWeight: 'bold' }]}> {album.name} </Text>
-                            <Text style={[styles.albumInfo, { opacity: '60%' }]}> {album.artist} </Text>
+                            <Text style={[styles.albumInfo, { fontWeight: 'bold' }]} numberOfLines={1}> {album.name} </Text>
+                            <Text style={[styles.albumInfo, { opacity: '60%' }]} numberOfLines={1}> {album.artist} </Text>
                         </View>
                     )
                 })}
@@ -231,7 +231,7 @@ export default function ProfileScreen({navigation}) {
                         {topSongs.map((song, index) => {
                             return (
                                 <View key={index}>
-                                    <Text style={[styles.topSData, styles.text]}>
+                                    <Text style={[styles.topSData, styles.text]} numberOfLines={1}>
                                         <View style={[styles.bulletpoint, { marginBottom: 3, marginLeft: 5, marginRight: 10 }]} />
                                         {song.name} - {song.artist}
                                     </Text>
@@ -248,7 +248,7 @@ export default function ProfileScreen({navigation}) {
                         {topArtists.map((artist, index) => {
                             return (
                                 <View key={index + 4}>
-                                    <Text style={[styles.topSData, styles.text]}>
+                                    <Text style={[styles.topSData, styles.text]} numberOfLines={1}>
                                         <View style={[styles.bulletpoint, { marginBottom: 3, marginLeft: 5, marginRight: 10 }]} />
                                         {artist.name}
                                     </Text>

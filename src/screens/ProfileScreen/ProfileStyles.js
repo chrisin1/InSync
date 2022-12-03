@@ -3,7 +3,6 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
     albumBackground: {
         alignSelf: 'flex-start',
-        alignItems: 'center',
         backgroundColor: "#373737",
         borderRadius: 15,
         marginHorizontal: 10,
@@ -30,6 +29,8 @@ export default StyleSheet.create({
         color: 'white',
         fontSize: 14,
         marginBottom: 3,
+        marginStart: 5,
+        width: 150,
     },
     bulletpoint: {
         alignSelf: 'center',
