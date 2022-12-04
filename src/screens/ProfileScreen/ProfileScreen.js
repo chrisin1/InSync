@@ -139,7 +139,7 @@ export default function ProfileScreen({navigation}) {
             <Text style={[styles.text, { fontWeight: "400", fontSize: 36, maxWidth: '35%' }]} numberOfLines={1}>
                 {displayName}
             </Text>
-            <Text style={[styles.text, { opacity: '60%', marginTop: 10, maxWidth: '35%' }]} numberOfLines={2}>
+            <Text style={[styles.text, { opacity: '60%', marginTop: 5, maxWidth: '35%' }]} numberOfLines={2}>
                 {bio}
             </Text>
 

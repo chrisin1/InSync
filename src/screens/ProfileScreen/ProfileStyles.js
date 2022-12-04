@@ -75,7 +75,6 @@ export default StyleSheet.create({
     profileImage: {
         borderRadius: 100,
         height: 175,
-        marginTop: 15,
         overflow: "hidden",
         width: 175,
     },
