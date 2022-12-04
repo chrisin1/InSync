@@ -273,7 +273,7 @@ export default function HomeScreen(props) {
                 </Text>
             </View>
             
-            <ScrollView showsVerticalScrollIndicator={false}>
+            <ScrollView style={{ width: '90%' }} showsVerticalScrollIndicator={false}>
                 {compatibilityRanking?.map(createCards)}
             </ScrollView>
         </View>

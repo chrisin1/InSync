@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import styles from './ProfileStyles';
 import SpotifyWebApi from 'spotify-web-api-js';
-import { Text, View, SafeAreaView, Image, ScrollView, TouchableOpacity, TextInput } from "react-native";
+import { Dimensions, Text, View, SafeAreaView, Image, ScrollView, TouchableOpacity, TextInput } from "react-native";
 import { AuthContext } from '../../AuthContext/AuthContext';
 import { auth, db } from '../../firebase/config';
 import { getDoc, updateDoc, doc, setDoc } from 'firebase/firestore';
@@ -138,11 +138,10 @@ export default function ProfileScreen({navigation}) {
     // name and bio
     const headerInfo = (
         <View style={styles.infoContainer}>
-            <Text style={[styles.text, { fontWeight: "400", fontSize: 36 }]}>
+            <Text style={[styles.text, { fontWeight: "400", fontSize: 36, maxWidth: '50%' }]} numberOfLines={1}>
                 {displayName}
             </Text>
-            <Text>{'\n'}</Text>
-            <Text style={[styles.text, { opacity: '60%', marginTop: -15 }]}>
+            <Text style={[styles.text, { opacity: '60%', marginTop: 5, maxWidth: '50%' }]} numberOfLines={2}>
                 {bio}
             </Text>
 
@@ -153,17 +152,17 @@ export default function ProfileScreen({navigation}) {
     const metaInfo = (
         <View style={styles.statsContainer}>
             <View style={styles.statsBox}>
-                <Text style={[styles.text, { fontSize: 20 }]}>{age}</Text>
+                <Text style={[styles.text, { fontSize: 20 }]} numberOfLines={1}>{age}</Text>
                 <Text style={[styles.text, { fontSize: 12, fontWeight: '100', opacity: '60%' }]}>Age</Text>
             </View>
             <View style={styles.bulletpoint}/>
             <View style={styles.statsBox}>
-                <Text style={[styles.text, { fontSize: 20 }]}>{gender}</Text>
+                <Text style={[styles.text, { fontSize: 20 }]} numberOfLines={1}>{gender}</Text>
                 <Text style={[styles.text, { fontSize: 12, fontWeight: '100', opacity: '60%' }]}>Gender</Text>
             </View>
             <View style={styles.bulletpoint}/>
             <View style={styles.statsBox}>
-                <Text style={[styles.text, { fontSize: 20 }]}>{location}</Text>
+                <Text style={[styles.text, { fontSize: 20 }]} numberOfLines={1}>{location}</Text>
                 <Text style={[styles.text, { fontSize: 12, fontWeight: '100', opacity: '60%' }]}>Location</Text>
             </View>
         </View>
@@ -191,7 +190,7 @@ export default function ProfileScreen({navigation}) {
     )
 
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={[styles.container, { width: Dimensions.get('window').width }]}>
             <View style={{ alignSelf: "center" }}>
                 <Text style={styles.title}>Profile</Text>
             </View>
@@ -216,8 +215,8 @@ export default function ProfileScreen({navigation}) {
                                 defaultSource={require('../../../assets/placeholder-album.png')}
                                 style={styles.albumImage} />
                                 
-                            <Text style={[styles.albumInfo, { fontWeight: 'bold' }]}> {album.name} </Text>
-                            <Text style={[styles.albumInfo, { opacity: '60%' }]}> {album.artist} </Text>
+                            <Text style={[styles.albumInfo, { fontWeight: 'bold' }]} numberOfLines={1}> {album.name} </Text>
+                            <Text style={[styles.albumInfo, { opacity: '60%' }]} numberOfLines={1}> {album.artist} </Text>
                         </View>
                     )
                 })}
@@ -233,8 +232,8 @@ export default function ProfileScreen({navigation}) {
                         {topSongs.map((song, index) => {
                             return (
                                 <View key={index}>
-                                    <Text style={[styles.topSData, styles.text]}>
-                                        <View style={[styles.bulletpoint, { marginBottom: 3, marginLeft: 5, marginRight: 10 }]} />
+                                    <Text style={[styles.topSData, styles.text]} numberOfLines={1}>
+                                        <View style={[styles.bulletpoint, { marginBottom: 3, marginLeft: -5, marginRight: 10 }]} />
                                         {song.name} - {song.artist}
                                     </Text>
                                 </View>
@@ -250,8 +249,8 @@ export default function ProfileScreen({navigation}) {
                         {topArtists.map((artist, index) => {
                             return (
                                 <View key={index + 4}>
-                                    <Text style={[styles.topSData, styles.text]}>
-                                        <View style={[styles.bulletpoint, { marginBottom: 3, marginLeft: 5, marginRight: 10 }]} />
+                                    <Text style={[styles.topSData, styles.text]} numberOfLines={1}>
+                                        <View style={[styles.bulletpoint, { marginBottom: 3, marginLeft: -5, marginRight: 10 }]} />
                                         {artist.name}
                                     </Text>
                                 </View>

@@ -3,7 +3,6 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
     albumBackground: {
         alignSelf: 'flex-start',
-        alignItems: 'center',
         backgroundColor: "#373737",
         borderRadius: 15,
         marginHorizontal: 10,
@@ -30,6 +29,8 @@ export default StyleSheet.create({
         color: 'white',
         fontSize: 14,
         marginBottom: 3,
+        marginStart: 5,
+        width: 150,
     },
     bulletpoint: {
         alignSelf: 'center',
@@ -58,17 +59,18 @@ export default StyleSheet.create({
     container: {
         alignItems: 'center',
         alignSelf: 'center',
-        flex: 1,
+        maxWidth: '75%'
     },
     headerContainer: {
-        alignSelf: "center",
-        alignItems: 'center',
+        alignSelf: "baseline",
         flexDirection: "row",
-        justifyContent: 'space-evenly',
+        justifyContent: 'space-between',
         marginTop: 50,
     },
     infoContainer: {
-        alignSelf: "flex-start",
+        alignSelf: "center",
+        alignItems: 'flex-start',
+        flexDirection: 'column'
     },
     profileImage: {
         borderRadius: 100,
@@ -78,7 +80,7 @@ export default StyleSheet.create({
     },
     statsContainer: {
         flexDirection: "row",
-        marginTop: 10,
+        marginTop: 5,
     },
     statsBox: {
         alignItems: "flex-start",
@@ -114,5 +116,6 @@ export default StyleSheet.create({
         justifyContent: 'center',
         marginBottom: 5,
         marginStart: 10,
+        paddingHorizontal: 10,
     },
 });
