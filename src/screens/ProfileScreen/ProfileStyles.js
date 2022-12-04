@@ -59,27 +59,29 @@ export default StyleSheet.create({
     container: {
         alignItems: 'center',
         alignSelf: 'center',
-        flex: 1,
+        maxWidth: '75%'
     },
     headerContainer: {
-        alignSelf: "center",
-        alignItems: 'center',
+        alignSelf: "baseline",
         flexDirection: "row",
-        justifyContent: 'space-evenly',
+        justifyContent: 'space-between',
         marginTop: 50,
     },
     infoContainer: {
-        alignSelf: "flex-start",
+        alignSelf: "center",
+        alignItems: 'flex-start',
+        flexDirection: 'column'
     },
     profileImage: {
         borderRadius: 100,
         height: 175,
+        marginTop: 15,
         overflow: "hidden",
         width: 175,
     },
     statsContainer: {
         flexDirection: "row",
-        marginTop: 10,
+        marginTop: 5,
     },
     statsBox: {
         alignItems: "flex-start",
@@ -115,5 +117,6 @@ export default StyleSheet.create({
         justifyContent: 'center',
         marginBottom: 5,
         marginStart: 10,
+        paddingHorizontal: 10,
     },
 });
