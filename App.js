@@ -161,28 +161,27 @@ export default function App() {
   const BottomTab = () => {
     return (
       <Tab.Navigator
-            initialRouteName={"Home"}
             screenOptions={{
               tabBarStyle: { backgroundColor: '#373737', borderBottomWidth: 0, borderTopWidth: 0, marginBottom: 1.5 },
               tabBarActiveTintColor: '#FF9283',
               title: ''
             }}>
               <Tab.Screen 
-                name="Chat" 
-                component={ChatScreen} 
-                options={{ 
-                  tabBarIcon: ({ color, size }) => (
-                    <Ionicons name="chatbubbles" color={color} size={size} />
-                  ),
-                  headerShown: false 
-                }} 
-              />
-              <Tab.Screen 
                 name="Home" 
                 component={HomeScreen} 
                 options={{ 
                   tabBarIcon: ({ color, size }) => (
                     <Ionicons name="ios-home-sharp" color={color} size={size} />
+                  ),
+                  headerShown: false 
+                }} 
+              />
+              <Tab.Screen 
+                name="Chat" 
+                component={ChatScreen} 
+                options={{ 
+                  tabBarIcon: ({ color, size }) => (
+                    <Ionicons name="chatbubbles" color={color} size={size} />
                   ),
                   headerShown: false 
                 }} 
