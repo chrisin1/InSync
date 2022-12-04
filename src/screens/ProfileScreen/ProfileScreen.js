@@ -136,10 +136,10 @@ export default function ProfileScreen({navigation}) {
     // name and bio
     const headerInfo = (
         <View style={styles.infoContainer}>
-            <Text style={[styles.text, { fontWeight: "400", fontSize: 36, maxWidth: '35%' }]} numberOfLines={1}>
+            <Text style={[styles.text, { fontWeight: "400", fontSize: 36, maxWidth: '50%' }]} numberOfLines={1}>
                 {displayName}
             </Text>
-            <Text style={[styles.text, { opacity: '60%', marginTop: 5, maxWidth: '35%' }]} numberOfLines={2}>
+            <Text style={[styles.text, { opacity: '60%', marginTop: 5, maxWidth: '50%' }]} numberOfLines={2}>
                 {bio}
             </Text>
 
