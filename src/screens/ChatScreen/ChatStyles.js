@@ -14,9 +14,7 @@ export default StyleSheet.create({
         margin: 50
     },
     image: {
-        backgroundColor: 'white',
         height: 75,
-        opacity: '10%',
         width: 75,
         borderRadius: 100,
         marginRight: 20
