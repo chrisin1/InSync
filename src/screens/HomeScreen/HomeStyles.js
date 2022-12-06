@@ -83,6 +83,7 @@ export default StyleSheet.create({
         justifyContents: 'center',
         margin: 20,
         marginBottom: 0,
+        width: '100%',
     },
     compText: {
         alignSelf: 'center',
@@ -109,6 +110,7 @@ export default StyleSheet.create({
         fontWeight: 'bold',
         marginStart: 5,
         marginLeft: 10,
+        width: '75%',
     },
     nowPlayingContainer: {
         alignSelf: 'flex-start',
