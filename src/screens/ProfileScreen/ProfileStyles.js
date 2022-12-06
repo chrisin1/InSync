@@ -70,7 +70,8 @@ export default StyleSheet.create({
     infoContainer: {
         alignSelf: "center",
         alignItems: 'flex-start',
-        flexDirection: 'column'
+        flexDirection: 'column',
+        width: 500
     },
     profileImage: {
         borderRadius: 100,
