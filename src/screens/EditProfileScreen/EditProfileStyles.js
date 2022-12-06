@@ -6,14 +6,22 @@ export default StyleSheet.create({
         alignSelf: 'center',
         flex: 1,
     },
+    backContainer: {
+        alignSelf: 'flex-start',
+        justifyContent: 'center',
+        margin: 15,
+        marginRight: 50,
+        marginTop: 50,
+    },
     title: {
         alignSelf: 'center',
         color: 'white',
         fontSize: 48,
         fontWeight: 'bold',
-        margin: 50
+        margin: 50,
+        marginTop: -80,
     },
-    profilePic: {
+    logo: {
         alignSelf: 'center',
         borderRadius: 100,
         height: 200,

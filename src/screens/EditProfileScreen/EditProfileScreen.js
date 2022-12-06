@@ -5,6 +5,7 @@ import { auth, db } from '../../firebase/config';
 import { updateDoc, doc, getDoc } from 'firebase/firestore';
 import { useRoute } from '@react-navigation/native';
 import styles from './EditProfileStyles'
+import { Ionicons } from '@expo/vector-icons';
 
 export default function EditProfileScreen({navigation}) {
     const route = useRoute();
@@ -27,14 +28,25 @@ export default function EditProfileScreen({navigation}) {
         navigation.push('UserProfile')
     }
 
+    const onBackPress = () => {
+        navigation.navigate('UserProfile');
+    }
+
     return (
         <View style={styles.container}>
             <KeyboardAwareScrollView
                 style={{ width: '100%' }}
                 keyboardShouldPersistTaps='always'>
+                 <Ionicons
+                    style={styles.backContainer}
+                    name="chevron-back-circle"
+                    color="#FF9382"
+                    size={52}
+                    onPress={() => onBackPress()}>
+                </Ionicons>
                 <Text style={styles.title}> Update Your Profile </Text>
                 <Image
-                    style={styles.profilePic}
+                    style={styles.logo}
                     source={require('../../../assets/insync-logo.png')}
                 />
                 <Text style={styles.inputTitle}>Display Name</Text>

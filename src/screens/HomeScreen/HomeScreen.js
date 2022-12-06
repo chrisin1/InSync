@@ -17,11 +17,13 @@ export default function HomeScreen({navigation}) {
         //console.log(user)
     })
 
-    const onMatchPress = (id) => {
+    const onMatchPress = (id, displayName, profilePic) => {
         // Add to history on database
         updateDoc(userDocRef, {
             history: arrayUnion({
                 id: id,
+                displayName: displayName,
+                profilePic: profilePic,
                 matched: 1
             })
         });
@@ -132,7 +134,7 @@ export default function HomeScreen({navigation}) {
                                 {
                                     id: doc.id,
                                     displayName: doc.data().displayName,
-                                    profileImage: doc.data().profileImage,
+                                    profilePic: doc.data().profilePic,
                                     topArtists: doc.data().topArtists,
                                     topSongs: doc.data().topSongs,
                                     topAlbums: doc.data().topAlbums,
@@ -186,6 +188,7 @@ export default function HomeScreen({navigation}) {
                     <View style={styles.cardHeader}>
                         <Image 
                             style={styles.profileImage} 
+                            source={user.profilePic}
                             defaultSource={require('../../../assets/placeholder-profile.png')} />
                         <Text style={styles.nameText} numberOfLines={1}> {user.displayName} </Text>
                     </View>
@@ -242,7 +245,7 @@ export default function HomeScreen({navigation}) {
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.button}
-                            onPress={() => onMatchPress(user.id)}>
+                            onPress={() => onMatchPress(user.id, user.displayName, user.profilePic)}>
                             <Image style={styles.buttonIcon}
                                 source={require('../../../assets/button-match.png')} />
                         </TouchableOpacity>

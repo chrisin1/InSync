@@ -45,7 +45,5 @@ export default StyleSheet.create({
         height: 150,
         overflow: "hidden",
         width: 150,
-        backgroundColor: 'white',
-        opacity: '10%'
     },
 });
