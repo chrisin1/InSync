@@ -41,11 +41,7 @@ export default function ChatScreen({navigation}) {
         <View style = {styles.bottomContainer}>
             <InputComponent/>
         </View>
-        
-
     </View>
-      
-
     )
 }
 

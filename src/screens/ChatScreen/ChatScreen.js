@@ -47,8 +47,8 @@ export default function ChatScreen({navigation}) {
                                     />
                                 <View style ={styles.rightContainer} >
                                     <View style ={styles.row}>
-                                        <Text style ={styles.name}>{user.displayName}</Text>
-                                        <Text style ={styles.text}></Text>
+                                        <Text style ={styles.name} numberOfLines={1}>{user.displayName}</Text>
+                                        <Text style ={styles.text}>{user.timeMatched}</Text>
                                     </View>
                                     <Text style ={styles.text} numberOfLines ={1}>we just matched!</Text>
                                 </View>

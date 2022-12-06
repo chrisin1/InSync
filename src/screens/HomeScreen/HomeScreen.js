@@ -19,11 +19,14 @@ export default function HomeScreen({navigation}) {
 
     const onMatchPress = (id, displayName, profilePic) => {
         // Add to history on database
+        var current = new Date();
+        timeMatched = current.getHours() + ":" + current.getMinutes() + ":" + current.getSeconds();
         updateDoc(userDocRef, {
             history: arrayUnion({
                 id: id,
                 displayName: displayName,
                 profilePic: profilePic,
+                timeMatched: timeMatched,
                 matched: 1
             })
         });
@@ -241,7 +244,7 @@ export default function HomeScreen({navigation}) {
                             style={styles.button}
                             onPress={() => onNoMatchPress(user.id)}>
                             <Image style={styles.buttonIcon}
-                                source={require('../../../assets/button-no-match.png')} />
+                                source={require('../../../assets/button-reject.png')} />
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.button}

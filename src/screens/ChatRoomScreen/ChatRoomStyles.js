@@ -33,7 +33,7 @@ export default StyleSheet.create({
         color: 'white',
         fontSize: 20,
         fontWeight: 'bold',
-        marginBottom: 5
+        marginBottom: 15
     },
     profileContainer: {
         alignSelf: 'center',
