@@ -8,7 +8,7 @@ import { enableIndexedDbPersistence } from 'firebase/firestore';
 import { doc, arrayUnion, query, where, collection, getDocs, getDoc, updateDoc } from 'firebase/firestore';
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 
-export default function HomeScreen(props) {
+export default function HomeScreen({navigation}) {
     var [nowPlaying, setNowPlaying] = useState({})
     var [compatibilityRanking, setCompatibilityRanking] = useState([{}])
     var [userDocRef, setUserDocRef] = useState(null);
@@ -93,6 +93,9 @@ export default function HomeScreen(props) {
                     else if (response.item === null){
                         console.log("Failed to get top tracks");
                     }
+                }).catch((error)=> {
+                    console.log("Not connected to spotify")
+                    navigation.navigate('Connect With Spotify');
                 })
 
                 let matchHistory = [];
