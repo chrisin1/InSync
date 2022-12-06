@@ -23,6 +23,7 @@ export default StyleSheet.create({
         fontSize: 16,
         fontWeight: 'bold',
         marginBottom: 3,
+        marginRight: 20,
         color: 'white',
     },
     text: {
