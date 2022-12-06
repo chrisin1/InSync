@@ -244,7 +244,7 @@ export default function HomeScreen({navigation}) {
                             style={styles.button}
                             onPress={() => onNoMatchPress(user.id)}>
                             <Image style={styles.buttonIcon}
-                                source={require('../../../assets/button-no-match.png')} />
+                                source={require('../../../assets/button-reject.png')} />
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={styles.button}
