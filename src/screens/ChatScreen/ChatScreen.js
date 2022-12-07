@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import { auth, db } from '../../firebase/config';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, onSnapshot, query, collection, orderBy } from 'firebase/firestore';
 import styles from './ChatStyles';
 
 
@@ -9,22 +9,45 @@ export default function ChatScreen({navigation}) {
     var [history, setHistory] = useState([]);
     var [displayName, setDisplayName] = useState('');
     var [profilePic, setProfilePic] = useState('');
+    var [messages, setMessages] = useState(['hello']);
 
     const onRoomPress = (user) => {
-        navigation.navigate('ChatRoom', {user});
+        navigation.navigate('ChatRoom', {user, messages});
     }
 
-    auth.onAuthStateChanged(user => {
-        if (user) { // user is logged in
-            const docRef = doc(db, 'users', user.uid);
-            getDoc(docRef).then(async (userDoc) => {
-                setHistory(userDoc.data().history);
-            })
-            .catch((error) => {
-                console.log('error retrieving user information: ', error);
-            })
-        }
-    })
+    useEffect(() => {
+        auth.onAuthStateChanged(user => {
+            if (user) { // user is logged in
+
+                //Get user matching history and listen for updates
+                const docRef = doc(db, 'users', user.uid);
+                onSnapshot(docRef, (userDoc) => {
+                    console.log("Current data: ", userDoc.data());
+                    setHistory(userDoc.data().history);
+                });
+
+                //Get user's messages and listen for updates
+                const messagesQuery = query(collection(db, 'messages/'+user.uid+'/messages'), orderBy('time', 'desc'));
+                onSnapshot(messagesQuery, (snapshot) => {
+                    snapshot.docChanges().forEach((change) => {
+                        if (change.type === 'modified') {
+                            console.log(change.type);
+                            var message = change.doc.data();
+                            messages.push(
+                                {
+                                    messageId: change.doc.id,
+                                    time: message.time,
+                                    id: message.id,
+                                    text: message.text
+                                }
+                            )
+                        }
+                        //can add remove/edit message functionality too
+                    });
+                })
+            }
+        })
+    }, []);
 
     const matchedUsers = history.filter(function(func) {
         return func.matched == 1
@@ -36,7 +59,7 @@ export default function ChatScreen({navigation}) {
 
             <View>
                 {matchedUsers.map((user) => {
-                    console.log('user: ', user);
+                    //console.log('user: ', user);
                     return (
                         <TouchableOpacity onPress={() => onRoomPress(user)}>
                             <View style={styles.chatContainer}>

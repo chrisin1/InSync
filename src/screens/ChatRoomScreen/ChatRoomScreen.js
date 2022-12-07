@@ -5,14 +5,42 @@ import MessageComponent from '../../components/MessageComponent';
 import InputComponent from '../../components/InputComponent';
 import { Ionicons } from '@expo/vector-icons';
 import { useRoute } from '@react-navigation/native';
+import { addDoc, serverTimestamp, collection } from 'firebase/firestore';
+import { auth, db } from '../../firebase/config';
 
 export default function ChatScreen({navigation}) {
     const route = useRoute();
     const displayName = route.params.user.displayName;
     const profilePic = route.params.user.profilePic;
+    const id = route.params.user.id;
+    const messages = route.params.messages;
 
     const onBackPress = () => {
         navigation.navigate('Chat');
+    }
+
+    const writeMessage = (text) => {
+        auth.onAuthStateChanged(user => {
+            if (user) { // user is signed in
+                try {
+                    addDoc(collection(db, 'messages/'+user.uid+'/messages'), {
+                        id: id,
+                        text: text,
+                        incoming: false,
+                        time: serverTimestamp()
+                    });
+                    addDoc(collection(db, 'messages/'+id+'/messages'), {
+                        id: user.uid,
+                        text: text,
+                        incoming: true,
+                        time: serverTimestamp()
+                    });
+                }
+                catch(error) {
+                    console.error('Error writing new message to Firebase Database', error);
+                }
+            }
+        })
     }
 
     return (
