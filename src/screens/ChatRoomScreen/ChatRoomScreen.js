@@ -23,13 +23,13 @@ export default function ChatScreen({navigation}) {
         auth.onAuthStateChanged(user => {
             if (user) { // user is signed in
                 try {
-                    addDoc(collection(db, 'messages/'+user.uid+'/messages'), {
+                    addDoc(collection(db, 'chat/'+user.uid+'/messages'), {
                         id: id,
                         text: text,
                         incoming: false,
                         time: serverTimestamp()
                     });
-                    addDoc(collection(db, 'messages/'+id+'/messages'), {
+                    addDoc(collection(db, 'chat/'+id+'/messages'), {
                         id: user.uid,
                         text: text,
                         incoming: true,

@@ -27,7 +27,7 @@ export default function ChatScreen({navigation}) {
                 });
 
                 //Get user's messages and listen for updates
-                const messagesQuery = query(collection(db, 'messages/'+user.uid+'/messages'), orderBy('time', 'desc'));
+                const messagesQuery = query(collection(db, 'chat/'+user.uid+'/messages'), orderBy('time', 'desc'));
                 onSnapshot(messagesQuery, (snapshot) => {
                     snapshot.docChanges().forEach((change) => {
                         if (change.type === 'modified') {
