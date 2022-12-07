@@ -18,17 +18,16 @@ export default function ChatScreen({navigation}) {
     useEffect(() => {
         auth.onAuthStateChanged(user => {
             if (user) { // user is logged in
-                const docRef = doc(db, 'users', user.uid);
-                getDoc(docRef).then(async (userDoc) => {
-                    setHistory(userDoc.data().history);
-                })
-                .catch((error) => {
-                    console.log('error retrieving user information: ', error);
-                })
 
+                //Get user matching history and listen for updates
+                const docRef = doc(db, 'users', user.uid);
+                onSnapshot(docRef, (userDoc) => {
+                    console.log("Current data: ", userDoc.data());
+                    setHistory(userDoc.data().history);
+                });
+
+                //Get user's messages and listen for updates
                 const messagesQuery = query(collection(db, 'messages/'+user.uid+'/messages'), orderBy('time', 'desc'));
-    
-                // Start listening to the query.
                 onSnapshot(messagesQuery, (snapshot) => {
                     snapshot.docChanges().forEach((change) => {
                         if (change.type === 'modified') {
@@ -43,7 +42,7 @@ export default function ChatScreen({navigation}) {
                                 }
                             )
                         }
-                        //can add remove message functionality too
+                        //can add remove/edit message functionality too
                     });
                 })
             }
