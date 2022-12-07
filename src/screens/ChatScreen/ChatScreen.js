@@ -7,7 +7,7 @@ import styles from './ChatStyles';
 
 export default function ChatScreen({navigation}) {
     var [history, setHistory] = useState([]);
-    var [messages, setMessages] = useState(['']);
+    var [messages, setMessages] = useState([]);
 
     const onRoomPress = (user) => {
         navigation.navigate('ChatRoom', {user, messages});
