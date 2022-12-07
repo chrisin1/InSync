@@ -28,17 +28,20 @@ export default function ChatScreen({navigation}) {
                 const messagesQuery = query(collection(db, 'chat/'+user.uid+'/messages'), orderBy('time', 'desc'));
                 onSnapshot(messagesQuery, (snapshot) => {
                     snapshot.docChanges().forEach((change) => {
-                        if (change.type === 'modified') {
+                        if (change.type != 'removed') {
                             console.log(change.type);
                             var message = change.doc.data();
-                            messages.push(
-                                {
-                                    messageId: change.doc.id,
-                                    time: message.time,
-                                    id: message.id,
-                                    text: message.text
-                                }
-                            )
+                            if(message.time != null)
+                            {
+                                messages.push(
+                                    {
+                                        messageId: change.doc.id,
+                                        time: message.time,
+                                        id: message.id,
+                                        text: message.text
+                                    }
+                                )
+                            }
                         }
                         //can add remove/edit message functionality too
                     });
