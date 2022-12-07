@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { Button, Image, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import styles from './ChatRoomStyles';
-import MessageComponent from '../../components/MessageComponent';
-import InputComponent from '../../components/InputComponent';
+import OutgoingMessageComponent from '../../components/OutgoingMessageComponent';
+import IncomingMessageComponent from '../../components/IncomingMessageComponent';
 import { Ionicons } from '@expo/vector-icons';
 import { useRoute } from '@react-navigation/native';
 import { addDoc, serverTimestamp, collection } from 'firebase/firestore';
@@ -10,10 +10,13 @@ import { auth, db } from '../../firebase/config';
 
 export default function ChatScreen({navigation}) {
     const route = useRoute();
+    // grabbing data for OTHER user
     const displayName = route.params.user.displayName;
     const profilePic = route.params.user.profilePic;
     const id = route.params.user.id;
     const messages = route.params.messages;
+
+    const[input, setInput] = useState('');
 
     const onBackPress = () => {
         navigation.navigate('Chat');
@@ -35,6 +38,7 @@ export default function ChatScreen({navigation}) {
                         incoming: true,
                         time: serverTimestamp()
                     });
+                    console.log('Added new message! ')
                 }
                 catch(error) {
                     console.error('Error writing new message to Firebase Database', error);
@@ -43,8 +47,13 @@ export default function ChatScreen({navigation}) {
         })
     }
 
-    return (
+    console.log("ChatRoom Messages: ", messages);
+    const sortedMsgs = messages.filter(function(msg) {
+        return msg.id == id;
+    })
+    console.log("Sorted Messages: ", sortedMsgs);
 
+    return (
     <View style={styles.container}>
         <Ionicons
             style={styles.backContainer}
@@ -63,11 +72,28 @@ export default function ChatScreen({navigation}) {
         </View>
         
         <View style={styles.messagesContainer}>
-            <MessageComponent/>
+            {sortedMsgs.map((msg) => {
+                if (msg.incoming == true) {
+                    return <IncomingMessageComponent text={msg.text} />
+                }
+                if (msg.incoming == false) {
+                    return <OutgoingMessageComponent text={msg.text} />
+                }
+            })}
         </View>
         
         <View style = {styles.bottomContainer}>
-            <InputComponent/>
+            <View style = {styles.inputContainer}>
+                <TextInput
+                    style={{ marginVertical: 0, paddingVertical: 0, outline: 'none' }}
+                    value= {input}
+                    onChangeText={setInput}
+                    placeholder='Type Message'>
+                </TextInput>
+            </View>
+            <Ionicons name="chevron-forward-circle"
+                color='#FF9382' size={52} flex={1}
+                onPress={() => writeMessage(input)}/>
         </View>
     </View>
     )

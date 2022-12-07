@@ -7,9 +7,7 @@ import styles from './ChatStyles';
 
 export default function ChatScreen({navigation}) {
     var [history, setHistory] = useState([]);
-    var [displayName, setDisplayName] = useState('');
-    var [profilePic, setProfilePic] = useState('');
-    var [messages, setMessages] = useState(['hello']);
+    var [messages, setMessages] = useState(['']);
 
     const onRoomPress = (user) => {
         navigation.navigate('ChatRoom', {user, messages});
@@ -45,6 +43,7 @@ export default function ChatScreen({navigation}) {
                         //can add remove/edit message functionality too
                     });
                 })
+                console.log("Chat Screen Messages: ", messages);
             }
         })
     }, []);
