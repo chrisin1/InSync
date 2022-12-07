@@ -7,9 +7,7 @@ import styles from './ChatStyles';
 
 export default function ChatScreen({navigation}) {
     var [history, setHistory] = useState([]);
-    var [displayName, setDisplayName] = useState('');
-    var [profilePic, setProfilePic] = useState('');
-    var [messages, setMessages] = useState(['hello']);
+    var [messages, setMessages] = useState(['']);
 
     const onRoomPress = (user) => {
         navigation.navigate('ChatRoom', {user, messages});
@@ -27,7 +25,7 @@ export default function ChatScreen({navigation}) {
                 });
 
                 //Get user's messages and listen for updates
-                const messagesQuery = query(collection(db, 'messages/'+user.uid+'/messages'), orderBy('time', 'desc'));
+                const messagesQuery = query(collection(db, 'chat/'+user.uid+'/messages'), orderBy('time', 'desc'));
                 onSnapshot(messagesQuery, (snapshot) => {
                     snapshot.docChanges().forEach((change) => {
                         if (change.type === 'modified') {
@@ -45,6 +43,7 @@ export default function ChatScreen({navigation}) {
                         //can add remove/edit message functionality too
                     });
                 })
+                console.log("Chat Screen Messages: ", messages);
             }
         })
     }, []);
